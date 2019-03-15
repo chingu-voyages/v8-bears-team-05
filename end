@@ -1,0 +1,38 @@
+[33mcommit 98ec8e3e935acddeb29d333236334adb62634584[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 22add40 36ec409
+Author: Bhaskar Mishra <bhaskar3797mishra@gmail.com>
+Date:   Fri Mar 15 13:20:25 2019 +0530
+
+    Merge pull request #1 from chingu-voyages/develop
+    
+    Testing Git WorkFlow  #1
+
+[33mcommit 36ec409ba0208a6216b90269cb649283e907bfb0[m[33m ([m[1;31morigin/develop[m[33m)[m
+Author: Rishabh Agrawal <rishabha.1999@gmail.com>
+Date:   Fri Mar 15 03:42:41 2019 +0530
+
+    Project stage
+
+[33mcommit ce6307621ebf75e97b45aebbadaa8455d82845a6[m
+Author: Rishabh Agrawal <rishabha.1999@gmail.com>
+Date:   Fri Mar 15 03:40:51 2019 +0530
+
+    Test
+
+[33mcommit 22add4046c04991fbc4a7d9132cd87f6db58a580[m
+Author: Rishabh Agrawal <rishabha.1999@gmail.com>
+Date:   Fri Mar 15 02:59:30 2019 +0530
+
+    Test
+
+[33mcommit fe36fec950bb2a324dcb9c61f4191ba672a08b39[m
+Author: Rishabh Agrawal <rishabha.1999@gmail.com>
+Date:   Fri Mar 15 02:46:18 2019 +0530
+
+    testing
+
+[33mcommit e6aa86c39362d1e8e09bf1726c3371b7a3393d2b[m
+Author: Chance <tropicalchancer@users.noreply.github.com>
+Date:   Tue Mar 12 19:06:54 2019 +0700
+
+    Initial commit
