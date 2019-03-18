@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["react-app", "airbnb", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "react/jsx-filename-extension": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 120
+      }
+    ]
+  }
+}
