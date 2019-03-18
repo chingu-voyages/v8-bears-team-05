@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # Collab-live
 
 ## V8-bears-team-05
@@ -63,5 +61,3 @@ The React application will run on port 3000 and the Express server on port 3001.
         "editor.formatOnSave": true,
         "prettier.eslintIntegration": true
         ```
-
-    > > > > > > > f7aeec23afc5901ef3a1d487ada17ef465a28406
