@@ -2,7 +2,7 @@
 
 ## V8-bears-team-05
 
-Add project decription here ...
+Add project decription here
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Then an Express server was added in the `server` directory. The server is proxied via the `proxy` key in `package.json`.
 
@@ -54,6 +54,7 @@ The React application will run on port 3000 and the Express server on port 3001.
 2.  Install [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 3.  Install [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 4.  Modify the VSCode user settings to add below configuration
+
 
         ```javascript
         "eslint.alwaysShowStatus": true,
