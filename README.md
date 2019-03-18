@@ -1,4 +1,8 @@
-# React application with Express server
+# Collab-live
+
+## V8-bears-team-05
+
+Add project decription here ...
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Then an Express server was added in the `server` directory. The server is proxied via the `proxy` key in `package.json`.
 
@@ -7,8 +11,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Clone the project, change into the directory and install the dependencies.
 
 ```bash
-git clone https://github.com/philnash/react-express-starter.git
-cd react-express-starter
+git clone https://github.com/chingu-voyages/v8-bears-team-05.git
+cd bears-team-05
 npm install
 ```
 
@@ -32,8 +36,28 @@ Run both applications together with the command:
 npm run dev
 ```
 
-The React application will run on port 3000 and the server port 3001.
+You can create an optimized production build with the command:
 
-## React Twilio starter
+```bash
+npm run build
+```
 
-The [twilio branch](https://github.com/philnash/react-express-starter/tree/twilio) is a similar setup but also provides endpoints with basic [Access Tokens](https://www.twilio.com/docs/iam/access-tokens) for [Twilio Programmable Chat](https://www.twilio.com/docs/chat) and [Twilio Programmable Video](https://www.twilio.com/docs/video). You can use the project as a base for building React chat or video applications.
+The React application will run on port 3000 and the Express server on port 3001.
+
+### VSCode + ESLint + Prettier
+
+[VSCode](https://code.visualstudio.com/) is a lightweight but powerful source code editor. [ESLint](https://eslint.org/) takes care of the code-quality. [Prettier](https://prettier.io/) takes care of all the formatting.
+
+#### Installation guide
+
+1.  Install [VSCode](https://code.visualstudio.com/)
+2.  Install [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+3.  Install [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+4.  Modify the VSCode user settings to add below configuration
+
+    ```javascript
+    "eslint.alwaysShowStatus": true,
+    "eslint.autoFixOnSave": true,
+    "editor.formatOnSave": true,
+    "prettier.eslintIntegration": true
+    ```
