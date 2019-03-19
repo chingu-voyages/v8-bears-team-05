@@ -1,0 +1,15 @@
+.home-container {
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.white-board,
+.code-editor {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
