@@ -57,6 +57,7 @@ The React application will run on port 3000 and the Express server on port 3001.
 3.  Install [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 4.  Modify the VSCode user settings to add below configuration
 
+
     ```javascript
     "eslint.alwaysShowStatus": true,
     "eslint.autoFixOnSave": true,
