@@ -14,15 +14,18 @@ cd bears-team-05
 npm install
 ```
 
-Create a `.env` file for environment variables in your server.
+Create a `.env` file for environment variables in your project directory.
 
 You can start the server on its own with the command:
+
+Open [http://localhost:3030](http://localhost:3030) to view it in the browser.
 
 ```bash
 npm run server
 ```
 
 Run the React application on its own with the command:
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ```bash
@@ -55,9 +58,9 @@ The React application will run on port 3000 and the Express server on port 3001.
 4.  Modify the VSCode user settings to add below configuration
 
 
-        ```javascript
-        "eslint.alwaysShowStatus": true,
-        "eslint.autoFixOnSave": true,
-        "editor.formatOnSave": true,
-        "prettier.eslintIntegration": true
-        ```
+    ```javascript
+    "eslint.alwaysShowStatus": true,
+    "eslint.autoFixOnSave": true,
+    "editor.formatOnSave": true,
+    "prettier.eslintIntegration": true
+    ```
