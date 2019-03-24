@@ -5,10 +5,11 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 import Logo from './Logo';
+import './NavBar.css';
 
 const NavBar = () => {
   return (
-    <Navbar className="py-3" bg="light" expand="lg">
+    <Navbar className="py-2" bg="light" expand="lg">
       <Container>
         <Navbar.Brand href="#">
           <Logo />
