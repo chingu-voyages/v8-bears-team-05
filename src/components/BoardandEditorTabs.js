@@ -18,7 +18,7 @@ class BoardandEditor extends React.Component {
     return (
       <Container id="board">
         <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
-          <Tab eventKey="whiteboard" title="Whtieboard">
+          <Tab eventKey="whiteboard" title="Whiteboard">
             <WhiteBoard />
           </Tab>
           <Tab eventKey="codeeditor" title="CodeEditor">
