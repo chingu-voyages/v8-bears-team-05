@@ -30,7 +30,10 @@ class BoardandEditor extends React.Component {
               </Tab>
             </Tabs>
           </Col>
-          <Col md={3} />
+          <Col md={3}>
+            <div className="tools" />
+            <div className="chat" />
+          </Col>
         </Row>
       </Container>
     );
