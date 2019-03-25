@@ -2,14 +2,18 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import HomePage from './HomePage';
 import BoardandEditor from './BoardandEditorTabs';
+import NavBar from './NavBar';
 import './App.css';
 
 const App = () => {
   return (
-    <Container fluid className="app">
-      <HomePage />
-      <BoardandEditor />
-    </Container>
+    <>
+      <NavBar />
+      <Container fluid className="app">
+        <HomePage />
+        <BoardandEditor />
+      </Container>
+    </>
   );
 };
 
