@@ -5,16 +5,17 @@
   background-color: blueviolet;
   position: relative;
   font-weight: bold;
+  font-size: 2rem;
   height: 100%;
-  width: 7rem;
+  width: 11rem;
   z-index: 200;
   transform: skewX(-15deg);
 }
 
 .logo::before {
   content: "";
-  width: 2rem;
-  height: 1.5rem;
+  width: 3.6rem;
+  height: 2rem;
   position: absolute;
   top: -20%;
   left: 80%;
@@ -23,8 +24,8 @@
 }
 .logo::after {
   content: "";
-  width: 2rem;
-  height: 1.5rem;
+  width: 3.6rem;
+  height: 2rem;
   position: absolute;
   bottom: -20%;
   right: 80%;

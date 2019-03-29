@@ -9,7 +9,7 @@ import './NavBar.css';
 
 const NavBar = () => {
   return (
-    <Navbar className="py-2" bg="light" expand="lg">
+    <Navbar className="py-4" bg="light" expand="lg">
       <Container>
         <Navbar.Brand href="#">
           <Logo />
