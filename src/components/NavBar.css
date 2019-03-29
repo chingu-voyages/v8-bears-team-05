@@ -5,3 +5,7 @@
 .btn-success {
   font-size: 1.6rem;
 }
+
+.py-2.navbar {
+  margin-bottom: 5px;
+}

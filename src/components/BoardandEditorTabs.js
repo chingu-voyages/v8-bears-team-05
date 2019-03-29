@@ -22,7 +22,7 @@ class BoardandEditor extends React.Component {
         <Row>
           <Col md={9}>
             <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
-              <Tab eventKey="whiteboard" title="Whtieboard">
+              <Tab eventKey="whiteboard" title="Whiteboard">
                 <WhiteBoard />
               </Tab>
               <Tab eventKey="codeeditor" title="CodeEditor">
@@ -30,7 +30,10 @@ class BoardandEditor extends React.Component {
               </Tab>
             </Tabs>
           </Col>
-          <Col md={3} />
+          <Col md={3}>
+            <div className="tools" />
+            <div className="chat" />
+          </Col>
         </Row>
       </Container>
     );
