@@ -10,13 +10,13 @@ import './App.css';
 const App = () => {
   return (
     <>
-      <NavBar />
-      <Container fluid className="app">
-        <BrowserRouter>
+      <BrowserRouter>
+        <NavBar />
+        <Container fluid className="app">
           <Route path="/" exact component={Homepage} />
           <Route path="/boardandeditor" component={BoardandEditor} />
-        </BrowserRouter>
-      </Container>
+        </Container>
+      </BrowserRouter>
     </>
   );
 };

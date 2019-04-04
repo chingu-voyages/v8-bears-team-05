@@ -6,6 +6,7 @@ import Tab from 'react-bootstrap/Tab';
 import { Col, Row } from 'react-bootstrap';
 import WhiteBoard from './WhiteBoard';
 import CodeEditor from './CodeEditor';
+import LiveChat from './LiveChat';
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -31,8 +32,7 @@ class BoardandEditor extends React.Component {
             </Tabs>
           </Col>
           <Col md={3}>
-            <div className="tools" />
-            <div className="chat" />
+            <LiveChat />
           </Col>
         </Row>
       </Container>

@@ -5,18 +5,7 @@
   border-width: 0 1px 1px 1px;
   height: 80vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.tools {
-  border: 1px solid #d3d3d3;
-  height: 80%;
-  margin: 10px 0;
-}
-
-.chat {
-  border: 1px solid #d3d3d3;
-  height: 10%;
-  margin: 10px 0;
 }
