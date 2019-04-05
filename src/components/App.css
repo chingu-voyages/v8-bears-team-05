@@ -1,15 +1,11 @@
-.home-container {
-  height: 100vh;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-}
-
 .white-board,
 .code-editor {
-  height: 90vh;
+  border-style: solid;
+  border-color: #d3d3d3;
+  border-width: 0 1px 1px 1px;
+  height: 80vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

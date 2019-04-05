@@ -1,10 +1,14 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 
+import ToolBox from './ToolBox';
+import './WhiteBoard.css';
+
 const WhiteBoard = () => {
   return (
     <Container className="white-board">
-      <h1>white board content here</h1>
+      <canvas id="canvas" />
+      <ToolBox />
     </Container>
   );
 };
