@@ -18,7 +18,7 @@ const NavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
             <Nav.Link href="#aboutus">About us</Nav.Link>
-            <Nav.Link href="#trynow">Try Now</Nav.Link>
+
             <Nav.Link href="#joinameeting">Join a meeting</Nav.Link>
             <Nav.Link href="#hostameeting">Host a meeting</Nav.Link>
             <Nav.Link href="#whiteboard">White Board</Nav.Link>

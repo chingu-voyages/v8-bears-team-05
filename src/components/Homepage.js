@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import './Homepage.css';
 import undrawDesignThinking from '../assets/undraw_design_thinking_x8f6.svg';
 import undrawPairProgramming from '../assets/undraw_pair_programming_njlp.svg';
@@ -9,7 +9,11 @@ import whiteboard from '../assets/whiteboard.svg';
 import code from '../assets/software.svg';
 import videoCall from '../assets/video-call (1).svg';
 
-const Homepage = () => {
+const Homepage = props => {
+  const onStart = () => {
+    props.history.push('/boardandeditor');
+  };
+
   return (
     <div>
       <div className="hero-container container">
@@ -19,7 +23,9 @@ const Homepage = () => {
             to Next level
           </h1>
           <h4>work together anywhere , any time.</h4>
-          <Button className="try-btn">TRY NOW</Button>
+          <Button className="try-btn" onClick={onStart}>
+            START NOW
+          </Button>
         </div>
         <div>
           <img className="undrawDesignThinking" src={undrawDesignThinking} alt="" />
@@ -80,6 +86,10 @@ const Homepage = () => {
       </footer>
     </div>
   );
+};
+
+Homepage.propTypes = {
+  history: PropTypes.node.isRequired,
 };
 
 export default Homepage;
