@@ -1,0 +1,28 @@
+.chat-history {
+  border: 1px solid #d3d3d3;
+  height: 80%;
+  margin: 10px 0;
+}
+
+.chat {
+  /* border: 1px solid #d3d3d3; */
+  height: 8%;
+  margin: 10px 0;
+}
+
+.chat-input {
+  height: 100%;
+  box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
+  font-size: 1.6rem;
+}
+
+.chat-inputgroup {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.send-message {
+  font-size: 2rem;
+}
