@@ -65,13 +65,12 @@ class BoardandEditor extends React.Component {
 
   setSketchRef = ref => {
     this.setState({
+      ...this.state,
       sketchRef: ref,
     });
   };
 
   onChangeTool = event => {
-    event.stopPropagation();
-
     if (event.target.getAttribute('value')) {
       this.setState({
         ...this.state,
@@ -84,30 +83,40 @@ class BoardandEditor extends React.Component {
   };
 
   onSketchChange = () => {
-    const { canUndo, sketchRef } = this.state;
+    const { canUndo, sketchRef, drawings } = this.state;
     const prev = canUndo;
     const now = sketchRef.canUndo();
+
+    drawings.push(sketchRef.toDataURL());
+    this.setState({ drawings });
     if (prev !== now) {
-      this.setState({ canUndo: now });
+      this.setState({ ...this.state, canUndo: now });
     }
   };
 
   undo = () => {
-    const { sketchRef } = this.state;
-    sketchRef.undo();
-    this.setState({
-      canUndo: sketchRef.canUndo(),
-      canRedo: sketchRef.canRedo(),
-    });
+    const { sketchRef, canUndo } = this.state;
+    if (canUndo) {
+      sketchRef.undo();
+
+      this.setState({
+        ...this.state,
+        canUndo: sketchRef.canUndo(),
+        canRedo: sketchRef.canRedo(),
+      });
+    }
   };
 
   redo = () => {
-    const { sketchRef } = this.state;
-    sketchRef.redo();
-    this.setState({
-      canUndo: sketchRef.canUndo(),
-      canRedo: sketchRef.canRedo(),
-    });
+    const { sketchRef, canRedo } = this.state;
+    if (canRedo) {
+      sketchRef.redo();
+      this.setState({
+        ...this.state,
+        canUndo: sketchRef.canUndo(),
+        canRedo: sketchRef.canRedo(),
+      });
+    }
   };
 
   clear = () => {
@@ -115,6 +124,7 @@ class BoardandEditor extends React.Component {
     sketchRef.clear();
     // sketchRef.setBackgroundFromDataUrl('');
     this.setState({
+      ...this.state,
       // controlledValue: null,
       // backgroundColor: 'transparent',
       // fillWithBackgroundColor: false,
@@ -129,19 +139,19 @@ class BoardandEditor extends React.Component {
     });
   };
 
-  OnMouseMove = () => {
-    const { mouseDown, sketchRef } = this.state;
-    //* **Facing lag in drawing due to setState on  mousemove as it is async will solve it or you may if you want to***
-    if (mouseDown) {
-      // drawings.push(sketchRef.toDataURL());
-      // this.setState({ drawings });
-      const drawings = sketchRef.toDataURL();
-      console.log(drawings);
+  // OnMouseMove = () => {
+  //   const { mouseDown, sketchRef } = this.state;
+  //   //* **Facing lag in drawing due to setState on  mousemove as it is async will solve it or you may if you want to***
+  //   if (mouseDown) {
+  //     // drawings.push(sketchRef.toDataURL());
+  //     // this.setState({ drawings });
+  //     const drawings = sketchRef.toDataURL();
+  //     console.log(drawings);
 
-      // ****Insert Here code for sockets ****
-      // app will send data every time mouseis dragged on canvas
-    }
-  };
+  //     // ****Insert Here code for sockets ****
+  //     // app will send data every time mouseis dragged on canvas
+  //   }
+  // };
 
   render() {
     const { key, lineWidth, lineColor, selectedTool, sketchRef } = this.state;
@@ -155,10 +165,10 @@ class BoardandEditor extends React.Component {
                   lineWidth={lineWidth}
                   lineColor={lineColor}
                   tool={selectedTool}
-                  SketchChange={this.onSketchChange}
+                  sketchChange={this.onSketchChange}
                   loadSketch={this.setSketchRef}
                   setMouseDown={this.setMouseDown}
-                  mouseMove={this.OnMouseMove}
+                  // mouseMove={this.OnMouseMove}
                 />
               </Tab>
               <Tab eventKey="codeeditor" title="CodeEditor">

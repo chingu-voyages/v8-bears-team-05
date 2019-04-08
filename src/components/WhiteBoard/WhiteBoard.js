@@ -13,9 +13,9 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    const { lineColor, lineWidth, tool, sketchChange, setMouseDown, mouseMove } = this.props;
+    const { lineColor, lineWidth, tool, sketchChange, setMouseDown } = this.props;
     return (
-      <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown} onMouseMove={mouseMove}>
+      <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
         <SketchField
           name="sketch"
           className="canvas"
@@ -42,7 +42,6 @@ WhiteBoard.propTypes = {
   loadSketch: PropTypes.func.isRequired,
   sketchChange: PropTypes.func.isRequired,
   setMouseDown: PropTypes.func.isRequired,
-  mouseMove: PropTypes.func.isRequired,
 };
 WhiteBoard.defaultProps = {
   tool: undefined,
