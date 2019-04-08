@@ -8,6 +8,9 @@ import { Col, Row } from 'react-bootstrap';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import ToolBox from '../ToolBox/ToolBox';
+import openSocket from 'socket.io-client';
+const  socket = openSocket('http://localhost:3030');
+
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -46,6 +49,7 @@ class BoardandEditor extends React.Component {
       enableCopyPaste: false,
       sketchRef: null,
       mouseDown: false,
+      storeData: [],
     };
   }
 
@@ -136,10 +140,16 @@ class BoardandEditor extends React.Component {
       // drawings.push(sketchRef.toDataURL());
       // this.setState({ drawings });
       const drawings = sketchRef.toDataURL();
-      console.log(drawings);
-
+      if (!this.state.storeData.includes(drawings)) {
+        this.setState({
+          storeData: [...this.state.storeData, drawings],
+        });
+      }
+      
       // ****Insert Here code for sockets ****
       // app will send data every time mouseis dragged on canvas
+      // console.log(this.state.storeData);
+      socket.emit('store-data', this.state.storeData);
     }
   };
 
