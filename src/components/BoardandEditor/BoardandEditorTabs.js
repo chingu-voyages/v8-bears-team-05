@@ -5,12 +5,13 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { Tools } from 'react-sketch';
 import { Col, Row } from 'react-bootstrap';
+import io from 'socket.io-client';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
-import ToolBox from '../ToolBox/ToolBox';
-import openSocket from 'socket.io-client';
-const  socket = openSocket('http://localhost:3030');
 
+import ToolBox from '../ToolBox/ToolBox';
+
+const socket = io('http://localhost:7000', { transports: ['websocket', 'polling'] }, { path: '/api/boardandeditor' });
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -134,22 +135,22 @@ class BoardandEditor extends React.Component {
   };
 
   OnMouseMove = () => {
-    const { mouseDown, sketchRef } = this.state;
+    const { mouseDown, sketchRef, storeData } = this.state;
     //* **Facing lag in drawing due to setState on  mousemove as it is async will solve it or you may if you want to***
     if (mouseDown) {
       // drawings.push(sketchRef.toDataURL());
       // this.setState({ drawings });
       const drawings = sketchRef.toDataURL();
-      if (!this.state.storeData.includes(drawings)) {
+      if (!storeData.includes(drawings)) {
         this.setState({
-          storeData: [...this.state.storeData, drawings],
+          storeData: [...storeData, drawings],
         });
       }
-      
+
       // ****Insert Here code for sockets ****
       // app will send data every time mouseis dragged on canvas
       // console.log(this.state.storeData);
-      socket.emit('store-data', this.state.storeData);
+      socket.emit('store-data', storeData);
     }
   };
 

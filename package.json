@@ -18,7 +18,8 @@
     "react-scripts": "2.1.8",
     "react-sketch": "^0.5.1",
     "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0"
+    "socket.io-client": "^2.2.0",
+    "cors": "^2.8.5"
   },
   "proxy": "http://localhost:3030",
   "scripts": {
@@ -26,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node-env-run server --exec nodemon",
+    "server": "node-env-run ./server/server.js --exec nodemon",
     "dev": "run-p server start"
   },
   "eslintConfig": {
@@ -39,7 +40,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "cors": "^2.8.5",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
