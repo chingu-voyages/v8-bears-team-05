@@ -21,13 +21,12 @@
     "socket.io-client": "^2.2.0",
     "cors": "^2.8.5"
   },
-  "proxy": "http://localhost:3030",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node-env-run ./server/server.js --exec nodemon",
+    "server": "nodemon ./server/server.js",
     "dev": "run-p server start"
   },
   "eslintConfig": {
