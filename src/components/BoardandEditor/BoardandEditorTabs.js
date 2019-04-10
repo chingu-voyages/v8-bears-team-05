@@ -5,9 +5,13 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { Tools } from 'react-sketch';
 import { Col, Row } from 'react-bootstrap';
+import io from 'socket.io-client';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
+
 import ToolBox from '../ToolBox/ToolBox';
+
+const socket = io('http://localhost:7000', { transports: ['websocket', 'polling'] }, { path: '/api/boardandeditor' });
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -46,6 +50,7 @@ class BoardandEditor extends React.Component {
       enableCopyPaste: false,
       sketchRef: null,
       mouseDown: false,
+      storeData: [],
     };
   }
 
@@ -83,14 +88,24 @@ class BoardandEditor extends React.Component {
   };
 
   onSketchChange = () => {
-    const { canUndo, sketchRef, drawings } = this.state;
+    const { canUndo, sketchRef, storeData } = this.state;
     const prev = canUndo;
     const now = sketchRef.canUndo();
 
-    drawings.push(sketchRef.toDataURL());
-    this.setState({ drawings });
-    if (prev !== now) {
-      this.setState({ ...this.state, canUndo: now });
+    const drawings = sketchRef.toDataURL();
+    if (!storeData.includes(drawings) && prev !== now) {
+      this.setState({
+        ...this.state,
+        canUndo: now,
+        storeData: [...storeData, drawings],
+      });
+      socket.emit('store-data', storeData);
+    }
+    if (!storeData.includes(drawings) && prev === now) {
+      this.setState({
+        storeData: [...storeData, drawings],
+      });
+      socket.emit('store-data', storeData);
     }
   };
 
@@ -138,20 +153,6 @@ class BoardandEditor extends React.Component {
       return { ...prevState, mouseDown: !prevState.mouseDown };
     });
   };
-
-  // OnMouseMove = () => {
-  //   const { mouseDown, sketchRef } = this.state;
-  //   //* **Facing lag in drawing due to setState on  mousemove as it is async will solve it or you may if you want to***
-  //   if (mouseDown) {
-  //     // drawings.push(sketchRef.toDataURL());
-  //     // this.setState({ drawings });
-  //     const drawings = sketchRef.toDataURL();
-  //     console.log(drawings);
-
-  //     // ****Insert Here code for sockets ****
-  //     // app will send data every time mouseis dragged on canvas
-  //   }
-  // };
 
   render() {
     const { key, lineWidth, lineColor, selectedTool, sketchRef } = this.state;
