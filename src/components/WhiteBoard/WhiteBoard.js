@@ -1,9 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
 import React, { Component } from 'react';
 import { SketchField } from 'react-sketch';
-import Container from 'react-bootstrap/Container';
+import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+
+import Modal from '../Modal/Modal';
 import './WhiteBoard.css';
 
 class WhiteBoard extends Component {
@@ -13,9 +16,10 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    const { lineColor, lineWidth, tool, sketchChange, setMouseDown } = this.props;
+    const { lineColor, lineWidth, tool, sketchChange, setMouseDown, show, toggleModal, imageDrop } = this.props;
     return (
       <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
+        <Modal show={show} toggleModal={toggleModal} imageDrop={imageDrop} />
         <SketchField
           name="sketch"
           className="canvas"
@@ -36,12 +40,16 @@ class WhiteBoard extends Component {
 }
 WhiteBoard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
+
   lineColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
+  show: PropTypes.string.isRequired,
   loadSketch: PropTypes.func.isRequired,
   sketchChange: PropTypes.func.isRequired,
   setMouseDown: PropTypes.func.isRequired,
+  imageDrop: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 WhiteBoard.defaultProps = {
   tool: undefined,

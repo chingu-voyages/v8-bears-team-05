@@ -28,7 +28,7 @@ class BoardandEditor extends React.Component {
       enableRemoveSelected: false,
       // fillWithColor: false,
       // fillWithBackgroundColor: false,
-      drawings: [],
+      show: false,
       canUndo: false,
       canRedo: false,
       controlledSize: false,
@@ -51,8 +51,15 @@ class BoardandEditor extends React.Component {
       sketchRef: null,
       mouseDown: false,
       storeData: [],
+      modalShow: false,
     };
   }
+
+  toggleModal = () => {
+    this.setState(prevState => ({
+      modalShow: !prevState.modalShow,
+    }));
+  };
 
   // handle color change
   onChangeColor = color => {
@@ -156,6 +163,24 @@ class BoardandEditor extends React.Component {
     });
   };
 
+  imageDrop = accepted => {
+    if (accepted && accepted.length > 0) {
+      const { sketchRef } = this.state;
+      const sketch = sketchRef;
+      const reader = new FileReader();
+
+      reader.addEventListener(
+        'load',
+        () => {
+          sketch.addImg(reader.result);
+          this.setState({ modalShow: false });
+        },
+        false
+      );
+      reader.readAsDataURL(accepted[0]);
+    }
+  };
+
   setMouseDown = () => {
     this.setState(prevState => {
       return { ...prevState, mouseDown: !prevState.mouseDown };
@@ -163,7 +188,7 @@ class BoardandEditor extends React.Component {
   };
 
   render() {
-    const { key, lineWidth, lineColor, selectedTool, sketchRef } = this.state;
+    const { key, lineWidth, lineColor, selectedTool, sketchRef, modalShow } = this.state;
     return (
       <Container id="board">
         <Row>
@@ -177,6 +202,9 @@ class BoardandEditor extends React.Component {
                   sketchChange={this.onSketchChange}
                   loadSketch={this.setSketchRef}
                   setMouseDown={this.setMouseDown}
+                  show={modalShow}
+                  toggleModal={this.toggleModal}
+                  imageDrop={this.imageDrop}
                 />
               </Tab>
               <Tab eventKey="codeeditor" title="CodeEditor">
@@ -185,19 +213,22 @@ class BoardandEditor extends React.Component {
             </Tabs>
           </Col>
           <Col md={3}>
-            <ToolBox
-              lineWidth={lineWidth}
-              lineColor={lineColor}
-              selectedTool={selectedTool}
-              sketchRef={sketchRef}
-              changeColor={this.onChangeColor}
-              rangeChanged={this.onRangeChanged}
-              changeTool={this.onChangeTool}
-              sketchChange={this.onSketchChange}
-              undo={this.undo}
-              redo={this.redo}
-              clear={this.clear}
-            />
+            {key === 'whiteboard' ? (
+              <ToolBox
+                lineWidth={lineWidth}
+                lineColor={lineColor}
+                selectedTool={selectedTool}
+                sketchRef={sketchRef}
+                changeColor={this.onChangeColor}
+                rangeChanged={this.onRangeChanged}
+                changeTool={this.onChangeTool}
+                sketchChange={this.onSketchChange}
+                undo={this.undo}
+                redo={this.redo}
+                clear={this.clear}
+                toggleModal={this.toggleModal}
+              />
+            ) : null}
           </Col>
         </Row>
       </Container>

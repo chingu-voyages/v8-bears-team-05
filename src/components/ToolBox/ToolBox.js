@@ -19,7 +19,18 @@ import { CompactPicker } from 'react-color';
 import Tool from '../Tool/Tool';
 import './ToolBox.css';
 
-const ToolBox = ({ lineWidth, lineColor, changeColor, rangeChanged, changeTool, selectedTool, undo, redo, clear }) => {
+const ToolBox = ({
+  lineWidth,
+  lineColor,
+  changeColor,
+  rangeChanged,
+  changeTool,
+  selectedTool,
+  undo,
+  redo,
+  clear,
+  toggleModal,
+}) => {
   return (
     <>
       <div className="tools">
@@ -34,7 +45,7 @@ const ToolBox = ({ lineWidth, lineColor, changeColor, rangeChanged, changeTool, 
         <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faEraser} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Rectangle} iconName={faSquare} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
-        <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
+        <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faHighlighter} selectedTool={selectedTool} />
 
         <Tool selectTool={undo} tool={Tools.Undo} iconName={faUndo} selectedTool={selectedTool} />
@@ -82,6 +93,7 @@ ToolBox.propTypes = {
   rangeChanged: PropTypes.func.isRequired,
   changeTool: PropTypes.func.isRequired,
   selectedTool: PropTypes.node.isRequired,
+  toggleModal: PropTypes.func.isRequired,
   undo: PropTypes.func.isRequired,
   redo: PropTypes.func.isRequired,
   clear: PropTypes.func.isRequired,
