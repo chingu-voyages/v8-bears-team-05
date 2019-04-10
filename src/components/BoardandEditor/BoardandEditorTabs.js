@@ -54,6 +54,7 @@ class BoardandEditor extends React.Component {
     };
   }
 
+  // handle color change
   onChangeColor = color => {
     this.setState({
       ...this.state,
@@ -61,6 +62,7 @@ class BoardandEditor extends React.Component {
     });
   };
 
+  // handle width change
   onRangeChanged = value => {
     this.setState({
       ...this.state,
@@ -68,6 +70,7 @@ class BoardandEditor extends React.Component {
     });
   };
 
+  // set the canvas reference after canvas is mounted
   setSketchRef = ref => {
     this.setState({
       ...this.state,
@@ -75,6 +78,7 @@ class BoardandEditor extends React.Component {
     });
   };
 
+  // handle drawing and font Tool selection
   onChangeTool = event => {
     if (event.target.getAttribute('value')) {
       this.setState({
@@ -87,6 +91,7 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  // update state and undo redo status on sketch change
   onSketchChange = () => {
     const { canUndo, sketchRef, storeData } = this.state;
     const prev = canUndo;
@@ -109,6 +114,7 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  // function for undoing one change
   undo = () => {
     const { sketchRef, canUndo } = this.state;
     if (canUndo) {
@@ -122,6 +128,7 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  // function for redoing the changes
   redo = () => {
     const { sketchRef, canRedo } = this.state;
     if (canRedo) {
@@ -134,6 +141,7 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  // function for removing all changes
   clear = () => {
     const { sketchRef } = this.state;
     sketchRef.clear();
@@ -169,7 +177,6 @@ class BoardandEditor extends React.Component {
                   sketchChange={this.onSketchChange}
                   loadSketch={this.setSketchRef}
                   setMouseDown={this.setMouseDown}
-                  // mouseMove={this.OnMouseMove}
                 />
               </Tab>
               <Tab eventKey="codeeditor" title="CodeEditor">
@@ -181,12 +188,12 @@ class BoardandEditor extends React.Component {
             <ToolBox
               lineWidth={lineWidth}
               lineColor={lineColor}
+              selectedTool={selectedTool}
+              sketchRef={sketchRef}
               changeColor={this.onChangeColor}
               rangeChanged={this.onRangeChanged}
               changeTool={this.onChangeTool}
               sketchChange={this.onSketchChange}
-              selectedTool={selectedTool}
-              sketchRef={sketchRef}
               undo={this.undo}
               redo={this.redo}
               clear={this.clear}
