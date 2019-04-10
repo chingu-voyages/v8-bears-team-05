@@ -11,7 +11,12 @@ import CodeEditor from '../CodeEditor/CodeEditor';
 
 import ToolBox from '../ToolBox/ToolBox';
 
-const socket = io('http://localhost:7000', { transports: ['websocket', 'polling'] }, { path: '/api/boardandeditor' });
+const socket = io('http://localhost:7000/boardandeditor', { transports: ['websocket', 'polling'] });
+
+// Front end Data testing purposes...
+// socket.on('timer', data => {
+//   console.log(data);
+// });
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
