@@ -7,13 +7,13 @@ const port = 4000;
 const http = require('http');
 
 const server = http.createServer(app);
-const io = require('socket.io')(server, { transports: ['websocket', 'polling'] }, { path: '/api/boardandeditor' });
+const io = require('socket.io')(server, { transports: ['websocket', 'polling'] });
 const cors = require('cors');
-const router = require('./route/route');
+
 // const server = app.listen(port)
 
 io.set('origins', '*:*');
-app.use('/api', router);
+
 app.use(cors());
 // app.use(express.static(path.join(__dirname, '../build')));
 app.use(express.static(path.join(__dirname, '../public')));
@@ -25,10 +25,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
   console.log('testing...');
 });
+
 io.listen(7000);
-io.on('connection', client => {
+io.of('/boardandeditor').on('connection', client => {
   client.on('store-data', data => {
-    // client.emit('timer', (data) => console.log(data));
-    console.log(data);
+    client.emit('timer', data);
+    // console.log(data);
   });
 });
