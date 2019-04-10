@@ -1,0 +1,41 @@
+.Icon {
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem;
+  width: 5rem;
+  border-radius: 50%;
+  height: 5rem;
+  position: relative;
+  transform: scale(0.8);
+}
+
+.Icon:hover {
+  color: #fff;
+  background-color: #8a2be2;
+  opacity: 0.9;
+
+  transform: scale(0.8);
+}
+.active-tool {
+  color: #fff !important;
+  background-color: #8a2be2 !important;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.Icon-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  z-index: 9999;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+.tools svg {
+  font-size: 2.4rem;
+
+  cursor: pointer;
+}

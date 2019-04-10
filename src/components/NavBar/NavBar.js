@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-import Logo from './Logo';
+import Logo from '../Logo/Logo';
 import './NavBar.css';
 
 const NavBar = () => {

@@ -2,9 +2,9 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import BoardandEditor from './BoardandEditorTabs';
-import Homepage from './Homepage';
-import NavBar from './NavBar';
+import BoardandEditor from './BoardandEditor/BoardandEditorTabs';
+import Homepage from './Homepage/Homepage';
+import NavBar from './NavBar/NavBar';
 import './App.css';
 
 const App = () => {

@@ -3,11 +3,11 @@ import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Homepage.css';
-import undrawDesignThinking from '../assets/undraw_design_thinking_x8f6.svg';
-import undrawPairProgramming from '../assets/undraw_pair_programming_njlp.svg';
-import whiteboard from '../assets/whiteboard.svg';
-import code from '../assets/software.svg';
-import videoCall from '../assets/video-call (1).svg';
+import undrawDesignThinking from '../../assets/undraw_design_thinking_x8f6.svg';
+import undrawPairProgramming from '../../assets/undraw_pair_programming_njlp.svg';
+import whiteboard from '../../assets/whiteboard.svg';
+import code from '../../assets/software.svg';
+import videoCall from '../../assets/video-call (1).svg';
 
 const Homepage = props => {
   const onStart = () => {
