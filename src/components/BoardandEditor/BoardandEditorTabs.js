@@ -8,7 +8,7 @@ import { Col, Row } from 'react-bootstrap';
 import io from 'socket.io-client';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
-
+import { BoardContext } from '../../contexts';
 import ToolBox from '../ToolBox/ToolBox';
 
 const socket = io('http://localhost:7000/boardandeditor', { transports: ['websocket', 'polling'] });
@@ -34,7 +34,7 @@ class BoardandEditor extends React.Component {
       enableRemoveSelected: false,
       // fillWithColor: false,
       // fillWithBackgroundColor: false,
-      drawings: [],
+      show: false,
       canUndo: false,
       canRedo: false,
       controlledSize: false,
@@ -59,6 +59,8 @@ class BoardandEditor extends React.Component {
       mouseDown: false,
       storeData: [],
       socket,
+      modalShow: false,
+      addTextOpen: false,
     };
   }
 
@@ -133,6 +135,12 @@ class BoardandEditor extends React.Component {
     });
   }
 
+  toggleModal = () => {
+    this.setState(prevState => ({
+      modalShow: !prevState.modalShow,
+    }));
+  };
+
   // handle color change
   onChangeColor = color => {
     this.setState({
@@ -160,13 +168,24 @@ class BoardandEditor extends React.Component {
   // handle drawing and font Tool selection
   onChangeTool = event => {
     if (event.target.getAttribute('value')) {
-      this.setState({
-        ...this.state,
+      const { addTextOpen } = this.state;
+      if (addTextOpen === true) {
+        this.setState({
+          ...this.state,
+          addTextOpen: !addTextOpen,
+          selectedTool: event.target.getAttribute('value'),
+          enableRemoveSelected: event.target.value === Tools.Select,
+          enableCopyPaste: event.target.value === Tools.Select,
+        });
+      } else {
+        this.setState({
+          ...this.state,
 
-        selectedTool: event.target.getAttribute('value'),
-        enableRemoveSelected: event.target.value === Tools.Select,
-        enableCopyPaste: event.target.value === Tools.Select,
-      });
+          selectedTool: event.target.getAttribute('value'),
+          enableRemoveSelected: event.target.value === Tools.Select,
+          enableCopyPaste: event.target.value === Tools.Select,
+        });
+      }
     }
   };
 
@@ -246,6 +265,52 @@ class BoardandEditor extends React.Component {
     socket.emit('clear-canvas');
   };
 
+  removeSelected = () => {
+    const { sketchRef } = this.state;
+    sketchRef.removeSelected();
+  };
+
+  imageDrop = accepted => {
+    if (accepted && accepted.length > 0) {
+      const { sketchRef } = this.state;
+      const sketch = sketchRef;
+      const reader = new FileReader();
+
+      reader.addEventListener(
+        'load',
+        () => {
+          sketch.addImg(reader.result);
+          this.setState({ modalShow: false });
+        },
+        false
+      );
+      reader.readAsDataURL(accepted[0]);
+    }
+  };
+
+  setText = e => {
+    this.setState({
+      ...this.state,
+      text: e.target.value,
+    });
+  };
+
+  clickAddText = e => {
+    const { addTextOpen, selectedTool } = this.state;
+    if (selectedTool !== 'text') {
+      this.setState({
+        ...this.state,
+        addTextOpen: !addTextOpen,
+        selectedTool: e.target.getAttribute('value'),
+      });
+    }
+  };
+
+  addText = () => {
+    const { sketchRef, text } = this.state;
+    sketchRef.addText(text);
+  };
+
   setMouseDown = () => {
     this.setState(prevState => {
       return { ...prevState, mouseDown: !prevState.mouseDown };
@@ -253,22 +318,26 @@ class BoardandEditor extends React.Component {
   };
 
   render() {
-    const { key, lineWidth, lineColor, selectedTool, sketchRef, controlledValue } = this.state;
+    const { key, lineWidth, lineColor, selectedTool, sketchRef, controlledValue, modalShow, addTextOpen } = this.state;
     return (
       <Container id="board">
         <Row>
           <Col md={9}>
             <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
               <Tab eventKey="whiteboard" title="Whiteboard">
-                <WhiteBoard
-                  lineWidth={lineWidth}
-                  lineColor={lineColor}
-                  tool={selectedTool}
-                  sketchChange={this.onSketchChange}
-                  loadSketch={this.setSketchRef}
-                  setMouseDown={this.setMouseDown}
-                  controlledValue={controlledValue}
-                />
+                <BoardContext.Provider
+                  value={{ show: modalShow, toggleModal: this.toggleModal, imageDrop: this.imageDrop }}
+                >
+                  <WhiteBoard
+                    lineWidth={lineWidth}
+                    lineColor={lineColor}
+                    tool={selectedTool}
+                    sketchChange={this.onSketchChange}
+                    loadSketch={this.setSketchRef}
+                    setMouseDown={this.setMouseDown}
+                    controlledValue={controlledValue}
+                  />
+                </BoardContext.Provider>
               </Tab>
               <Tab eventKey="codeeditor" title="CodeEditor">
                 <CodeEditor />
@@ -276,19 +345,27 @@ class BoardandEditor extends React.Component {
             </Tabs>
           </Col>
           <Col md={3}>
-            <ToolBox
-              lineWidth={lineWidth}
-              lineColor={lineColor}
-              selectedTool={selectedTool}
-              sketchRef={sketchRef}
-              changeColor={this.onChangeColor}
-              rangeChanged={this.onRangeChanged}
-              changeTool={this.onChangeTool}
-              sketchChange={this.onSketchChange}
-              undo={this.undo}
-              redo={this.redo}
-              clear={this.clear}
-            />
+            {key === 'whiteboard' ? (
+              <ToolBox
+                lineWidth={lineWidth}
+                lineColor={lineColor}
+                selectedTool={selectedTool}
+                sketchRef={sketchRef}
+                changeColor={this.onChangeColor}
+                rangeChanged={this.onRangeChanged}
+                changeTool={this.onChangeTool}
+                sketchChange={this.onSketchChange}
+                undo={this.undo}
+                redo={this.redo}
+                clear={this.clear}
+                toggleModal={this.toggleModal}
+                removeSelected={this.removeSelected}
+                clickAddText={this.clickAddText}
+                addTextOpen={addTextOpen}
+                setText={this.setText}
+                addText={this.addText}
+              />
+            ) : null}
           </Col>
         </Row>
       </Container>

@@ -1,9 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
 import React, { Component } from 'react';
 import { SketchField } from 'react-sketch';
-import Container from 'react-bootstrap/Container';
+import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+
+import Modal from '../Modal/Modal';
 import './WhiteBoard.css';
 
 class WhiteBoard extends Component {
@@ -16,6 +19,7 @@ class WhiteBoard extends Component {
     const { lineColor, lineWidth, tool, sketchChange, setMouseDown, controlledValue } = this.props;
     return (
       <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
+        <Modal />
         <SketchField
           name="sketch"
           className="canvas"
@@ -36,9 +40,11 @@ class WhiteBoard extends Component {
 }
 WhiteBoard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
+
   lineColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
+
   loadSketch: PropTypes.func.isRequired,
   sketchChange: PropTypes.func.isRequired,
   setMouseDown: PropTypes.func.isRequired,

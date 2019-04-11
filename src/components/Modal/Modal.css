@@ -1,0 +1,17 @@
+.droparea {
+  width: 70%;
+  height: 16.4rem;
+  margin: auto;
+  border: 2px dashed rgb(102, 102, 102);
+  border-style: dashed;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  justify-content: center;
+}
+.modal-title {
+  text-align: center !important;
+}
