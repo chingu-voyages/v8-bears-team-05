@@ -41,8 +41,13 @@ const modal = () => {
 };
 
 modal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  imageDrop: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  toggleModal: PropTypes.func,
+  imageDrop: PropTypes.func,
+};
+modal.defaultProps = {
+  show: false,
+  toggleModal: () => {},
+  imageDrop: () => {},
 };
 export default modal;
