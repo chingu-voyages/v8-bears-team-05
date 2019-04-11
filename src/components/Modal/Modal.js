@@ -3,33 +3,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import { Modal, Button } from 'react-bootstrap';
+
+import { BoardContext } from '../../contexts';
 import './Modal.css';
 
-const modal = ({ show, toggleModal, imageDrop }) => {
+const modal = () => {
   return (
     <div>
-      <Modal show={show} onHide={toggleModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Drop a image</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Dropzone onDrop={imageDrop}>
-            {({ getRootProps, getInputProps }) => (
-              <section>
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <div className="droparea">
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-                  </div>
-                </div>
-              </section>
-            )}
-          </Dropzone>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={toggleModal}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+      <BoardContext.Consumer>
+        {({ show, toggleModal, imageDrop }) => (
+          <Modal show={show} onHide={toggleModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">Drop a image</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Dropzone onDrop={imageDrop}>
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <div className="droparea">
+                        <p>Drag 'n' drop some files here, or click to select files</p>
+                      </div>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={toggleModal}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+      </BoardContext.Consumer>
     </div>
   );
 };

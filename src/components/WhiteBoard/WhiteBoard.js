@@ -16,10 +16,10 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    const { lineColor, lineWidth, tool, sketchChange, setMouseDown, show, toggleModal, imageDrop } = this.props;
+    const { lineColor, lineWidth, tool, sketchChange, setMouseDown } = this.props;
     return (
       <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
-        <Modal show={show} toggleModal={toggleModal} imageDrop={imageDrop} />
+        <Modal />
         <SketchField
           name="sketch"
           className="canvas"
@@ -44,12 +44,10 @@ WhiteBoard.propTypes = {
   lineColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
-  show: PropTypes.string.isRequired,
+
   loadSketch: PropTypes.func.isRequired,
   sketchChange: PropTypes.func.isRequired,
   setMouseDown: PropTypes.func.isRequired,
-  imageDrop: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired,
 };
 WhiteBoard.defaultProps = {
   tool: undefined,

@@ -8,7 +8,7 @@ import { Col, Row } from 'react-bootstrap';
 import io from 'socket.io-client';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
-
+import { BoardContext } from '../../contexts';
 import ToolBox from '../ToolBox/ToolBox';
 
 const socket = io('http://localhost:7000/boardandeditor', { transports: ['websocket', 'polling'] });
@@ -168,6 +168,11 @@ class BoardandEditor extends React.Component {
     });
   };
 
+  removeSelected = () => {
+    const { sketchRef } = this.state;
+    sketchRef.removeSelected();
+  };
+
   imageDrop = accepted => {
     if (accepted && accepted.length > 0) {
       const { sketchRef } = this.state;
@@ -200,17 +205,18 @@ class BoardandEditor extends React.Component {
           <Col md={9}>
             <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
               <Tab eventKey="whiteboard" title="Whiteboard">
-                <WhiteBoard
-                  lineWidth={lineWidth}
-                  lineColor={lineColor}
-                  tool={selectedTool}
-                  sketchChange={this.onSketchChange}
-                  loadSketch={this.setSketchRef}
-                  setMouseDown={this.setMouseDown}
-                  show={modalShow}
-                  toggleModal={this.toggleModal}
-                  imageDrop={this.imageDrop}
-                />
+                <BoardContext.Provider
+                  value={{ show: modalShow, toggleModal: this.toggleModal, imageDrop: this.imageDrop }}
+                >
+                  <WhiteBoard
+                    lineWidth={lineWidth}
+                    lineColor={lineColor}
+                    tool={selectedTool}
+                    sketchChange={this.onSketchChange}
+                    loadSketch={this.setSketchRef}
+                    setMouseDown={this.setMouseDown}
+                  />
+                </BoardContext.Provider>
               </Tab>
               <Tab eventKey="codeeditor" title="CodeEditor">
                 <CodeEditor />
@@ -232,6 +238,7 @@ class BoardandEditor extends React.Component {
                 redo={this.redo}
                 clear={this.clear}
                 toggleModal={this.toggleModal}
+                removeSelected={this.removeSelected}
               />
             ) : null}
           </Col>
