@@ -13,7 +13,7 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    const { lineColor, lineWidth, tool, sketchChange, setMouseDown } = this.props;
+    const { lineColor, lineWidth, tool, sketchChange, setMouseDown, controlledValue } = this.props;
     return (
       <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
         <SketchField
@@ -25,8 +25,8 @@ class WhiteBoard extends Component {
           width="100%"
           height="100%"
           // defaultValue={dataJson}
-          // value={controlledValue}
-          // forceValue
+          value={controlledValue}
+          forceValue
           onChange={sketchChange}
           tool={tool}
         />
@@ -42,8 +42,10 @@ WhiteBoard.propTypes = {
   loadSketch: PropTypes.func.isRequired,
   sketchChange: PropTypes.func.isRequired,
   setMouseDown: PropTypes.func.isRequired,
+  controlledValue: PropTypes.string,
 };
 WhiteBoard.defaultProps = {
   tool: undefined,
+  controlledValue: undefined,
 };
 export default WhiteBoard;

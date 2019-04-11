@@ -15,6 +15,7 @@ const socket = io('http://localhost:7000/boardandeditor', { transports: ['websoc
 
 // Front end Data testing purposes...
 // socket.on('timer', data => {
+//   console.log(data[data.length - 1]);
 //   console.log(data);
 // });
 
@@ -37,6 +38,7 @@ class BoardandEditor extends React.Component {
       canUndo: false,
       canRedo: false,
       controlledSize: false,
+      controlledValue: null,
       sketchWidth: 600,
       sketchHeight: 600,
       stretched: true,
@@ -56,7 +58,79 @@ class BoardandEditor extends React.Component {
       sketchRef: null,
       mouseDown: false,
       storeData: [],
+      socket,
     };
+  }
+
+  // Listening for drawing on canvas
+  componentDidMount() {
+    socket.on('draw-line', lineData => {
+      const { storeData, canUndo, sketchRef } = this.state;
+
+      if (!storeData.includes(lineData)) {
+        this.setState({
+          controlledValue: lineData,
+        });
+
+        this.setState({
+          ...this.state,
+          storeData: [...storeData, lineData],
+        });
+      }
+
+      const prev = canUndo;
+      const now = sketchRef.canUndo();
+
+      if (prev !== now) {
+        this.setState({
+          ...this.state,
+          canUndo: now,
+        });
+      }
+    });
+
+    // undo canvas for all users connected to the network
+    socket.on('undo-canvas', () => {
+      const { sketchRef, canUndo } = this.state;
+
+      if (canUndo) {
+        sketchRef.undo();
+
+        this.setState({
+          ...this.state,
+          canUndo: sketchRef.canUndo(),
+          canRedo: sketchRef.canRedo(),
+        });
+      }
+    });
+
+    // redo canvas for all users connected to the network
+    socket.on('redo-canvas', () => {
+      const { sketchRef, canRedo } = this.state;
+      if (canRedo) {
+        sketchRef.redo();
+        this.setState({
+          ...this.state,
+          canUndo: sketchRef.canUndo(),
+          canRedo: sketchRef.canRedo(),
+        });
+      }
+    });
+
+    // Clear canvas
+    socket.on('clear-canvas', () => {
+      const { sketchRef } = this.state;
+      sketchRef.clear();
+      // sketchRef.setBackgroundFromDataUrl('');
+      this.setState({
+        ...this.state,
+        controlledValue: null,
+        // backgroundColor: 'transparent',
+        // fillWithBackgroundColor: false,
+        canUndo: sketchRef.canUndo(),
+        canRedo: sketchRef.canRedo(),
+      });
+    });
   }
 
   // handle color change
@@ -102,26 +176,32 @@ class BoardandEditor extends React.Component {
     const prev = canUndo;
     const now = sketchRef.canUndo();
 
-    const drawings = sketchRef.toDataURL();
-    if (!storeData.includes(drawings) && prev !== now) {
+    // const drawings = sketchRef.toDataURL();
+    const drawingsJSON = JSON.stringify(sketchRef.toJSON());
+
+    if (!storeData.includes(drawingsJSON) && prev !== now) {
+      // console.log(storeData)
+      // console.log(drawingsJSON.objects);
       this.setState({
         ...this.state,
         canUndo: now,
-        storeData: [...storeData, drawings],
+        storeData: [...storeData, drawingsJSON],
       });
-      socket.emit('store-data', storeData);
-    }
-    if (!storeData.includes(drawings) && prev === now) {
+      socket.emit('store-data', drawingsJSON);
+    } else if (!storeData.includes(drawingsJSON) && prev === now) {
+      // console.log(storeData)
       this.setState({
-        storeData: [...storeData, drawings],
+        ...this.state,
+        storeData: [...storeData, drawingsJSON],
       });
-      socket.emit('store-data', storeData);
+      socket.emit('store-data', drawingsJSON);
     }
   };
 
   // function for undoing one change
   undo = () => {
     const { sketchRef, canUndo } = this.state;
+
     if (canUndo) {
       sketchRef.undo();
 
@@ -130,6 +210,8 @@ class BoardandEditor extends React.Component {
         canUndo: sketchRef.canUndo(),
         canRedo: sketchRef.canRedo(),
       });
+
+      socket.emit('undo-canvas');
     }
   };
 
@@ -143,6 +225,7 @@ class BoardandEditor extends React.Component {
         canUndo: sketchRef.canUndo(),
         canRedo: sketchRef.canRedo(),
       });
+      socket.emit('redo-canvas');
     }
   };
 
@@ -153,12 +236,14 @@ class BoardandEditor extends React.Component {
     // sketchRef.setBackgroundFromDataUrl('');
     this.setState({
       ...this.state,
-      // controlledValue: null,
+      controlledValue: null,
       // backgroundColor: 'transparent',
       // fillWithBackgroundColor: false,
       canUndo: sketchRef.canUndo(),
       canRedo: sketchRef.canRedo(),
     });
+
+    socket.emit('clear-canvas');
   };
 
   setMouseDown = () => {
@@ -168,7 +253,7 @@ class BoardandEditor extends React.Component {
   };
 
   render() {
-    const { key, lineWidth, lineColor, selectedTool, sketchRef } = this.state;
+    const { key, lineWidth, lineColor, selectedTool, sketchRef, controlledValue } = this.state;
     return (
       <Container id="board">
         <Row>
@@ -182,6 +267,7 @@ class BoardandEditor extends React.Component {
                   sketchChange={this.onSketchChange}
                   loadSketch={this.setSketchRef}
                   setMouseDown={this.setMouseDown}
+                  controlledValue={controlledValue}
                 />
               </Tab>
               <Tab eventKey="codeeditor" title="CodeEditor">
