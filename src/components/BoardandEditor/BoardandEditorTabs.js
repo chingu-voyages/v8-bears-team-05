@@ -57,6 +57,7 @@ class BoardandEditor extends React.Component {
       mouseDown: false,
       storeData: [],
       modalShow: false,
+      addTextOpen: false,
     };
   }
 
@@ -93,13 +94,24 @@ class BoardandEditor extends React.Component {
   // handle drawing and font Tool selection
   onChangeTool = event => {
     if (event.target.getAttribute('value')) {
-      this.setState({
-        ...this.state,
+      const { addTextOpen } = this.state;
+      if (addTextOpen === true) {
+        this.setState({
+          ...this.state,
+          addTextOpen: !addTextOpen,
+          selectedTool: event.target.getAttribute('value'),
+          enableRemoveSelected: event.target.value === Tools.Select,
+          enableCopyPaste: event.target.value === Tools.Select,
+        });
+      } else {
+        this.setState({
+          ...this.state,
 
-        selectedTool: event.target.getAttribute('value'),
-        enableRemoveSelected: event.target.value === Tools.Select,
-        enableCopyPaste: event.target.value === Tools.Select,
-      });
+          selectedTool: event.target.getAttribute('value'),
+          enableRemoveSelected: event.target.value === Tools.Select,
+          enableCopyPaste: event.target.value === Tools.Select,
+        });
+      }
     }
   };
 
@@ -191,6 +203,29 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  setText = e => {
+    this.setState({
+      ...this.state,
+      text: e.target.value,
+    });
+  };
+
+  clickAddText = e => {
+    const { addTextOpen, selectedTool } = this.state;
+    if (selectedTool !== 'text') {
+      this.setState({
+        ...this.state,
+        addTextOpen: !addTextOpen,
+        selectedTool: e.target.getAttribute('value'),
+      });
+    }
+  };
+
+  addText = () => {
+    const { sketchRef, text } = this.state;
+    sketchRef.addText(text);
+  };
+
   setMouseDown = () => {
     this.setState(prevState => {
       return { ...prevState, mouseDown: !prevState.mouseDown };
@@ -198,7 +233,7 @@ class BoardandEditor extends React.Component {
   };
 
   render() {
-    const { key, lineWidth, lineColor, selectedTool, sketchRef, modalShow } = this.state;
+    const { key, lineWidth, lineColor, selectedTool, sketchRef, modalShow, addTextOpen } = this.state;
     return (
       <Container id="board">
         <Row>
@@ -239,6 +274,10 @@ class BoardandEditor extends React.Component {
                 clear={this.clear}
                 toggleModal={this.toggleModal}
                 removeSelected={this.removeSelected}
+                clickAddText={this.clickAddText}
+                addTextOpen={addTextOpen}
+                setText={this.setText}
+                addText={this.addText}
               />
             ) : null}
           </Col>

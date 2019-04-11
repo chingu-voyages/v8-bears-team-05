@@ -12,7 +12,7 @@ const modal = () => {
     <div>
       <BoardContext.Consumer>
         {({ show, toggleModal, imageDrop }) => (
-          <Modal show={show} onHide={toggleModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+          <Modal show={show} onHide={toggleModal} size="sm" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">Drop a image</Modal.Title>
             </Modal.Header>

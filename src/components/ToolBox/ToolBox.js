@@ -6,16 +6,21 @@ import {
   faRedo,
   faUndo,
   faTimes,
+  faTrash,
   faPencilAlt,
   faImage,
   faHighlighter,
   faFont,
   faMousePointer,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import Range from 'react-range-progress';
 import { Tools } from 'react-sketch';
 import { faSquare, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { CompactPicker } from 'react-color';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { Collapse, Form, Button } from 'react-bootstrap';
 import Tool from '../Tool/Tool';
 import './ToolBox.css';
 
@@ -29,7 +34,12 @@ const ToolBox = ({
   undo,
   redo,
   clear,
+  addTextOpen,
   toggleModal,
+  removeSelected,
+  clickAddText,
+  addText,
+  setText,
 }) => {
   return (
     <>
@@ -41,17 +51,27 @@ const ToolBox = ({
           selectedTool={selectedTool}
         />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Pencil} iconName={faPencilAlt} selectedTool={selectedTool} />
-        <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faFont} selectedTool={selectedTool} />
+        <Tool selectTool={e => clickAddText(e)} tool="text" iconName={faFont} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faEraser} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Rectangle} iconName={faSquare} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
         <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faHighlighter} selectedTool={selectedTool} />
-
+        <Tool selectTool={removeSelected} tool="remove" iconName={faTimes} selectedTool={selectedTool} />
         <Tool selectTool={undo} tool={Tools.Undo} iconName={faUndo} selectedTool={selectedTool} />
         <Tool selectTool={redo} tool={Tools.Redo} iconName={faRedo} selectedTool={selectedTool} />
-        <Tool selectTool={clear} tool={Tools.Clear} iconName={faTimes} selectedTool={selectedTool} />
+        <Tool selectTool={clear} tool={Tools.Clear} iconName={faTrash} selectedTool={selectedTool} />
       </div>
+      <Collapse in={addTextOpen}>
+        <Form>
+          <Form.Group className="form-group">
+            <Form.Control type="text" placeholder="Enter Text here..." onChange={setText} />
+            <Button variant="light" onClick={addText}>
+              <FontAwesomeIcon icon={faPlus} />
+            </Button>
+          </Form.Group>
+        </Form>
+      </Collapse>
       <div className="tool-options">
         <p>Tool options</p>
         <p>Line Width:{lineWidth}</p>
@@ -97,5 +117,10 @@ ToolBox.propTypes = {
   undo: PropTypes.func.isRequired,
   redo: PropTypes.func.isRequired,
   clear: PropTypes.func.isRequired,
+  removeSelected: PropTypes.func.isRequired,
+  addTextOpen: PropTypes.bool.isRequired,
+  clickAddText: PropTypes.func.isRequired,
+  addText: PropTypes.func.isRequired,
+  setText: PropTypes.func.isRequired,
 };
 export default ToolBox;
