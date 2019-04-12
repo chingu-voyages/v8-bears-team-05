@@ -159,8 +159,9 @@ class BoardandEditor extends React.Component {
     }
 
     // Generate a 6 char unique ID to create a unique team
-    const id = nanoid(6);
-    // console.log(id);
+    const ids = ['rishabh', 'keshav']
+    const id = ids[Math.floor(Math.random()*ids.length)];;
+    console.log(id);
 
     // set state with id which is checked by host a meeting
     this.setState({
@@ -224,7 +225,7 @@ class BoardandEditor extends React.Component {
 
   // update state and undo redo status on sketch change
   onSketchChange = () => {
-    const { canUndo, sketchRef, storeData } = this.state;
+    const { canUndo, sketchRef, storeData, uniqueID } = this.state;
     const prev = canUndo;
     const now = sketchRef.canUndo();
 
@@ -239,19 +240,19 @@ class BoardandEditor extends React.Component {
         canUndo: now,
         storeData: [...storeData, drawingsJSON],
       });
-      socket.emit('store-data', drawingsJSON);
+      socket.emit('store-data', {room: uniqueID, data: drawingsJSON});
     } else if (!storeData.includes(drawingsJSON) && prev === now) {
       this.setState({
         ...this.state,
         storeData: [...storeData, drawingsJSON],
       });
-      socket.emit('store-data', drawingsJSON);
+      socket.emit('store-data', {room: uniqueID, data: drawingsJSON});
     }
   };
 
   // function for undoing one change
   undo = () => {
-    const { sketchRef, canUndo } = this.state;
+    const { sketchRef, canUndo, uniqueID } = this.state;
 
     if (canUndo) {
       sketchRef.undo();
@@ -262,13 +263,13 @@ class BoardandEditor extends React.Component {
         canRedo: sketchRef.canRedo(),
       });
 
-      socket.emit('undo-canvas');
+      socket.emit('undo-canvas', {room: uniqueID});
     }
   };
 
   // function for redoing the changes
   redo = () => {
-    const { sketchRef, canRedo } = this.state;
+    const { sketchRef, canRedo, uniqueID } = this.state;
     if (canRedo) {
       sketchRef.redo();
       this.setState({
@@ -276,13 +277,13 @@ class BoardandEditor extends React.Component {
         canUndo: sketchRef.canUndo(),
         canRedo: sketchRef.canRedo(),
       });
-      socket.emit('redo-canvas');
+      socket.emit('redo-canvas', {room: uniqueID});
     }
   };
 
   // function for removing all changes
   clear = () => {
-    const { sketchRef } = this.state;
+    const { sketchRef, uniqueID } = this.state;
     sketchRef.clear();
     // sketchRef.setBackgroundFromDataUrl('');
     this.setState({
@@ -294,7 +295,7 @@ class BoardandEditor extends React.Component {
       canRedo: sketchRef.canRedo(),
     });
 
-    socket.emit('clear-canvas');
+    socket.emit('clear-canvas', {room: uniqueID});
   };
 
   removeSelected = () => {
