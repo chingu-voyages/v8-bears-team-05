@@ -1,0 +1,12 @@
+.join-modal-form {
+  box-shadow: none;
+  display: block;
+}
+
+.join-modal-title {
+  font-size: 1.6rem;
+}
+.join-modal-button {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+}

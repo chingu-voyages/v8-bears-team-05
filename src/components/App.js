@@ -14,27 +14,43 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
+      hostModalOpen: false,
+      joinModalOpen: false,
     };
   }
 
-  generateIDs = () => {
-    this.setState(prevProps => ({
-      modalOpen: !prevProps.modalOpen,
+  toggleHostModal = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      hostModalOpen: !prevState.hostModalOpen,
+    }));
+  };
+
+  toggleJoinModal = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      joinModalOpen: !prevState.joinModalOpen,
     }));
   };
 
   render() {
-    const { modalOpen } = this.state;
+    const { hostModalOpen, joinModalOpen } = this.state;
     return (
       <>
         <BrowserRouter>
-          <NavBar generateIDs={this.generateIDs} modalOpen={modalOpen} />
+          <NavBar toggleHostModal={this.toggleHostModal} toggleJoinModal={this.toggleJoinModal} />
           <Container fluid className="app">
             <Route
               path="/"
               exact
-              render={(modalOpen, generateIDs) => <Homepage modalOpen={modalOpen} closeModal={this.generateIDs} />}
+              render={() => (
+                <Homepage
+                  hostModalOpen={hostModalOpen}
+                  toggleHostModal={this.toggleHostModal}
+                  joinModalOpen={joinModalOpen}
+                  toggleJoinModal={this.toggleJoinModal}
+                />
+              )}
             />
             <Route path="/boardandeditor" component={BoardandEditor} />
           </Container>

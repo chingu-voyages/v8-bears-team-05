@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Logo from '../Logo/Logo';
 import './NavBar.css';
 
-const NavBar = ({ generateIDs }) => {
+const NavBar = ({ toggleHostModal, toggleJoinModal }) => {
   return (
     <Navbar className="py-4" bg="light" expand="lg">
       <Container>
@@ -20,8 +20,10 @@ const NavBar = ({ generateIDs }) => {
           <Nav>
             <Nav.Link href="#aboutus">About us</Nav.Link>
 
-            <Nav.Link href="#joinameeting">Join a meeting</Nav.Link>
-            <Nav.Link href="#hostameeting" onClick={generateIDs}>
+            <Nav.Link href="#joinameeting" onClick={toggleJoinModal}>
+              Join a meeting
+            </Nav.Link>
+            <Nav.Link href="#hostameeting" onClick={toggleHostModal}>
               Host a meeting
             </Nav.Link>
             <Nav.Link href="#whiteboard">White Board</Nav.Link>
@@ -37,7 +39,8 @@ const NavBar = ({ generateIDs }) => {
 };
 
 NavBar.propTypes = {
-  generateIDs: PropTypes.func.isRequired,
+  toggleHostModal: PropTypes.func.isRequired,
+  toggleJoinModal: PropTypes.func.isRequired,
 };
 
 export default NavBar;
