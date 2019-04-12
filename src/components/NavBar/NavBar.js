@@ -20,10 +20,10 @@ const NavBar = ({ toggleHostModal, toggleJoinModal }) => {
           <Nav>
             <Nav.Link href="#aboutus">About us</Nav.Link>
 
-            <Nav.Link href="#joinameeting" onClick={toggleJoinModal}>
+            <Nav.Link href="" onClick={toggleJoinModal}>
               Join a meeting
             </Nav.Link>
-            <Nav.Link href="#hostameeting" onClick={toggleHostModal}>
+            <Nav.Link href="" onClick={toggleHostModal}>
               Host a meeting
             </Nav.Link>
             <Nav.Link href="#whiteboard">White Board</Nav.Link>

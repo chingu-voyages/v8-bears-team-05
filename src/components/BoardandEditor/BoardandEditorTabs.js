@@ -6,10 +6,14 @@ import Tab from 'react-bootstrap/Tab';
 import { Tools } from 'react-sketch';
 import { Col, Row } from 'react-bootstrap';
 import io from 'socket.io-client';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { BoardContext } from '../../contexts';
 import ToolBox from '../ToolBox/ToolBox';
+import JoinModal from '../JoinModal/JoinModal';
+import MeetingModal from '../MeetingModal/MeetingModal';
 
 const socket = io('http://localhost:7000/boardandeditor', { transports: ['websocket', 'polling'] });
 
@@ -319,57 +323,67 @@ class BoardandEditor extends React.Component {
 
   render() {
     const { key, lineWidth, lineColor, selectedTool, sketchRef, controlledValue, modalShow, addTextOpen } = this.state;
+    const { hostModalOpen, joinModalOpen } = this.props;
     return (
-      <Container id="board">
-        <Row>
-          <Col md={9}>
-            <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
-              <Tab eventKey="whiteboard" title="Whiteboard">
-                <BoardContext.Provider
-                  value={{ show: modalShow, toggleModal: this.toggleModal, imageDrop: this.imageDrop }}
-                >
-                  <WhiteBoard
-                    lineWidth={lineWidth}
-                    lineColor={lineColor}
-                    tool={selectedTool}
-                    sketchChange={this.onSketchChange}
-                    loadSketch={this.setSketchRef}
-                    setMouseDown={this.setMouseDown}
-                    controlledValue={controlledValue}
-                  />
-                </BoardContext.Provider>
-              </Tab>
-              <Tab eventKey="codeeditor" title="CodeEditor">
-                <CodeEditor />
-              </Tab>
-            </Tabs>
-          </Col>
-          <Col md={3}>
-            {key === 'whiteboard' ? (
-              <ToolBox
-                lineWidth={lineWidth}
-                lineColor={lineColor}
-                selectedTool={selectedTool}
-                sketchRef={sketchRef}
-                changeColor={this.onChangeColor}
-                rangeChanged={this.onRangeChanged}
-                changeTool={this.onChangeTool}
-                sketchChange={this.onSketchChange}
-                undo={this.undo}
-                redo={this.redo}
-                clear={this.clear}
-                toggleModal={this.toggleModal}
-                removeSelected={this.removeSelected}
-                clickAddText={this.clickAddText}
-                addTextOpen={addTextOpen}
-                setText={this.setText}
-                addText={this.addText}
-              />
-            ) : null}
-          </Col>
-        </Row>
-      </Container>
+      <>
+        <MeetingModal hostModalOpen={hostModalOpen} />
+        <JoinModal joinModalOpen={joinModalOpen} />
+        <Container id="board">
+          <Row>
+            <Col md={9}>
+              <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
+                <Tab eventKey="whiteboard" title="Whiteboard">
+                  <BoardContext.Provider
+                    value={{ show: modalShow, toggleModal: this.toggleModal, imageDrop: this.imageDrop }}
+                  >
+                    <WhiteBoard
+                      lineWidth={lineWidth}
+                      lineColor={lineColor}
+                      tool={selectedTool}
+                      sketchChange={this.onSketchChange}
+                      loadSketch={this.setSketchRef}
+                      setMouseDown={this.setMouseDown}
+                      controlledValue={controlledValue}
+                    />
+                  </BoardContext.Provider>
+                </Tab>
+                <Tab eventKey="codeeditor" title="CodeEditor">
+                  <CodeEditor />
+                </Tab>
+              </Tabs>
+            </Col>
+            <Col md={3}>
+              {key === 'whiteboard' ? (
+                <ToolBox
+                  lineWidth={lineWidth}
+                  lineColor={lineColor}
+                  selectedTool={selectedTool}
+                  sketchRef={sketchRef}
+                  changeColor={this.onChangeColor}
+                  rangeChanged={this.onRangeChanged}
+                  changeTool={this.onChangeTool}
+                  sketchChange={this.onSketchChange}
+                  undo={this.undo}
+                  redo={this.redo}
+                  clear={this.clear}
+                  toggleModal={this.toggleModal}
+                  removeSelected={this.removeSelected}
+                  clickAddText={this.clickAddText}
+                  addTextOpen={addTextOpen}
+                  setText={this.setText}
+                  addText={this.addText}
+                />
+              ) : null}
+            </Col>
+          </Row>
+        </Container>
+      </>
     );
   }
 }
-export default BoardandEditor;
+export default withRouter(BoardandEditor);
+
+BoardandEditor.propTypes = {
+  hostModalOpen: PropTypes.bool.isRequired,
+  joinModalOpen: PropTypes.bool.isRequired,
+};

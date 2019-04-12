@@ -10,19 +10,14 @@ import undrawPairProgramming from '../../assets/undraw_pair_programming_njlp.svg
 import whiteboard from '../../assets/whiteboard.svg';
 import code from '../../assets/software.svg';
 import videoCall from '../../assets/video-call (1).svg';
-import MeetingModal from '../MeetingModal/MeetingModal';
 
-import JoinModal from '../JoinModal/JoinModal';
-
-const Homepage = ({ history, toggleHostModal, hostModalOpen, toggleJoinModal, joinModalOpen }) => {
+const Homepage = ({ history }) => {
   const onStart = () => {
     history.push('/boardandeditor');
   };
 
   return (
     <>
-      <MeetingModal toggleHostModal={toggleHostModal} hostModalOpen={hostModalOpen} />
-      <JoinModal toggleJoinModal={toggleJoinModal} joinModalOpen={joinModalOpen} />
       <div>
         <div>
           <div className="hero-container container">
@@ -101,10 +96,6 @@ const Homepage = ({ history, toggleHostModal, hostModalOpen, toggleJoinModal, jo
 
 Homepage.propTypes = {
   history: PropTypes.object.isRequired,
-  toggleHostModal: PropTypes.func.isRequired,
-  hostModalOpen: PropTypes.bool.isRequired,
-  toggleJoinModal: PropTypes.func.isRequired,
-  joinModalOpen: PropTypes.bool.isRequired,
 };
 
 export default withRouter(Homepage);
