@@ -159,8 +159,8 @@ class BoardandEditor extends React.Component {
     }
 
     // Generate a 6 char unique ID to create a unique team
-    const ids = ['rishabh', 'keshav']
-    const id = ids[Math.floor(Math.random()*ids.length)];;
+    const ids = ['rishabh', 'keshav'];
+    const id = ids[Math.floor(Math.random() * ids.length)];
     console.log(id);
 
     // set state with id which is checked by host a meeting
@@ -240,13 +240,13 @@ class BoardandEditor extends React.Component {
         canUndo: now,
         storeData: [...storeData, drawingsJSON],
       });
-      socket.emit('store-data', {room: uniqueID, data: drawingsJSON});
+      socket.emit('store-data', { room: uniqueID, data: drawingsJSON });
     } else if (!storeData.includes(drawingsJSON) && prev === now) {
       this.setState({
         ...this.state,
         storeData: [...storeData, drawingsJSON],
       });
-      socket.emit('store-data', {room: uniqueID, data: drawingsJSON});
+      socket.emit('store-data', { room: uniqueID, data: drawingsJSON });
     }
   };
 
@@ -263,7 +263,7 @@ class BoardandEditor extends React.Component {
         canRedo: sketchRef.canRedo(),
       });
 
-      socket.emit('undo-canvas', {room: uniqueID});
+      socket.emit('undo-canvas', { room: uniqueID });
     }
   };
 
@@ -277,7 +277,7 @@ class BoardandEditor extends React.Component {
         canUndo: sketchRef.canUndo(),
         canRedo: sketchRef.canRedo(),
       });
-      socket.emit('redo-canvas', {room: uniqueID});
+      socket.emit('redo-canvas', { room: uniqueID });
     }
   };
 
@@ -295,7 +295,7 @@ class BoardandEditor extends React.Component {
       canRedo: sketchRef.canRedo(),
     });
 
-    socket.emit('clear-canvas', {room: uniqueID});
+    socket.emit('clear-canvas', { room: uniqueID });
   };
 
   removeSelected = () => {

@@ -61,7 +61,7 @@ io.of('/boardandeditor').on('connection', socket => {
 
       // Event handler for new incoming connections   -- It will only work if you go to the URL endpoint '/boardandeditor' directly for now.
 
-      const sendData = (drawHistory[id])[drawHistory[id].length - 1];
+      const sendData = drawHistory[id][drawHistory[id].length - 1];
 
       // Draws the canvas for the new socket
       socket.emit('draw-line', sendData);
@@ -74,21 +74,21 @@ io.of('/boardandeditor').on('connection', socket => {
   socket.on('store-data', res => {
     // Save the drawn paths to the drawHistory
     const id = res.room;
-    if (!(drawHistory[id]).includes(res.data)) {
+    if (!drawHistory[id].includes(res.data)) {
       drawHistory[id].push(res.data);
       socket.broadcast.to(id).emit('draw-line', res.data);
     }
   });
 
   // undo canvas for all users
-  socket.on('undo-canvas', (res) => {
+  socket.on('undo-canvas', res => {
     const id = res.room;
     redoHistory[id].unshift(drawHistory[id].pop());
     socket.broadcast.to(id).emit('undo-canvas');
   });
 
   // redo canvas for all users
-  socket.on('redo-canvas', (res) => {
+  socket.on('redo-canvas', res => {
     const id = res.room;
     const data = redoHistory[id].shift();
     drawHistory[id].push(data);
@@ -96,7 +96,7 @@ io.of('/boardandeditor').on('connection', socket => {
   });
 
   // clear canvas for all users
-  socket.on('clear-canvas', (res) => {
+  socket.on('clear-canvas', res => {
     const id = res.room;
     drawHistory[id].length = 0;
     redoHistory[id].length = 0;
