@@ -241,7 +241,6 @@ class BoardandEditor extends React.Component {
       });
       socket.emit('store-data', drawingsJSON);
     } else if (!storeData.includes(drawingsJSON) && prev === now) {
-      // console.log(storeData)
       this.setState({
         ...this.state,
         storeData: [...storeData, drawingsJSON],
@@ -304,16 +303,16 @@ class BoardandEditor extends React.Component {
   };
 
   imageDrop = accepted => {
-    if (accepted && accepted.length > 0) {
+    if (accepted && accepted.length > 0 && accepted[0].size / 1048576 < 2.5) {
       const { sketchRef } = this.state;
       const sketch = sketchRef;
       const reader = new FileReader();
-
+      console.log(accepted[0].size / 1048576);
       reader.addEventListener(
         'load',
         () => {
-          sketch.addImg(reader.result);
-          this.setState({ modalShow: false });
+          sketch.addImg(reader.result, { scale: 0.3 });
+          this.setState({ modalShow: false, selectedTool: Tools.Select });
         },
         false
       );
@@ -341,6 +340,7 @@ class BoardandEditor extends React.Component {
 
   addText = () => {
     const { sketchRef, text } = this.state;
+    this.setState({ selectedTool: Tools.Select });
     sketchRef.addText(text);
   };
 

@@ -1,0 +1,11 @@
+.meeting-form {
+  box-shadow: none;
+  display: block;
+}
+.meeting-modal-title {
+  font-size: 2rem;
+}
+.meeting-modal-button {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+}

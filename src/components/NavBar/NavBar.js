@@ -3,11 +3,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import PropTypes from 'prop-types';
 
 import Logo from '../Logo/Logo';
 import './NavBar.css';
 
-const NavBar = () => {
+const NavBar = ({ toggleHostModal, toggleJoinModal }) => {
   return (
     <Navbar className="py-4" bg="light" expand="lg">
       <Container>
@@ -19,8 +20,12 @@ const NavBar = () => {
           <Nav>
             <Nav.Link href="#aboutus">About us</Nav.Link>
 
-            <Nav.Link href="#joinameeting">Join a meeting</Nav.Link>
-            <Nav.Link href="#hostameeting">Host a meeting</Nav.Link>
+            <Nav.Link href="#joinameeting" onClick={toggleJoinModal}>
+              Join a meeting
+            </Nav.Link>
+            <Nav.Link href="#hostameeting" onClick={toggleHostModal}>
+              Host a meeting
+            </Nav.Link>
             <Nav.Link href="#whiteboard">White Board</Nav.Link>
             <Nav.Link href="#signin">Sign in</Nav.Link>
             <Button variant="success" href="#signup">
@@ -31,6 +36,11 @@ const NavBar = () => {
       </Container>
     </Navbar>
   );
+};
+
+NavBar.propTypes = {
+  toggleHostModal: PropTypes.func.isRequired,
+  toggleJoinModal: PropTypes.func.isRequired,
 };
 
 export default NavBar;
