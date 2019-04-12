@@ -32,45 +32,67 @@ const drawHistory = [];
 // Stores redo history
 const redoHistory = [];
 
+// Stores user generated IDs
+const currentGenIDs = [];
+
 // Listens socket req on Port 7000
 io.listen(7000);
 
 // Connect with boardeditor front-end
-io.of('/boardandeditor').on('connection', client => {
-  // Event handler for new incoming connections   -- It will only work if you go to the URL endpoint '/boardandeditor' directly for now.
+io.of('/boardandeditor').on('connection', socket => {
+  // Generates the id on the server and creates a new room
+  socket.on('create-room', id => {
+    if (!currentGenIDs.includes(id)) {
+      currentGenIDs.push(id);
+      socket.join(id);
+    } else {
+      socket.emit('err', `This id: ${id} is already in use.`);
+    }
+  });
 
-  // Draws the canvas for the new client
-  const sendData = drawHistory[drawHistory.length - 1];
-  // console.log(sendData);
-  client.emit('draw-line', sendData);
+  // Joins the user to the existing room
+  socket.on('join-room', id => {
+    if (currentGenIDs.includes(id)) {
+      socket.join(id);
+
+      // Event handler for new incoming connections   -- It will only work if you go to the URL endpoint '/boardandeditor' directly for now.
+
+      const sendData = drawHistory[drawHistory.length - 1];
+
+      // Draws the canvas for the new socket
+      socket.to(id).emit('draw-line', sendData);
+    } else {
+      socket.emit('err', `The entered id: ${id} is invalid.`);
+    }
+  });
 
   // draw canvas for all users
-  client.on('store-data', lineData => {
+  socket.on('store-data', lineData => {
     // Save the drawn paths to the drawHistory
     if (!drawHistory.includes(lineData)) {
       drawHistory.push(lineData);
-      client.broadcast.emit('draw-line', lineData);
+      socket.broadcast.emit('draw-line', lineData);
     }
     // console.log(data);
   });
 
   // undo canvas for all users
-  client.on('undo-canvas', () => {
+  socket.on('undo-canvas', () => {
     redoHistory.unshift(drawHistory.pop());
-    client.broadcast.emit('undo-canvas');
+    socket.broadcast.emit('undo-canvas');
   });
 
   // redo canvas for all users
-  client.on('redo-canvas', () => {
+  socket.on('redo-canvas', () => {
     const data = redoHistory.shift();
     drawHistory.push(data);
-    client.broadcast.emit('redo-canvas');
+    socket.broadcast.emit('redo-canvas');
   });
 
   // clear canvas for all users
-  client.on('clear-canvas', () => {
+  socket.on('clear-canvas', () => {
     drawHistory.length = 0;
     redoHistory.length = 0;
-    client.broadcast.emit('clear-canvas');
+    socket.broadcast.emit('clear-canvas');
   });
 });

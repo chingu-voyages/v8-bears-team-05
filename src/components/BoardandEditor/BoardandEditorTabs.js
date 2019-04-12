@@ -6,6 +6,7 @@ import Tab from 'react-bootstrap/Tab';
 import { Tools } from 'react-sketch';
 import { Col, Row } from 'react-bootstrap';
 import io from 'socket.io-client';
+import nanoid from 'nanoid';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { BoardContext } from '../../contexts';
@@ -61,6 +62,7 @@ class BoardandEditor extends React.Component {
       socket,
       modalShow: false,
       addTextOpen: false,
+      uniqueID: null,
     };
   }
 
@@ -133,12 +135,43 @@ class BoardandEditor extends React.Component {
         canRedo: sketchRef.canRedo(),
       });
     });
+
+    // This socket is triggered on error
+    socket.on('err', message => {
+      console.log(message);
+    });
   }
 
+  // Add a comment here @Iliyas
   toggleModal = () => {
     this.setState(prevState => ({
       modalShow: !prevState.modalShow,
     }));
+  };
+
+  // Get an id for unique teams
+  genUniqueID = () => {
+    const { uniqueID } = this.state;
+
+    // Check for an existing id
+    if (uniqueID !== null) {
+      return uniqueID;
+    }
+
+    // Generate a 6 char unique ID to create a unique team
+    const id = nanoid(6);
+    // console.log(id);
+
+    // set state with id which is checked by host a meeting
+    this.setState({
+      uniqueID: id,
+    });
+
+    // socket emit to join the room
+    socket.emit('create-room', id);
+    // socket.to(id).emit('create-room');
+
+    return id;
   };
 
   // handle color change
