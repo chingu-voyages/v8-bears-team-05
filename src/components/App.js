@@ -24,26 +24,25 @@ class App extends Component {
 
   toggleHostModal = () => {
     const { location, history } = this.props;
-    console.log(location);
+
     if (location.pathname === '/') {
-      this.setState(prevState => ({
-        ...prevState,
-        hostModalOpen: !prevState.hostModalOpen,
-      }));
       history.push('/boardandeditor');
     }
+    this.setState(prevState => ({
+      ...prevState,
+      hostModalOpen: !prevState.hostModalOpen,
+    }));
   };
 
   toggleJoinModal = () => {
     const { location, history } = this.props;
-    console.log(location);
     if (location.pathname === '/') {
-      this.setState(prevState => ({
-        ...prevState,
-        joinModalOpen: !prevState.joinModalOpen,
-      }));
       history.push('/boardandeditor');
     }
+    this.setState(prevState => ({
+      ...prevState,
+      joinModalOpen: !prevState.joinModalOpen,
+    }));
   };
 
   render() {
@@ -59,7 +58,14 @@ class App extends Component {
           />
           <Route
             path="/boardandeditor"
-            render={() => <BoardandEditor hostModalOpen={hostModalOpen} joinModalOpen={joinModalOpen} />}
+            render={() => (
+              <BoardandEditor
+                hostModalOpen={hostModalOpen}
+                joinModalOpen={joinModalOpen}
+                toggleHostModal={this.toggleHostModal}
+                toggleJoinModal={this.toggleJoinModal}
+              />
+            )}
           />
         </Container>
       </>
