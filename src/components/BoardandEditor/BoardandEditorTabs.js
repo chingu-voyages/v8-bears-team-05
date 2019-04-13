@@ -66,12 +66,14 @@ class BoardandEditor extends React.Component {
       socket,
       modalShow: false,
       addTextOpen: false,
-      uniqueID: null,
+      uniqueID: '',
     };
   }
 
   // Listening for drawing on canvas
   componentDidMount() {
+    this.genUniqueID();
+
     socket.on('draw-line', lineData => {
       const { storeData, canUndo, sketchRef } = this.state;
 
@@ -158,25 +160,32 @@ class BoardandEditor extends React.Component {
     const { uniqueID } = this.state;
 
     // Check for an existing id
-    if (uniqueID !== null) {
-      return uniqueID;
+    if (uniqueID === '') {
+      // Generate a 6 char unique ID to create a unique team
+      const ids = ['rishabh', 'keshav'];
+      const id = ids[Math.floor(Math.random() * ids.length)];
+      // console.log(id);
+
+      // set state with id which is checked by host a meeting
+      this.setState({
+        uniqueID: id,
+      });
     }
+  };
 
-    // Generate a 6 char unique ID to create a unique team
-    const ids = ['rishabh', 'keshav'];
-    const id = ids[Math.floor(Math.random() * ids.length)];
-    console.log(id);
-
-    // set state with id which is checked by host a meeting
-    this.setState({
-      uniqueID: id,
-    });
+  // create room on host button trigger
+  createRoom = () => {
+    const { uniqueID } = this.state;
 
     // socket emit to join the room
-    socket.emit('create-room', id);
-    // socket.to(id).emit('create-room');
+    socket.emit('create-room', uniqueID);
+  };
 
-    return id;
+  // join room on host button trigger
+  joinRoom = id => {
+    console.log(id);
+    // socket emit to join the room
+    socket.emit('join-room', id);
   };
 
   // handle color change
@@ -356,12 +365,22 @@ class BoardandEditor extends React.Component {
   };
 
   render() {
-    const { key, lineWidth, lineColor, selectedTool, sketchRef, controlledValue, modalShow, addTextOpen } = this.state;
+    const {
+      key,
+      lineWidth,
+      lineColor,
+      selectedTool,
+      sketchRef,
+      controlledValue,
+      modalShow,
+      addTextOpen,
+      uniqueID,
+    } = this.state;
     const { hostModalOpen, joinModalOpen } = this.props;
     return (
       <>
-        <MeetingModal hostModalOpen={hostModalOpen} />
-        <JoinModal joinModalOpen={joinModalOpen} />
+        <MeetingModal hostModalOpen={hostModalOpen} uniqueID={uniqueID} createRoom={this.createRoom} />
+        <JoinModal joinModalOpen={joinModalOpen} joinRoom={this.joinRoom} />
         <Container id="board">
           <Row>
             <Col md={9}>

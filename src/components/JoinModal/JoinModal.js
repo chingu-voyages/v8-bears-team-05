@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './JoinModal.css';
 
-const JoinModal = ({ joinModalOpen, toggleJoinModal }) => {
+const JoinModal = ({ joinModalOpen, toggleJoinModal, joinRoom }) => {
   return (
     <Modal
       show={joinModalOpen}
@@ -21,7 +21,7 @@ const JoinModal = ({ joinModalOpen, toggleJoinModal }) => {
             <Form.Label className="join-modal-title">Enter ID</Form.Label>
             <Form.Control type="text" placeholder="Enter ID here..." />
 
-            <Button variant="primary" className="join-modal-button">
+            <Button variant="primary" className="join-modal-button" onClick={joinRoom}>
               Join
             </Button>
           </Form.Group>
@@ -34,6 +34,7 @@ const JoinModal = ({ joinModalOpen, toggleJoinModal }) => {
 JoinModal.propTypes = {
   joinModalOpen: PropTypes.bool.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
+  joinRoom: PropTypes.func.isRequired,
 };
 
 export default JoinModal;
