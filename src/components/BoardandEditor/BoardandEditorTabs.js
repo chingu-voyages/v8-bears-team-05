@@ -76,6 +76,8 @@ class BoardandEditor extends React.Component {
 
     socket.on('draw-line', lineData => {
       const { storeData, canUndo, sketchRef } = this.state;
+      const prev = canUndo;
+      const now = sketchRef.canUndo();
 
       if (!storeData.includes(lineData)) {
         this.setState({
@@ -86,16 +88,13 @@ class BoardandEditor extends React.Component {
           ...this.state,
           storeData: [...storeData, lineData],
         });
-      }
 
-      const prev = canUndo;
-      const now = sketchRef.canUndo();
-
-      if (prev !== now) {
-        this.setState({
-          ...this.state,
-          canUndo: now,
-        });
+        if (prev !== now) {
+          this.setState({
+            ...this.state,
+            canUndo: now,
+          });
+        }
       }
     });
 
@@ -162,11 +161,12 @@ class BoardandEditor extends React.Component {
     // Check for an existing id
     if (uniqueID === '') {
       // Generate a 6 char unique ID to create a unique team
-      const ids = ['rishabh', 'keshav'];
-      const id = ids[Math.floor(Math.random() * ids.length)];
+      // const ids = ['rishabh', 'keshav'];
+      // const id = ids[Math.floor(Math.random() * ids.length)];
+      const id = nanoid(6);
       // console.log(id);
 
-      // set state with id which is checked by host a meeting
+      // set id state to connect to the socket
       this.setState({
         uniqueID: id,
       });
@@ -176,14 +176,29 @@ class BoardandEditor extends React.Component {
   // create room on host button trigger
   createRoom = () => {
     const { uniqueID } = this.state;
+    const { toggleHostModal } = this.props;
+
+    // Close the Modal
+    toggleHostModal();
 
     // socket emit to join the room
     socket.emit('create-room', uniqueID);
   };
 
   // join room on host button trigger
-  joinRoom = id => {
-    console.log(id);
+  joinRoom = () => {
+    const { joinID, toggleJoinModal } = this.props;
+    const id = joinID;
+    // console.log(this.props.joinID);
+
+    // set id state to connect to the socket
+    this.setState({
+      uniqueID: id,
+    });
+
+    // Close the Modal
+    toggleJoinModal();
+
     // socket emit to join the room
     socket.emit('join-room', id);
   };
@@ -321,7 +336,7 @@ class BoardandEditor extends React.Component {
       const { sketchRef } = this.state;
       const sketch = sketchRef;
       const reader = new FileReader();
-      console.log(accepted[0].size / 1048576);
+      // console.log(accepted[0].size / 1048576);
       reader.addEventListener(
         'load',
         () => {
@@ -365,12 +380,32 @@ class BoardandEditor extends React.Component {
   };
 
   render() {
-    const { key, lineWidth, lineColor, selectedTool, sketchRef, controlledValue, modalShow, addTextOpen, uniqueID } = this.state;
-    const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal } = this.props;
+    const {
+      key,
+      lineWidth,
+      lineColor,
+      selectedTool,
+      sketchRef,
+      controlledValue,
+      modalShow,
+      addTextOpen,
+      uniqueID,
+    } = this.state;
+    const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal, changeJoinID } = this.props;
     return (
       <>
-        <MeetingModal hostModalOpen={hostModalOpen} toggleHostModal={toggleHostModal} uniqueID={uniqueID} createRoom={this.createRoom}/>
-        <JoinModal joinModalOpen={joinModalOpen} toggleJoinModal={toggleJoinModal} joinRoom={this.joinRoom} />
+        <MeetingModal
+          hostModalOpen={hostModalOpen}
+          toggleHostModal={toggleHostModal}
+          uniqueID={uniqueID}
+          createRoom={this.createRoom}
+        />
+        <JoinModal
+          joinModalOpen={joinModalOpen}
+          toggleJoinModal={toggleJoinModal}
+          joinRoom={this.joinRoom}
+          changeJoinID={changeJoinID}
+        />
         <Container id="board">
           <Row>
             <Col md={9}>
@@ -429,6 +464,8 @@ export default withRouter(BoardandEditor);
 BoardandEditor.propTypes = {
   hostModalOpen: PropTypes.bool.isRequired,
   joinModalOpen: PropTypes.bool.isRequired,
+  changeJoinID: PropTypes.func.isRequired,
+  joinID: PropTypes.string.isRequired,
   toggleHostModal: PropTypes.func.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
 };

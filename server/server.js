@@ -23,7 +23,7 @@ app.listen(port, () => console.log(`Express server is running on http://localhos
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
-  console.log('testing...');
+  // console.log('testing...');
 });
 
 // Stores draw history for all users
@@ -32,9 +32,6 @@ const drawHistory = {};
 // Stores redo history for all users
 const redoHistory = {};
 
-// Stores user generated IDs
-const currentGenIDs = []; // Remove this, and add disconnect state....
-
 // Listens socket req on Port 7000
 io.listen(7000);
 
@@ -42,8 +39,7 @@ io.listen(7000);
 io.of('/boardandeditor').on('connection', socket => {
   // Generates the id on the server and creates a new room
   socket.on('create-room', id => {
-    if (!currentGenIDs.includes(id)) {
-      currentGenIDs.push(id);
+    if (!(id in drawHistory)) {
       drawHistory[id] = [];
       redoHistory[id] = [];
       // console.log(drawHistory)
@@ -55,12 +51,11 @@ io.of('/boardandeditor').on('connection', socket => {
 
   // Joins the user to the existing room
   socket.on('join-room', id => {
-    if (currentGenIDs.includes(id)) {
+    if (!(id in drawHistory)) {
       // console.log(drawHistory);
       socket.join(id);
 
-      // Event handler for new incoming connections   -- It will only work if you go to the URL endpoint '/boardandeditor' directly for now.
-
+      // Get data for drawing
       const sendData = drawHistory[id][drawHistory[id].length - 1];
 
       // Draws the canvas for the new socket
@@ -74,24 +69,27 @@ io.of('/boardandeditor').on('connection', socket => {
   socket.on('store-data', res => {
     // Save the drawn paths to the drawHistory
     const id = res.room;
-    if (!drawHistory[id].includes(res.data)) {
+    if (id in drawHistory && !drawHistory[id].includes(res.data)) {
       drawHistory[id].push(res.data);
       socket.broadcast.to(id).emit('draw-line', res.data);
     }
+    // else { console.log(res) }  // For Debugging
   });
 
   // undo canvas for all users
   socket.on('undo-canvas', res => {
     const id = res.room;
     redoHistory[id].unshift(drawHistory[id].pop());
+    // console.log(redoHistory)
     socket.broadcast.to(id).emit('undo-canvas');
   });
 
   // redo canvas for all users
   socket.on('redo-canvas', res => {
     const id = res.room;
-    const data = redoHistory[id].shift();
+    const data = redoHistory[id].pop();
     drawHistory[id].push(data);
+    // console.log(redoHistory)
     socket.broadcast.to(id).emit('redo-canvas');
   });
 
