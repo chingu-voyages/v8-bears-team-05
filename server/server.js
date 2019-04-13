@@ -32,6 +32,9 @@ const drawHistory = {};
 // Stores redo history for all users
 const redoHistory = {};
 
+// Current User Status
+const userOnline = {};
+
 // Listens socket req on Port 7000
 io.listen(7000);
 
@@ -42,6 +45,7 @@ io.of('/boardandeditor').on('connection', socket => {
     if (!(id in drawHistory)) {
       drawHistory[id] = [];
       redoHistory[id] = [];
+      userOnline[id] = { online: 1 };
       // console.log(drawHistory)
       socket.join(id);
     } else {
@@ -55,6 +59,7 @@ io.of('/boardandeditor').on('connection', socket => {
       // console.log(drawHistory);
       socket.join(id);
 
+      userOnline[id].online += 1;
       // Get data for drawing
       const sendData = drawHistory[id][drawHistory[id].length - 1];
 
@@ -101,8 +106,21 @@ io.of('/boardandeditor').on('connection', socket => {
     socket.broadcast.to(id).emit('clear-canvas');
   });
 
-  // Disconnect sockets
-  socket.on('disconnect', () => {
-    console.log(socket.id);
+  // Clean up memory on disconnect
+  socket.on('disconnecting', () => {
+    // console.log(Object.keys(socket.rooms));
+
+    // Get disconnected room ID
+    const roomID = Object.keys(socket.rooms)[1];
+    if (roomID in userOnline) {
+      userOnline[roomID].online -= 1;
+
+      if (userOnline[roomID].online === 0) {
+        delete drawHistory[roomID];
+        delete redoHistory[roomID];
+        delete userOnline[roomID];
+      }
+    }
+    // console.log(userOnline)  // Debugging Purposes
   });
 });
