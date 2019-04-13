@@ -47,10 +47,10 @@ class App extends Component {
   };
 
   handleIDChange = e => {
-    this.setState(prevState => ({
-      ...prevState,
+    this.setState({
+      ...this.state,
       joinID: e.target.value,
-    }));
+    });
     // console.log(this.state.joinID)
   };
 
