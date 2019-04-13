@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       hostModalOpen: false,
       joinModalOpen: false,
+      joinID: '',
     };
   }
 
@@ -45,8 +46,16 @@ class App extends Component {
     }));
   };
 
+  handleIDChange = e => {
+    this.setState({
+      ...this.state,
+      joinID: e.target.value,
+    });
+    // console.log(this.state.joinID)
+  };
+
   render() {
-    const { hostModalOpen, joinModalOpen } = this.state;
+    const { hostModalOpen, joinModalOpen, joinID } = this.state;
     return (
       <>
         <NavBar toggleHostModal={this.toggleHostModal} toggleJoinModal={this.toggleJoinModal} />
@@ -64,6 +73,8 @@ class App extends Component {
                 joinModalOpen={joinModalOpen}
                 toggleHostModal={this.toggleHostModal}
                 toggleJoinModal={this.toggleJoinModal}
+                changeJoinID={this.handleIDChange}
+                joinID={joinID}
               />
             )}
           />
