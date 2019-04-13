@@ -51,7 +51,7 @@ io.of('/boardandeditor').on('connection', socket => {
 
   // Joins the user to the existing room
   socket.on('join-room', id => {
-    if (!(id in drawHistory)) {
+    if (id in drawHistory) {
       // console.log(drawHistory);
       socket.join(id);
 
@@ -99,5 +99,10 @@ io.of('/boardandeditor').on('connection', socket => {
     drawHistory[id].length = 0;
     redoHistory[id].length = 0;
     socket.broadcast.to(id).emit('clear-canvas');
+  });
+
+  // Disconnect sockets
+  socket.on('disconnect', () => {
+    console.log(socket.id);
   });
 });
