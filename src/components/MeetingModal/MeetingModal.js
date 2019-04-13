@@ -4,9 +4,15 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './MeetingModal.css';
 
-const MeetingModal = ({ hostModalOpen }) => {
+const MeetingModal = ({ hostModalOpen, toggleHostModal }) => {
   return (
-    <Modal show={hostModalOpen} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+    <Modal
+      show={hostModalOpen}
+      onHide={toggleHostModal}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title>Host a meeting</Modal.Title>
       </Modal.Header>
@@ -28,6 +34,7 @@ const MeetingModal = ({ hostModalOpen }) => {
 
 MeetingModal.propTypes = {
   hostModalOpen: PropTypes.bool.isRequired,
+  toggleHostModal: PropTypes.func.isRequired,
 };
 
 export default MeetingModal;

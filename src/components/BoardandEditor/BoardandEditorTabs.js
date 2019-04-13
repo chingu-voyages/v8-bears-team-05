@@ -323,11 +323,11 @@ class BoardandEditor extends React.Component {
 
   render() {
     const { key, lineWidth, lineColor, selectedTool, sketchRef, controlledValue, modalShow, addTextOpen } = this.state;
-    const { hostModalOpen, joinModalOpen } = this.props;
+    const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal } = this.props;
     return (
       <>
-        <MeetingModal hostModalOpen={hostModalOpen} />
-        <JoinModal joinModalOpen={joinModalOpen} />
+        <MeetingModal hostModalOpen={hostModalOpen} toggleHostModal={toggleHostModal} />
+        <JoinModal joinModalOpen={joinModalOpen} toggleJoinModal={toggleJoinModal} />
         <Container id="board">
           <Row>
             <Col md={9}>
@@ -386,4 +386,6 @@ export default withRouter(BoardandEditor);
 BoardandEditor.propTypes = {
   hostModalOpen: PropTypes.bool.isRequired,
   joinModalOpen: PropTypes.bool.isRequired,
+  toggleHostModal: PropTypes.func.isRequired,
+  toggleJoinModal: PropTypes.func.isRequired,
 };
