@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-access-state-in-setstate */
 import React from 'react';
 import Container from 'react-bootstrap/Container';
@@ -173,6 +174,7 @@ class BoardandEditor extends React.Component {
   onChangeTool = event => {
     if (event.target.getAttribute('value')) {
       const { addTextOpen } = this.state;
+
       if (addTextOpen === true) {
         this.setState({
           ...this.state,
@@ -311,7 +313,7 @@ class BoardandEditor extends React.Component {
 
   addText = () => {
     const { sketchRef, text } = this.state;
-    this.setState({ selectedTool: Tools.Select });
+    this.setState({ selectedTool: Tools.Select, addTextOpen: false });
     sketchRef.addText(text);
   };
 
