@@ -16,7 +16,16 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    const { lineColor, lineWidth, tool, sketchChange, setMouseDown, controlledValue, saveImage } = this.props;
+    const {
+      lineColor,
+      eraserColor,
+      lineWidth,
+      tool,
+      sketchChange,
+      setMouseDown,
+      controlledValue,
+      saveImage,
+    } = this.props;
     return (
       <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
         <Modal />
@@ -27,7 +36,7 @@ class WhiteBoard extends Component {
           name="sketch"
           className="canvas"
           ref={comp => (this._sketch = comp)}
-          lineColor={lineColor}
+          lineColor={eraserColor || lineColor}
           lineWidth={lineWidth}
           width="100%"
           height="100%"
@@ -45,6 +54,7 @@ WhiteBoard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
 
   lineColor: PropTypes.string.isRequired,
+  eraserColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
   saveImage: PropTypes.func.isRequired,

@@ -32,6 +32,7 @@ const ToolBox = ({
   changeColor,
   rangeChanged,
   changeTool,
+  eraserTool,
   selectedTool,
   zoomIn,
   zoomOut,
@@ -55,6 +56,7 @@ const ToolBox = ({
           selectedTool={selectedTool}
         />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Pencil} iconName={faPencilAlt} selectedTool={selectedTool} />
+        <Tool selectTool={e => eraserTool(e)} tool={Tools.Pencil} iconName={faPencilAlt} selectedTool={selectedTool} />
         <Tool selectTool={e => clickAddText(e)} tool="text" iconName={faFont} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faEraser} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Rectangle} iconName={faSquare} selectedTool={selectedTool} />
@@ -120,6 +122,7 @@ ToolBox.propTypes = {
   changeColor: PropTypes.func.isRequired,
   rangeChanged: PropTypes.func.isRequired,
   changeTool: PropTypes.func.isRequired,
+  eraserTool: PropTypes.func.isRequired,
   selectedTool: PropTypes.node.isRequired,
   zoomIn: PropTypes.func.isRequired,
   zoomOut: PropTypes.func.isRequired,

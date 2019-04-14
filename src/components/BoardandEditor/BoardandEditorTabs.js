@@ -33,6 +33,7 @@ class BoardandEditor extends React.Component {
       key: 'whiteboard',
       lineWidth: 4,
       lineColor: '#000',
+      eraserColor: null,
       // fillColor: '#68CCCA',
       // backgroundColor: 'transparent',
       // shadowWidth: 0,
@@ -296,6 +297,26 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  onEraserTool = event => {
+    if (event.target.getAttribute('value')) {
+      this.setState({
+        ...this.state,
+
+        selectedTool: event.target.getAttribute('value'),
+        enableRemoveSelected: event.target.value === Tools.Select,
+        enableCopyPaste: event.target.value === Tools.Select,
+      });
+
+      this.setState({
+        ...this.state,
+        eraserColor: '#fff',
+      });
+
+      // console.log(this.state.eraserColor)
+      this.onRangeChanged(10);
+    }
+  };
+
   // update state and undo redo status on sketch change
   onSketchChange = () => {
     const { canUndo, sketchRef, storeData, uniqueID } = this.state;
@@ -429,6 +450,7 @@ class BoardandEditor extends React.Component {
       key,
       lineWidth,
       lineColor,
+      eraserColor,
       selectedTool,
       sketchRef,
       controlledValue,
@@ -462,6 +484,7 @@ class BoardandEditor extends React.Component {
                     <WhiteBoard
                       lineWidth={lineWidth}
                       lineColor={lineColor}
+                      eraserColor={eraserColor}
                       tool={selectedTool}
                       sketchChange={this.onSketchChange}
                       loadSketch={this.setSketchRef}
@@ -486,6 +509,7 @@ class BoardandEditor extends React.Component {
                   changeColor={this.onChangeColor}
                   rangeChanged={this.onRangeChanged}
                   changeTool={this.onChangeTool}
+                  eraserTool={this.onEraserTool}
                   sketchChange={this.onSketchChange}
                   undo={this.undo}
                   redo={this.redo}
