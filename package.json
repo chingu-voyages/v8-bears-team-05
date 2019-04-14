@@ -9,6 +9,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "file-saver": "^2.0.1",
     "nanoid": "^2.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",

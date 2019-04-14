@@ -10,6 +10,7 @@ import io from 'socket.io-client';
 import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { saveAs } from 'file-saver';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { BoardContext } from '../../contexts';
@@ -250,14 +251,8 @@ class BoardandEditor extends React.Component {
   downloadImage = () => {
     const { sketchRef } = this.state;
 
-    // eslint-disable-next-line prettier/prettier
-   // eslint-disable-next-line no-console
-    console.log(sketchRef);
-    // const event = new Event('click', {});
-
-    // buttonRef.href = sketchRef.toDataURL();
-    // buttonRef.download = 'toPNG.png';
-    // buttonRef.dispatchEvent(event);
+    // console.log(sketchRef.toDataURL());
+    saveAs(sketchRef.toDataURL(), 'doodlelive.png');
   };
 
   // handle width change
