@@ -13,7 +13,8 @@
 .save-button {
   position: absolute;
   right: 5rem;
-  top: 6rem;
+  top: 0rem;
+  padding: 0.5rem;
   border-radius: 2rem;
   font-size: 1.2rem;
   z-index: 200;
