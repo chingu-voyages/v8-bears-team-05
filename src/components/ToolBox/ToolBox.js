@@ -56,9 +56,9 @@ const ToolBox = ({
           selectedTool={selectedTool}
         />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Pencil} iconName={faPencilAlt} selectedTool={selectedTool} />
-        <Tool selectTool={e => eraserTool(e)} tool={Tools.Pencil} iconName={faPencilAlt} selectedTool={selectedTool} />
+
         <Tool selectTool={e => clickAddText(e)} tool="text" iconName={faFont} selectedTool={selectedTool} />
-        <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faEraser} selectedTool={selectedTool} />
+        <Tool selectTool={eraserTool} tool="eraser" iconName={faEraser} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Rectangle} iconName={faSquare} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
         <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />

@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
 import React, { Component } from 'react';
-import { SketchField } from 'react-sketch';
+import { SketchField, Tools } from 'react-sketch';
 import { Container, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ class WhiteBoard extends Component {
   render() {
     const {
       lineColor,
-      eraserColor,
+
       lineWidth,
       tool,
       sketchChange,
@@ -36,7 +36,7 @@ class WhiteBoard extends Component {
           name="sketch"
           className="canvas"
           ref={comp => (this._sketch = comp)}
-          lineColor={eraserColor || lineColor}
+          lineColor={tool === 'eraser' ? '#fff' : lineColor}
           lineWidth={lineWidth}
           width="100%"
           height="100%"
@@ -44,7 +44,7 @@ class WhiteBoard extends Component {
           value={controlledValue}
           forceValue
           onChange={sketchChange}
-          tool={tool}
+          tool={tool === 'eraser' ? Tools.Pencil : tool}
         />
       </Container>
     );
@@ -54,7 +54,7 @@ WhiteBoard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
 
   lineColor: PropTypes.string.isRequired,
-  eraserColor: PropTypes.string.isRequired,
+
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
   saveImage: PropTypes.func.isRequired,

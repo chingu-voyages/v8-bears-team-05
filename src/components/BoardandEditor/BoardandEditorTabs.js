@@ -297,24 +297,14 @@ class BoardandEditor extends React.Component {
     }
   };
 
-  onEraserTool = event => {
-    if (event.target.getAttribute('value')) {
-      this.setState({
-        ...this.state,
+  onEraserTool = () => {
+    this.setState({
+      ...this.state,
+      selectedTool: 'eraser',
+      lineWidth: 10,
+    });
 
-        selectedTool: event.target.getAttribute('value'),
-        enableRemoveSelected: event.target.value === Tools.Select,
-        enableCopyPaste: event.target.value === Tools.Select,
-      });
-
-      this.setState({
-        ...this.state,
-        eraserColor: '#fff',
-      });
-
-      // console.log(this.state.eraserColor)
-      this.onRangeChanged(10);
-    }
+    // console.log(this.state.eraserColor)
   };
 
   // update state and undo redo status on sketch change
