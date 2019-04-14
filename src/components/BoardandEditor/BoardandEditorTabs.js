@@ -75,6 +75,11 @@ class BoardandEditor extends React.Component {
   componentDidMount() {
     this.genUniqueID();
 
+    window.onbeforeunload = function() {
+      // Set refresh to sessionStorage before reload
+      sessionStorage.setItem('refresh', true);
+    };
+
     socket.on('draw-line', lineData => {
       const { storeData, canUndo, sketchRef } = this.state;
       const prev = canUndo;
@@ -164,13 +169,28 @@ class BoardandEditor extends React.Component {
       // Generate a 6 char unique ID to create a unique team
       // const ids = ['rishabh', 'keshav'];
       // const id = ids[Math.floor(Math.random() * ids.length)];
-      const id = nanoid(6);
-      // console.log(id);
+
+      const id = sessionStorage.getItem('uniqueID') || nanoid(6);
+
+      // Save unique id to sessionStorage
+      sessionStorage.setItem('uniqueID', id);
 
       // set id state to connect to the socket
       this.setState({
         uniqueID: id,
       });
+
+      const refresh = sessionStorage.getItem('refresh');
+
+      if (refresh === 'true') {
+        // socket emit to join the room
+        socket.emit('join-room', id);
+      } else {
+        // socket emit to create the room
+        socket.emit('create-room', id);
+        // console.log(typeof refresh)
+      }
+      sessionStorage.setItem('refresh', false);
     }
   };
 
@@ -196,6 +216,9 @@ class BoardandEditor extends React.Component {
     this.setState({
       uniqueID: id,
     });
+
+    // Save unique id to sessionStorage
+    sessionStorage.setItem('uniqueID', id);
 
     // Close the Modal
     toggleJoinModal();

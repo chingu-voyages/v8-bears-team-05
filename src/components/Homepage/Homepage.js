@@ -14,6 +14,7 @@ import videoCall from '../../assets/video-call (1).svg';
 const Homepage = ({ history }) => {
   const onStart = () => {
     history.push('/boardandeditor');
+    sessionStorage.setItem('refresh', false);
   };
 
   return (

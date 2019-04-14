@@ -35,6 +35,9 @@ const redoHistory = {};
 // Current User Status
 const userOnline = {};
 
+// Delete data after the set time
+const deleteData = {};
+
 // Listens socket req on Port 7000
 io.listen(7000);
 
@@ -56,6 +59,10 @@ io.of('/boardandeditor').on('connection', socket => {
   // Joins the user to the existing room
   socket.on('join-room', id => {
     if (id in drawHistory) {
+      // Cancel deletion if data in deleteData
+      if (id in deleteData) {
+        clearTimeout(deleteData[id]);
+      }
       // console.log(drawHistory);
       socket.join(id);
 
@@ -110,15 +117,22 @@ io.of('/boardandeditor').on('connection', socket => {
   socket.on('disconnecting', () => {
     // console.log(Object.keys(socket.rooms));
 
-    // Get disconnected room ID
-    const roomID = Object.keys(socket.rooms)[1];
-    if (roomID in userOnline) {
-      userOnline[roomID].online -= 1;
+    for (let i = 1; i < Object.keys(socket.rooms).length; i += 1) {
+      // Get disconnected room ID
+      const roomID = Object.keys(socket.rooms)[i];
+      // console.log(roomID)
+      if (roomID in userOnline) {
+        userOnline[roomID].online -= 1;
 
-      if (userOnline[roomID].online === 0) {
-        delete drawHistory[roomID];
-        delete redoHistory[roomID];
-        delete userOnline[roomID];
+        // Wipe data if the user does not come back within a minute
+        if (userOnline[roomID].online === 0) {
+          deleteData[roomID] = setTimeout(() => {
+            delete drawHistory[roomID];
+            delete redoHistory[roomID];
+            delete userOnline[roomID];
+            delete deleteData[roomID];
+          }, 60000);
+        }
       }
     }
     // console.log(userOnline)  // Debugging Purposes
