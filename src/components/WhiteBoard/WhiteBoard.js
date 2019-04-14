@@ -37,6 +37,7 @@ class WhiteBoard extends Component {
           className="canvas"
           ref={comp => (this._sketch = comp)}
           lineColor={tool === 'eraser' ? '#fff' : lineColor}
+          backgroundColor="#fff"
           lineWidth={lineWidth}
           width="100%"
           height="100%"
