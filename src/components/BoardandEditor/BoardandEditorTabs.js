@@ -31,7 +31,7 @@ class BoardandEditor extends React.Component {
     this.state = {
       key: 'whiteboard',
       lineWidth: 4,
-      lineColor: 'black',
+      lineColor: '#000',
       // fillColor: '#68CCCA',
       // backgroundColor: 'transparent',
       // shadowWidth: 0,
@@ -210,6 +210,31 @@ class BoardandEditor extends React.Component {
       ...this.state,
       lineColor: color.hex,
     });
+  };
+
+  // ZoomIn
+  zoomIn = () => {
+    const { sketchRef } = this.state;
+    sketchRef.zoom(1.25);
+  };
+
+  // zoom out
+  zoomOut = () => {
+    const { sketchRef } = this.state;
+    sketchRef.zoom(0.8);
+  };
+
+  downloadImage = () => {
+    const { sketchRef } = this.state;
+
+    // eslint-disable-next-line prettier/prettier
+   // eslint-disable-next-line no-console
+    console.log(sketchRef);
+    // const event = new Event('click', {});
+
+    // buttonRef.href = sketchRef.toDataURL();
+    // buttonRef.download = 'toPNG.png';
+    // buttonRef.dispatchEvent(event);
   };
 
   // handle width change
@@ -424,6 +449,7 @@ class BoardandEditor extends React.Component {
                       loadSketch={this.setSketchRef}
                       setMouseDown={this.setMouseDown}
                       controlledValue={controlledValue}
+                      saveImage={this.downloadImage}
                     />
                   </BoardContext.Provider>
                 </Tab>
@@ -452,6 +478,8 @@ class BoardandEditor extends React.Component {
                   addTextOpen={addTextOpen}
                   setText={this.setText}
                   addText={this.addText}
+                  zoomIn={this.zoomIn}
+                  zoomOut={this.zoomOut}
                 />
               ) : null}
             </Col>

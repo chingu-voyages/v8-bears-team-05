@@ -13,10 +13,12 @@ import {
   faFont,
   faMousePointer,
   faPlus,
+  faSearchPlus,
+  faSearchMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import Range from 'react-range-progress';
 import { Tools } from 'react-sketch';
-import { faSquare, faCircle } from '@fortawesome/free-regular-svg-icons';
+import { faSquare, faCircle, faHandPaper } from '@fortawesome/free-regular-svg-icons';
 import { CompactPicker } from 'react-color';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -31,6 +33,8 @@ const ToolBox = ({
   rangeChanged,
   changeTool,
   selectedTool,
+  zoomIn,
+  zoomOut,
   undo,
   redo,
   clear,
@@ -57,6 +61,10 @@ const ToolBox = ({
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
         <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faHighlighter} selectedTool={selectedTool} />
+
+        <Tool selectTool={zoomIn} tool="zoomin" iconName={faSearchPlus} selectedTool={selectedTool} />
+        <Tool selectTool={zoomOut} tool="zoomout" iconName={faSearchMinus} selectedTool={selectedTool} />
+        <Tool selectTool={e => changeTool(e)} tool={Tools.Pan} iconName={faHandPaper} selectedTool={selectedTool} />
         <Tool selectTool={removeSelected} tool="remove" iconName={faTimes} selectedTool={selectedTool} />
         <Tool selectTool={undo} tool={Tools.Undo} iconName={faUndo} selectedTool={selectedTool} />
         <Tool selectTool={redo} tool={Tools.Redo} iconName={faRedo} selectedTool={selectedTool} />
@@ -113,6 +121,8 @@ ToolBox.propTypes = {
   rangeChanged: PropTypes.func.isRequired,
   changeTool: PropTypes.func.isRequired,
   selectedTool: PropTypes.node.isRequired,
+  zoomIn: PropTypes.func.isRequired,
+  zoomOut: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   undo: PropTypes.func.isRequired,
   redo: PropTypes.func.isRequired,
