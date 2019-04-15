@@ -33,6 +33,7 @@ class BoardandEditor extends React.Component {
       key: 'whiteboard',
       lineWidth: 4,
       lineColor: '#000',
+      fillColor: '#d55',
       eraserColor: null,
       // fillColor: '#68CCCA',
       // backgroundColor: 'transparent',
@@ -62,7 +63,7 @@ class BoardandEditor extends React.Component {
       expandImages: false,
       expandControlled: false,
       text: 'a text, cool!',
-      enableCopyPaste: false,
+
       sketchRef: null,
       mouseDown: false,
       storeData: [],
@@ -237,6 +238,23 @@ class BoardandEditor extends React.Component {
     });
   };
 
+  // handle fill color change
+  onChangeFillColor = color => {
+    const { sketchRef, fillColor } = this.state;
+
+    this.setState({
+      ...this.state,
+      fillColor: color.hex,
+    });
+
+    // console.log(this.state.fillColor)
+    const activeObject = sketchRef._fc.getActiveObject();
+    if (activeObject !== null && activeObject !== undefined) {
+      activeObject.set('fill', fillColor);
+      sketchRef._fc.renderAll();
+    }
+  };
+
   // ZoomIn
   zoomIn = () => {
     const { sketchRef } = this.state;
@@ -286,16 +304,14 @@ class BoardandEditor extends React.Component {
           ...this.state,
           addTextOpen: !addTextOpen,
           selectedTool: event.target.getAttribute('value'),
-          enableRemoveSelected: event.target.value === Tools.Select,
-          enableCopyPaste: event.target.value === Tools.Select,
+          enableRemoveSelected: event.target.getAttribute('value') === Tools.Select,
         });
       } else {
         this.setState({
           ...this.state,
 
           selectedTool: event.target.getAttribute('value'),
-          enableRemoveSelected: event.target.value === Tools.Select,
-          enableCopyPaste: event.target.value === Tools.Select,
+          enableRemoveSelected: event.target.getAttribute('value') === Tools.Select,
         });
       }
     }
@@ -467,6 +483,7 @@ class BoardandEditor extends React.Component {
       key,
       lineWidth,
       lineColor,
+      fillColor,
       eraserColor,
       selectedTool,
       sketchRef,
@@ -501,6 +518,7 @@ class BoardandEditor extends React.Component {
                     <WhiteBoard
                       lineWidth={lineWidth}
                       lineColor={lineColor}
+                      fillColor={fillColor}
                       eraserColor={eraserColor}
                       tool={selectedTool}
                       sketchChange={this.onSketchChange}
@@ -521,9 +539,11 @@ class BoardandEditor extends React.Component {
                 <ToolBox
                   lineWidth={lineWidth}
                   lineColor={lineColor}
+                  fillColor={fillColor}
                   selectedTool={selectedTool}
                   sketchRef={sketchRef}
                   changeColor={this.onChangeColor}
+                  changeFillColor={this.onChangeFillColor}
                   rangeChanged={this.onRangeChanged}
                   changeTool={this.onChangeTool}
                   eraserTool={this.onEraserTool}

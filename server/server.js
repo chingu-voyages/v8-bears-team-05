@@ -91,7 +91,7 @@ io.of('/boardandeditor').on('connection', socket => {
   // undo canvas for all users
   socket.on('undo-canvas', res => {
     const id = res.room;
-    redoHistory[id].unshift(drawHistory[id].pop());
+    redoHistory[id].push(drawHistory[id].pop());
     // console.log(redoHistory)
     socket.broadcast.to(id).emit('undo-canvas');
   });
