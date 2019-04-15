@@ -272,6 +272,10 @@ class BoardandEditor extends React.Component {
     });
   };
 
+  highlightTool = () => {
+    this.setState({ ...this.state, selectedTool: 'highlighter' });
+  };
+
   // handle drawing and font Tool selection
   onChangeTool = event => {
     if (event.target.getAttribute('value')) {
@@ -517,6 +521,7 @@ class BoardandEditor extends React.Component {
                   addText={this.addText}
                   zoomIn={this.zoomIn}
                   zoomOut={this.zoomOut}
+                  highlightTool={this.highlightTool}
                 />
               ) : null}
             </Col>

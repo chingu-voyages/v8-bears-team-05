@@ -45,6 +45,7 @@ const ToolBox = ({
   clickAddText,
   addText,
   setText,
+  highlightTool,
 }) => {
   return (
     <>
@@ -62,7 +63,7 @@ const ToolBox = ({
         <Tool selectTool={e => changeTool(e)} tool={Tools.Rectangle} iconName={faSquare} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
         <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
-        <Tool selectTool={e => changeTool(e)} tool={undefined} iconName={faHighlighter} selectedTool={selectedTool} />
+        <Tool selectTool={highlightTool} tool="highlighter" iconName={faHighlighter} selectedTool={selectedTool} />
 
         <Tool selectTool={zoomIn} tool="zoomin" iconName={faSearchPlus} selectedTool={selectedTool} />
         <Tool selectTool={zoomOut} tool="zoomout" iconName={faSearchMinus} selectedTool={selectedTool} />
@@ -135,5 +136,6 @@ ToolBox.propTypes = {
   clickAddText: PropTypes.func.isRequired,
   addText: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
+  highlightTool: PropTypes.func.isRequired,
 };
 export default ToolBox;
