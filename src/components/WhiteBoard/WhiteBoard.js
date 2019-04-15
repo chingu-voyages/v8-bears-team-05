@@ -18,7 +18,7 @@ class WhiteBoard extends Component {
   render() {
     const {
       lineColor,
-
+      fillColor,
       lineWidth,
       tool,
       sketchChange,
@@ -38,6 +38,7 @@ class WhiteBoard extends Component {
           ref={comp => (this._sketch = comp)}
           lineColor={tool === 'eraser' ? '#fff' : lineColor}
           backgroundColor="#fff"
+          fillColor={fillColor}
           lineWidth={lineWidth}
           width="100%"
           height="100%"
@@ -55,7 +56,7 @@ WhiteBoard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
 
   lineColor: PropTypes.string.isRequired,
-
+  fillColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
   saveImage: PropTypes.func.isRequired,

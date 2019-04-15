@@ -15,6 +15,7 @@ import {
   faPlus,
   faSearchPlus,
   faSearchMinus,
+  faPencilRuler,
 } from '@fortawesome/free-solid-svg-icons';
 import Range from 'react-range-progress';
 import { Tools } from 'react-sketch';
@@ -29,7 +30,9 @@ import './ToolBox.css';
 const ToolBox = ({
   lineWidth,
   lineColor,
+  fillColor,
   changeColor,
+  changeFillColor,
   rangeChanged,
   changeTool,
   eraserTool,
@@ -61,6 +64,7 @@ const ToolBox = ({
         <Tool selectTool={e => clickAddText(e)} tool="text" iconName={faFont} selectedTool={selectedTool} />
         <Tool selectTool={eraserTool} tool="eraser" iconName={faEraser} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Rectangle} iconName={faSquare} selectedTool={selectedTool} />
+        <Tool selectTool={e => changeTool(e)} tool={Tools.Line} iconName={faPencilRuler} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
         <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
         <Tool selectTool={highlightTool} tool="highlighter" iconName={faHighlighter} selectedTool={selectedTool} />
@@ -112,7 +116,8 @@ const ToolBox = ({
           max={30}
         />
         <p>Line Color</p>
-        <CompactPicker color={lineColor} onChangeComplete={changeColor} />;
+        <CompactPicker color={lineColor} onChangeComplete={changeColor} />;<p>Fill Color</p>
+        <CompactPicker color={fillColor} onChangeComplete={changeFillColor} />;
       </div>
     </>
   );
@@ -120,7 +125,9 @@ const ToolBox = ({
 ToolBox.propTypes = {
   lineWidth: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
+  fillColor: PropTypes.string.isRequired,
   changeColor: PropTypes.func.isRequired,
+  changeFillColor: PropTypes.func.isRequired,
   rangeChanged: PropTypes.func.isRequired,
   changeTool: PropTypes.func.isRequired,
   eraserTool: PropTypes.func.isRequired,
