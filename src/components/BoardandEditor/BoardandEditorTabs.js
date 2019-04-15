@@ -309,13 +309,18 @@ class BoardandEditor extends React.Component {
 
   // update state and undo redo status on sketch change
   onSketchChange = () => {
-    const { canUndo, sketchRef, storeData, uniqueID } = this.state;
+    const { canUndo, sketchRef, storeData, uniqueID, selectedTool } = this.state;
     const prev = canUndo;
     const now = sketchRef.canUndo();
 
     // const drawings = sketchRef.toDataURL();
     const drawingsJSON = JSON.stringify(sketchRef.toJSON());
+    const size = sketchRef._fc.size();
 
+    if (selectedTool === 'eraser') {
+      sketchRef._fc.item(size - 1).selectable = false;
+      sketchRef._fc.renderAll();
+    }
     if (!storeData.includes(drawingsJSON) && prev !== now) {
       // console.log(storeData)
       // console.log(drawingsJSON.objects);
