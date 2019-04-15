@@ -33,7 +33,7 @@ class BoardandEditor extends React.Component {
       key: 'whiteboard',
       lineWidth: 4,
       lineColor: '#000',
-      fillColor: '#d55',
+      fillColor: '#f5e51b',
       eraserColor: null,
       // fillColor: '#68CCCA',
       // backgroundColor: 'transparent',
@@ -63,7 +63,6 @@ class BoardandEditor extends React.Component {
       expandImages: false,
       expandControlled: false,
       text: 'a text, cool!',
-
       sketchRef: null,
       mouseDown: false,
       storeData: [],
@@ -240,14 +239,13 @@ class BoardandEditor extends React.Component {
 
   // handle fill color change
   onChangeFillColor = color => {
-    const { sketchRef, fillColor } = this.state;
-
     this.setState({
       ...this.state,
       fillColor: color.hex,
     });
 
-    // console.log(this.state.fillColor)
+    const { sketchRef, fillColor } = this.state;
+
     const activeObject = sketchRef._fc.getActiveObject();
     if (activeObject !== null && activeObject !== undefined) {
       activeObject.set('fill', fillColor);
@@ -321,10 +319,7 @@ class BoardandEditor extends React.Component {
     this.setState({
       ...this.state,
       selectedTool: 'eraser',
-      lineWidth: 10,
     });
-
-    // console.log(this.state.eraserColor)
   };
 
   // update state and undo redo status on sketch change
@@ -337,42 +332,42 @@ class BoardandEditor extends React.Component {
     const size = sketchRef._fc.size();
     const drawingsJSON = JSON.stringify(sketchRef._fc.toJSON());
 
-    if (selectedTool === 'eraser') {
-      sketchRef._fc.item(size - 1).lockMovementX = true;
-      sketchRef._fc.item(size - 1).lockMovementY = true;
-      sketchRef._fc.item(size - 1).lockRotationX = true;
-      sketchRef._fc.item(size - 1).lockRotationY = true;
-      sketchRef._fc.item(size - 1).lockScalingX = true;
-      sketchRef._fc.item(size - 1).lockScalingY = true;
-      sketchRef._fc.item(size - 1).hasControls = false;
-      sketchRef._fc.item(size - 1).hasBorders = false;
-
-      JSON.parse(drawingsJSON).lockMovementX = true;
-      JSON.parse(drawingsJSON).lockMovementY = true;
-      JSON.parse(drawingsJSON).lockRotationX = true;
-      JSON.parse(drawingsJSON).lockRotationY = true;
-      JSON.parse(drawingsJSON).lockScalingX = true;
-      JSON.parse(drawingsJSON).lockScalingY = true;
-      JSON.parse(drawingsJSON).hasControls = false;
-      JSON.parse(drawingsJSON).hasBorders = false;
-    } else if (selectedTool === 'highlighter') {
-      sketchRef._fc.item(size - 1).moveTo(-10);
-    }
-
-    if (!storeData.includes(drawingsJSON) && prev !== now) {
-      // console.log(storeData)
-      // console.log(drawingsJSON.objects);
-      this.setState({
-        ...this.state,
-        canUndo: now,
-        storeData: [...storeData, drawingsJSON],
-      });
-      socket.emit('store-data', { room: uniqueID, data: drawingsJSON });
-    } else if (!storeData.includes(drawingsJSON) && prev === now) {
+    if (!storeData.includes(drawingsJSON)) {
       this.setState({
         ...this.state,
         storeData: [...storeData, drawingsJSON],
       });
+
+      // Lock Eraser size & position
+      if (selectedTool === 'eraser' || selectedTool === 'highlighter') {
+        sketchRef._fc.item(size - 1).lockMovementX = true;
+        sketchRef._fc.item(size - 1).lockMovementY = true;
+        sketchRef._fc.item(size - 1).lockRotationX = true;
+        sketchRef._fc.item(size - 1).lockRotationY = true;
+        sketchRef._fc.item(size - 1).lockScalingX = true;
+        sketchRef._fc.item(size - 1).lockScalingY = true;
+        sketchRef._fc.item(size - 1).hasControls = false;
+        sketchRef._fc.item(size - 1).hasBorders = false;
+
+        JSON.parse(drawingsJSON).lockMovementX = true;
+        JSON.parse(drawingsJSON).lockMovementY = true;
+        JSON.parse(drawingsJSON).lockRotationX = true;
+        JSON.parse(drawingsJSON).lockRotationY = true;
+        JSON.parse(drawingsJSON).lockScalingX = true;
+        JSON.parse(drawingsJSON).lockScalingY = true;
+        JSON.parse(drawingsJSON).hasControls = false;
+        JSON.parse(drawingsJSON).hasBorders = false;
+      }
+
+      // Set Undo state
+      if (prev !== now) {
+        this.setState({
+          ...this.state,
+          canUndo: now,
+        });
+      }
+
+      // Send draw data to the server
       socket.emit('store-data', { room: uniqueID, data: drawingsJSON });
     }
   };

@@ -16,15 +16,27 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    let { lineColor, tool } = this.props;
-    const { lineWidth, sketchChange, setMouseDown, controlledValue, saveImage, fillColor } = this.props;
+    let { lineColor, lineWidth, tool } = this.props;
+    const { sketchChange, setMouseDown, controlledValue, saveImage, fillColor } = this.props;
     switch (tool) {
+      case Tools.Pencil:
+        lineWidth = 4;
+        break;
       case 'highlighter':
         tool = Tools.Pencil;
+        lineColor = 'rgba(240, 255, 0, 0.5)';
+        lineWidth = 18;
         break;
       case 'eraser':
         tool = Tools.Pencil;
         lineColor = '#fff';
+        lineWidth = 15;
+        break;
+      case Tools.Rectangle:
+        lineWidth = 2;
+        break;
+      case Tools.Circle:
+        lineWidth = 2;
         break;
       default:
         break;
@@ -40,7 +52,7 @@ class WhiteBoard extends Component {
           name="sketch"
           className="canvas"
           ref={comp => (this._sketch = comp)}
-          lineColor={tool === 'eraser' ? '#fff' : lineColor}
+          lineColor={lineColor}
           backgroundColor="#fff"
           fillColor={fillColor}
           lineWidth={lineWidth}
@@ -50,7 +62,7 @@ class WhiteBoard extends Component {
           value={controlledValue}
           forceValue
           onChange={sketchChange}
-          tool={tool === 'eraser' ? Tools.Pencil : tool}
+          tool={tool}
         />
       </Container>
     );
