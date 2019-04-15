@@ -16,16 +16,20 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    const {
-      lineColor,
+    let { lineColor, tool } = this.props;
+    const { lineWidth, sketchChange, setMouseDown, controlledValue, saveImage } = this.props;
+    switch (tool) {
+      case 'highlighter':
+        tool = Tools.Pencil;
+        break;
+      case 'eraser':
+        tool = Tools.Pencil;
+        lineColor = '#fff';
+        break;
+      default:
+        break;
+    }
 
-      lineWidth,
-      tool,
-      sketchChange,
-      setMouseDown,
-      controlledValue,
-      saveImage,
-    } = this.props;
     return (
       <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
         <Modal />

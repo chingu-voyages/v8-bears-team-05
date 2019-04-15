@@ -339,6 +339,8 @@ class BoardandEditor extends React.Component {
       JSON.parse(drawingsJSON).lockScalingY = true;
       JSON.parse(drawingsJSON).hasControls = false;
       JSON.parse(drawingsJSON).hasBorders = false;
+    } else if (selectedTool === 'highlighter') {
+      sketchRef._fc.item(size - 1).moveTo(-10);
     }
 
     if (!storeData.includes(drawingsJSON) && prev !== now) {
