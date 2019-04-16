@@ -32,8 +32,8 @@ class BoardandEditor extends React.Component {
     this.state = {
       key: 'whiteboard',
       lineWidth: 4,
-      lineColor: '#000',
-      fillColor: '#f5e51b',
+      lineColor: 'rgba(0, 0, 0, 100)',
+      fillColor: 'rgba(245, 229, 27, 100)',
       eraserColor: null,
       // fillColor: '#68CCCA',
       // backgroundColor: 'transparent',
@@ -239,7 +239,7 @@ class BoardandEditor extends React.Component {
   handleLineColorChange = color => {
     this.setState({
       ...this.state,
-      lineColor: color.hex,
+      lineColor: `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
     });
   };
 
@@ -251,7 +251,7 @@ class BoardandEditor extends React.Component {
   handleFillColorChange = color => {
     this.setState({
       ...this.state,
-      fillColor: color.hex,
+      fillColor: `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
     });
 
     const { sketchRef, fillColor } = this.state;
