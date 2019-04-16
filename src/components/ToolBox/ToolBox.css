@@ -24,11 +24,11 @@
   align-items: center;
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  padding: 0 0.5rem;
+  padding: 10px 0.5rem 25px 0rem;
   margin-top: 2rem;
 }
 .tool-options p {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   text-align: center;
   color: #676767;
 }
@@ -40,15 +40,22 @@
 
 .line-color-swatch,
 .fill-color-swatch {
-  border-radius: 50%;
-  border-width: 0;
-  width: 4rem;
-  height: 3rem;
+  /* border-radius: 50%; */
+  /* border-width: 0; */
+  width: 10rem;
+  height: 2rem;
+}
+.line-color-swatch {
+  padding: 1px 18px;
+}
+.fill-color-swatch {
+  padding: 1px 20px;
 }
 .color {
   height: 2rem;
-  width: 2rem;
-  border-radius: 50%;
+  width: 8rem;
+  border: 0.5px solid #000;
+  /* border-radius: 50%; */
 }
 .popover {
   position: absolute;
@@ -60,4 +67,8 @@
   left: 0;
   bottom: 0;
   right: 0;
+}
+
+.line-width {
+  padding-top: 12px;
 }

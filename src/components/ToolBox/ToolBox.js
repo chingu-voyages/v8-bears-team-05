@@ -96,8 +96,34 @@ const ToolBox = ({
         </Form>
       </Collapse>
       <div className="tool-options">
-        <p>Tool options</p>
-        <p>Line Width:{lineWidth}</p>
+        <p>
+          <strong>Tool options</strong>
+        </p>
+        <div className="d-flex justify-content-left align-items-start pt-4">
+          <p className="">Line Color:</p>
+          <div className="line-color-swatch" onClick={handleLinePickerClick}>
+            <div style={{ backgroundColor: lineColor }} className="color" />
+          </div>
+          {displayLineColorPicker ? (
+            <div className="popover">
+              <div className="cover" onClick={handleLinePickerClick} />
+              <SketchPicker color={lineColor} onChangeComplete={handleLineColorChange} />
+            </div>
+          ) : null}
+        </div>
+        <div className="d-flex justify-content-left align-items-start pt-2">
+          <p className="px-1">Fill Color:</p>
+          <div className="fill-color-swatch" onClick={handleFillPickerClick}>
+            <div style={{ backgroundColor: fillColor }} className="color" />
+          </div>
+          {displayFillColorPicker ? (
+            <div className="popover">
+              <div className="cover" onClick={handleFillPickerClick} />
+              <SketchPicker color={fillColor} onChangeComplete={handleFillColorChange} />
+            </div>
+          ) : null}
+        </div>
+        <p className="line-width">Line Width: {lineWidth}</p>
         <Range
           value={lineWidth}
           fillColor={{
@@ -123,30 +149,6 @@ const ToolBox = ({
           onChange={rangeChanged}
           max={30}
         />
-        <div className="d-flex justify-content-center align-items-center pt-4">
-          <p className="px-1">Line Color:</p>
-          <div className="line-color-swatch px-1" onClick={handleLinePickerClick}>
-            <div style={{ backgroundColor: lineColor }} className="color" />
-          </div>
-          {displayLineColorPicker ? (
-            <div className="popover">
-              <div className="cover" onClick={handleLinePickerClick} />
-              <SketchPicker color={lineColor} onChangeComplete={handleLineColorChange} />
-            </div>
-          ) : null}
-        </div>
-        <div className="d-flex justify-content-center align-items-start pt-4">
-          <p className="px-1">Fill Color:</p>
-          <div className="fill-color-swatch px-1" onClick={handleFillPickerClick}>
-            <div style={{ backgroundColor: fillColor }} className="color" />
-          </div>
-          {displayFillColorPicker ? (
-            <div className="popover">
-              <div className="cover" onClick={handleFillPickerClick} />
-              <SketchPicker color={fillColor} onChangeComplete={handleFillColorChange} />
-            </div>
-          ) : null}
-        </div>
       </div>
     </>
   );
