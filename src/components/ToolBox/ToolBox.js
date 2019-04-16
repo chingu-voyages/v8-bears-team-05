@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-undef */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -20,7 +23,7 @@ import {
 import Range from 'react-range-progress';
 import { Tools } from 'react-sketch';
 import { faSquare, faCircle, faHandPaper } from '@fortawesome/free-regular-svg-icons';
-import { CompactPicker } from 'react-color';
+import { SketchPicker } from 'react-color';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Collapse, Form, Button } from 'react-bootstrap';
@@ -31,8 +34,8 @@ const ToolBox = ({
   lineWidth,
   lineColor,
   fillColor,
-  changeColor,
-  changeFillColor,
+  handleLinePickerClick,
+
   rangeChanged,
   changeTool,
   eraserTool,
@@ -49,6 +52,11 @@ const ToolBox = ({
   addText,
   setText,
   highlightTool,
+  displayLineColorPicker,
+  handleLineColorChange,
+  displayFillColorPicker,
+  handleFillColorChange,
+  handleFillPickerClick,
 }) => {
   return (
     <>
@@ -115,9 +123,30 @@ const ToolBox = ({
           onChange={rangeChanged}
           max={30}
         />
-        <p>Line Color</p>
-        <CompactPicker color={lineColor} onChangeComplete={changeColor} />;<p>Fill Color</p>
-        <CompactPicker color={fillColor} onChangeComplete={changeFillColor} />;
+        <div className="d-flex justify-content-center align-items-center pt-4">
+          <p className="px-1">Line Color:</p>
+          <div className="line-color-swatch px-1" onClick={handleLinePickerClick}>
+            <div style={{ backgroundColor: lineColor }} className="color" />
+          </div>
+          {displayLineColorPicker ? (
+            <div className="popover">
+              <div className="cover" onClick={handleLinePickerClick} />
+              <SketchPicker color={lineColor} onChangeComplete={handleLineColorChange} />
+            </div>
+          ) : null}
+        </div>
+        <div className="d-flex justify-content-center align-items-start pt-4">
+          <p className="px-1">Fill Color:</p>
+          <div className="fill-color-swatch px-1" onClick={handleFillPickerClick}>
+            <div style={{ backgroundColor: fillColor }} className="color" />
+          </div>
+          {displayFillColorPicker ? (
+            <div className="popover">
+              <div className="cover" onClick={handleFillPickerClick} />
+              <SketchPicker color={fillColor} onChangeComplete={handleFillColorChange} />
+            </div>
+          ) : null}
+        </div>
       </div>
     </>
   );
@@ -126,8 +155,7 @@ ToolBox.propTypes = {
   lineWidth: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
   fillColor: PropTypes.string.isRequired,
-  changeColor: PropTypes.func.isRequired,
-  changeFillColor: PropTypes.func.isRequired,
+  handleLineColorChange: PropTypes.func.isRequired,
   rangeChanged: PropTypes.func.isRequired,
   changeTool: PropTypes.func.isRequired,
   eraserTool: PropTypes.func.isRequired,
@@ -144,5 +172,10 @@ ToolBox.propTypes = {
   addText: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
   highlightTool: PropTypes.func.isRequired,
+  handleLinePickerClick: PropTypes.func.isRequired,
+  displayLineColorPicker: PropTypes.bool.isRequired,
+  displayFillColorPicker: PropTypes.bool.isRequired,
+  handleFillPickerClick: PropTypes.func.isRequired,
+  handleFillColorChange: PropTypes.func.isRequired,
 };
 export default ToolBox;

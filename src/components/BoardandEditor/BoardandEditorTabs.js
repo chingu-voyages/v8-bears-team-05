@@ -70,6 +70,8 @@ class BoardandEditor extends React.Component {
       modalShow: false,
       addTextOpen: false,
       uniqueID: '',
+      displayLineColorPicker: false,
+      displayFillColorPicker: false,
     };
   }
 
@@ -229,16 +231,24 @@ class BoardandEditor extends React.Component {
     socket.emit('join-room', id);
   };
 
+  handleLinePickerClick = () => {
+    this.setState(prevState => ({ ...this.state, displayLineColorPicker: !prevState.displayLineColorPicker }));
+  };
+
   // handle color change
-  onChangeColor = color => {
+  handleLineColorChange = color => {
     this.setState({
       ...this.state,
       lineColor: color.hex,
     });
   };
 
+  handleFillPickerClick = () => {
+    this.setState(prevState => ({ ...this.state, displayFillColorPicker: !prevState.displayFillColorPicker }));
+  };
+
   // handle fill color change
-  onChangeFillColor = color => {
+  handleFillColorChange = color => {
     this.setState({
       ...this.state,
       fillColor: color.hex,
@@ -486,6 +496,8 @@ class BoardandEditor extends React.Component {
       modalShow,
       addTextOpen,
       uniqueID,
+      displayLineColorPicker,
+      displayFillColorPicker,
     } = this.state;
     const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal, changeJoinID } = this.props;
     return (
@@ -537,8 +549,8 @@ class BoardandEditor extends React.Component {
                   fillColor={fillColor}
                   selectedTool={selectedTool}
                   sketchRef={sketchRef}
-                  changeColor={this.onChangeColor}
-                  changeFillColor={this.onChangeFillColor}
+                  handleLineColorChange={this.handleLineColorChange}
+                  handleFillColorChange={this.handleFillColorChange}
                   rangeChanged={this.onRangeChanged}
                   changeTool={this.onChangeTool}
                   eraserTool={this.onEraserTool}
@@ -555,6 +567,10 @@ class BoardandEditor extends React.Component {
                   zoomIn={this.zoomIn}
                   zoomOut={this.zoomOut}
                   highlightTool={this.highlightTool}
+                  displayLineColorPicker={displayLineColorPicker}
+                  handleLinePickerClick={this.handleLinePickerClick}
+                  displayFillColorPicker={displayFillColorPicker}
+                  handleFillPickerClick={this.handleFillPickerClick}
                 />
               ) : null}
             </Col>
