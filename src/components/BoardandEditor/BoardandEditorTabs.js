@@ -55,14 +55,13 @@ class BoardandEditor extends React.Component {
       stretchedY: false,
       originX: 'left',
       originY: 'top',
-      imageUrl: 'https://files.gamebanana.com/img/ico/sprays/4ea2f4dad8d6f.png',
       expandTools: false,
       expandControls: false,
       expandColors: false,
       expandBack: false,
       expandImages: false,
       expandControlled: false,
-      text: 'a text, cool!',
+      text: 'Enter your text here...',
       sketchRef: null,
       mouseDown: false,
       storeData: [],
@@ -361,7 +360,7 @@ class BoardandEditor extends React.Component {
       ])
     );
 
-    if (!storeData.includes(drawingsJSON)) {
+    if (!storeData.includes(drawingsJSON) && JSON.parse(drawingsJSON).objects.length !== 0) {
       // Lock Eraser size & position
       if (selectedTool === 'eraser' || selectedTool === 'highlighter') {
         sketchRef._fc.item(size - 1).lockMovementX = true;
@@ -372,6 +371,15 @@ class BoardandEditor extends React.Component {
         sketchRef._fc.item(size - 1).lockScalingY = true;
         sketchRef._fc.item(size - 1).hasControls = false;
         sketchRef._fc.item(size - 1).hasBorders = false;
+      } else {
+        sketchRef._fc.item(size - 1).lockMovementX = false;
+        sketchRef._fc.item(size - 1).lockMovementY = false;
+        sketchRef._fc.item(size - 1).lockRotationX = false;
+        sketchRef._fc.item(size - 1).lockRotationY = false;
+        sketchRef._fc.item(size - 1).lockScalingX = false;
+        sketchRef._fc.item(size - 1).lockScalingY = false;
+        sketchRef._fc.item(size - 1).hasControls = true;
+        sketchRef._fc.item(size - 1).hasBorders = true;
       }
 
       drawingsJSON = JSON.stringify(
@@ -400,12 +408,15 @@ class BoardandEditor extends React.Component {
           canUndo: now,
         });
       }
+
+      // Fix Shapes dragging issues
       if (selectedTool === Tools.Rectangle || selectedTool === Tools.Line || selectedTool === Tools.Circle) {
         this.setState({ selectedTool: Tools.Select });
         setTimeout(() => {
           this.setState({ selectedTool });
         }, 100);
       }
+
       // Send draw data to the server
       socket.emit('store-data', { room: uniqueID, data: drawingsJSON });
     }
