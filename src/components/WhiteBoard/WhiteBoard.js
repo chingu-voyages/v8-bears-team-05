@@ -57,7 +57,7 @@ class WhiteBoard extends Component {
           height="100%"
           // defaultValue={dataJson}
           value={controlledValue}
-          forceValue
+          // forceValue
           onChange={sketchChange}
           tool={tool}
         />
