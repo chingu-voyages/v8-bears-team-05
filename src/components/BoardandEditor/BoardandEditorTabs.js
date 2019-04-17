@@ -85,9 +85,7 @@ class BoardandEditor extends React.Component {
     };
 
     socket.on('draw-line', lineData => {
-      const { storeData, canUndo, sketchRef } = this.state;
-      const prev = canUndo;
-      const now = sketchRef.canUndo();
+      const { storeData } = this.state;
 
       if (!storeData.includes(lineData)) {
         this.setState({
@@ -99,6 +97,10 @@ class BoardandEditor extends React.Component {
           storeData: [...storeData, lineData],
         });
 
+        const { canUndo, sketchRef } = this.state;
+
+        const prev = canUndo;
+        const now = sketchRef.canUndo();
         if (prev !== now) {
           this.setState({
             ...this.state,
@@ -144,6 +146,7 @@ class BoardandEditor extends React.Component {
       this.setState({
         ...this.state,
         controlledValue: null,
+        storeData: [],
         // backgroundColor: 'transparent',
         // fillWithBackgroundColor: false,
         canUndo: sketchRef.canUndo(),
@@ -343,14 +346,20 @@ class BoardandEditor extends React.Component {
 
     // const drawings = sketchRef.toDataURL();
     const size = sketchRef._fc.size();
-    const drawingsJSON = JSON.stringify(sketchRef._fc.toJSON());
+    let drawingsJSON = JSON.stringify(
+      sketchRef._fc.toJSON([
+        'lockMovementX',
+        'lockMovementY',
+        'lockRotationX',
+        'lockRotationY',
+        'lockScalingX',
+        'lockScalingY',
+        'hasControls',
+        'hasBorders',
+      ])
+    );
 
     if (!storeData.includes(drawingsJSON)) {
-      this.setState({
-        ...this.state,
-        storeData: [...storeData, drawingsJSON],
-      });
-
       // Lock Eraser size & position
       if (selectedTool === 'eraser' || selectedTool === 'highlighter') {
         sketchRef._fc.item(size - 1).lockMovementX = true;
@@ -361,16 +370,26 @@ class BoardandEditor extends React.Component {
         sketchRef._fc.item(size - 1).lockScalingY = true;
         sketchRef._fc.item(size - 1).hasControls = false;
         sketchRef._fc.item(size - 1).hasBorders = false;
-
-        JSON.parse(drawingsJSON).lockMovementX = true;
-        JSON.parse(drawingsJSON).lockMovementY = true;
-        JSON.parse(drawingsJSON).lockRotationX = true;
-        JSON.parse(drawingsJSON).lockRotationY = true;
-        JSON.parse(drawingsJSON).lockScalingX = true;
-        JSON.parse(drawingsJSON).lockScalingY = true;
-        JSON.parse(drawingsJSON).hasControls = false;
-        JSON.parse(drawingsJSON).hasBorders = false;
       }
+
+      drawingsJSON = JSON.stringify(
+        sketchRef._fc.toJSON([
+          'lockMovementX',
+          'lockMovementY',
+          'lockRotationX',
+          'lockRotationY',
+          'lockScalingX',
+          'lockScalingY',
+          'hasControls',
+          'hasBorders',
+        ])
+      );
+
+      this.setState({
+        ...this.state,
+        storeData: [...storeData, drawingsJSON],
+        controlledValue: drawingsJSON,
+      });
 
       // Set Undo state
       if (prev !== now) {
@@ -424,6 +443,7 @@ class BoardandEditor extends React.Component {
     this.setState({
       ...this.state,
       controlledValue: null,
+      storeData: [],
       // backgroundColor: 'transparent',
       // fillWithBackgroundColor: false,
       canUndo: sketchRef.canUndo(),
