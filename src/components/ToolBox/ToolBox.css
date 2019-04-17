@@ -1,7 +1,8 @@
 .tools {
   width: 100%;
   /* height: 4rem; */
-  border-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   padding: 0 0.5rem;
   margin-top: 2rem;
@@ -23,11 +24,51 @@
   align-items: center;
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  padding: 0 0.5rem;
+  padding: 10px 0.5rem 25px 0rem;
   margin-top: 2rem;
 }
 .tool-options p {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   text-align: center;
   color: #676767;
+}
+.form-group {
+  display: flex;
+  padding: 2rem 4rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.line-color-swatch,
+.fill-color-swatch {
+  /* border-radius: 50%; */
+  /* border-width: 0; */
+  width: 10rem;
+  height: 2rem;
+}
+.line-color-swatch {
+  padding: 1px 18px;
+}
+.fill-color-swatch {
+  padding: 1px 20px;
+}
+.color {
+  height: 2rem;
+  width: 8rem;
+  border: 0.5px solid #000;
+  /* border-radius: 50%; */
+}
+.popover {
+  position: absolute;
+  z-index: 2;
+}
+.cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.line-width {
+  padding-top: 12px;
 }

@@ -2,8 +2,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
 import React, { Component } from 'react';
-import { SketchField } from 'react-sketch';
-import { Container } from 'react-bootstrap';
+import { SketchField, Tools } from 'react-sketch';
+import { Container, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import Modal from '../Modal/Modal';
@@ -16,20 +16,47 @@ class WhiteBoard extends Component {
   }
 
   render() {
-    const { lineColor, lineWidth, tool, sketchChange, setMouseDown, show, toggleModal, imageDrop } = this.props;
+    let { lineColor, lineWidth, tool } = this.props;
+    const { sketchChange, controlledValue, saveImage, fillColor } = this.props;
+    switch (tool) {
+      case 'highlighter':
+        tool = Tools.Pencil;
+        lineColor = 'rgba(240, 255, 0, 0.5)';
+        lineWidth = 18;
+        break;
+      case 'eraser':
+        tool = Tools.Pencil;
+        lineColor = '#fff';
+        lineWidth = 15;
+        break;
+      case Tools.Rectangle:
+        lineWidth = 2;
+        break;
+      case Tools.Circle:
+        lineWidth = 2;
+        break;
+      default:
+        break;
+    }
+
     return (
-      <Container className="white-board" onMouseDown={setMouseDown} onMouseUp={setMouseDown}>
-        <Modal show={show} toggleModal={toggleModal} imageDrop={imageDrop} />
+      <Container className="white-board">
+        <Modal />
+        <Button className="save-button" onClick={saveImage}>
+          Save As Image
+        </Button>
         <SketchField
           name="sketch"
           className="canvas"
           ref={comp => (this._sketch = comp)}
           lineColor={lineColor}
+          backgroundColor="#fff"
+          fillColor={fillColor}
           lineWidth={lineWidth}
           width="100%"
           height="100%"
           // defaultValue={dataJson}
-          // value={controlledValue}
+          value={controlledValue}
           // forceValue
           onChange={sketchChange}
           tool={tool}
@@ -42,16 +69,17 @@ WhiteBoard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
 
   lineColor: PropTypes.string.isRequired,
+  fillColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
-  show: PropTypes.string.isRequired,
+  saveImage: PropTypes.func.isRequired,
   loadSketch: PropTypes.func.isRequired,
   sketchChange: PropTypes.func.isRequired,
-  setMouseDown: PropTypes.func.isRequired,
-  imageDrop: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired,
+
+  controlledValue: PropTypes.string,
 };
 WhiteBoard.defaultProps = {
   tool: undefined,
+  controlledValue: undefined,
 };
 export default WhiteBoard;
