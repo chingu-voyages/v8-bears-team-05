@@ -316,6 +316,7 @@ class BoardandEditor extends React.Component {
           addTextOpen: !addTextOpen,
           selectedTool: event.target.getAttribute('value'),
           enableRemoveSelected: event.target.getAttribute('value') === Tools.Select,
+          enableCopyPaste: event.target.getAttribute('value') === Tools.Select,
         });
       } else {
         if (event.target.getAttribute('value') === 'pencil') {
@@ -326,6 +327,7 @@ class BoardandEditor extends React.Component {
 
           selectedTool: event.target.getAttribute('value'),
           enableRemoveSelected: event.target.getAttribute('value') === Tools.Select,
+          enableCopyPaste: event.target.getAttribute('value') === Tools.Select,
         });
       }
     }
@@ -398,7 +400,12 @@ class BoardandEditor extends React.Component {
           canUndo: now,
         });
       }
-
+      if (selectedTool === Tools.Rectangle || selectedTool === Tools.Line || selectedTool === Tools.Circle) {
+        this.setState({ selectedTool: Tools.Select });
+        setTimeout(() => {
+          this.setState({ selectedTool });
+        }, 100);
+      }
       // Send draw data to the server
       socket.emit('store-data', { room: uniqueID, data: drawingsJSON });
     }
@@ -500,12 +507,6 @@ class BoardandEditor extends React.Component {
     sketchRef.addText(text);
   };
 
-  setMouseDown = () => {
-    this.setState(prevState => {
-      return { ...prevState, mouseDown: !prevState.mouseDown };
-    });
-  };
-
   render() {
     const {
       key,
@@ -553,7 +554,6 @@ class BoardandEditor extends React.Component {
                       tool={selectedTool}
                       sketchChange={this.onSketchChange}
                       loadSketch={this.setSketchRef}
-                      setMouseDown={this.setMouseDown}
                       controlledValue={controlledValue}
                       saveImage={this.downloadImage}
                     />
