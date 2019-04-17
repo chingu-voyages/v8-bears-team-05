@@ -19,9 +19,6 @@ class WhiteBoard extends Component {
     let { lineColor, lineWidth, tool } = this.props;
     const { sketchChange, setMouseDown, controlledValue, saveImage, fillColor } = this.props;
     switch (tool) {
-      case Tools.Pencil:
-        lineWidth = 4;
-        break;
       case 'highlighter':
         tool = Tools.Pencil;
         lineColor = 'rgba(240, 255, 0, 0.5)';
