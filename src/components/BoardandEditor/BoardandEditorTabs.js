@@ -315,6 +315,9 @@ class BoardandEditor extends React.Component {
           enableRemoveSelected: event.target.getAttribute('value') === Tools.Select,
         });
       } else {
+        if (event.target.getAttribute('value') === 'pencil') {
+          this.setState({ ...this.state, lineWidth: 4 });
+        }
         this.setState({
           ...this.state,
 
