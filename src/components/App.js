@@ -45,6 +45,7 @@ class App extends Component {
 
   setMessage = (message, messageType) => {
     // set messages for the notification
+    this.setState({ message, messageType });
   };
 
   toggleJoinModal = () => {
@@ -67,7 +68,7 @@ class App extends Component {
   };
 
   addNotification = () => {
-    const { notificationRef } = this.state;
+    const { notificationRef, message, messageType } = this.state;
     notificationRef.current.addNotification({
       title: 'Awesomeness',
       message: 'Awesome Notifications!',
