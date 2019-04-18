@@ -2,11 +2,12 @@
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     background: #fefcfc;
+    font-size: 16px;
   }
   
   .ql-snow.ql-toolbar {
     display: block;
-    background: rgb(189, 210, 233);
+    background: rgb(224, 202, 245);
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em;
   }

@@ -1,16 +1,11 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import './highlight';
+import hljs from 'highlight.js';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-// import 'highlight.js/styles/tomorrow-night-bright.css';
+import 'highlight.js/styles/an-old-hope.css';
 import './CodeEditor.css';
 // import PropTypes from 'prop-types';
-
-// console.log(window.hljs.listLanguages())
-
-// Applies highlighting to all <pre><code>..</code></pre> blocks on a page.
-window.hljs.initHighlighting();
 
 class CodeEditor extends React.Component {
   constructor(props) {
@@ -18,10 +13,14 @@ class CodeEditor extends React.Component {
     this.state = { text: '' }; // You can also pass a Quill Delta here
     this.handleChange = this.handleChange.bind(this);
     this.theme = 'snow';
+    this.placeholder = 'Let your thoughts flow off your mind. This is where your creativity begins...';
   }
 
+  // Store text as soon as it changes
   handleChange(value) {
     this.setState({ text: value });
+    // var delta = quill.getContents();
+    // console.log(this.state.text)
   }
 
   render() {
@@ -35,8 +34,7 @@ class CodeEditor extends React.Component {
             theme={this.theme}
             modules={CodeEditor.modules}
             formats={CodeEditor.formats}
-            // bounds={'.app'}
-            // placeholder={this.props.placeholder}
+            placeholder={this.placeholder}
           />
         </div>
       </Container>
@@ -45,7 +43,9 @@ class CodeEditor extends React.Component {
 }
 
 CodeEditor.modules = {
-  syntax: true,
+  syntax: {
+    highlight: text => hljs.highlightAuto(text).value,
+  },
   toolbar: [
     [{ font: [] }, { header: [1, 2, 3, 4, 5, 6, false] }],
     [{ align: [] }, { color: [] }, { background: [] }],
@@ -81,14 +81,5 @@ CodeEditor.formats = [
   'video',
   'script',
 ];
-
-// CodeEditor.propTypes = {
-//   placeholder: PropTypes.string,
-// };
-
-// ReactDOM.render(
-//   <CodeEditor placeholder={'Write something...'}/>,
-//   document.querySelector('.app')
-// )
 
 export default CodeEditor;
