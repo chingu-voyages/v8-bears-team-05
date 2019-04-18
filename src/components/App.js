@@ -107,6 +107,7 @@ class App extends Component {
                 changeJoinID={this.handleIDChange}
                 joinID={joinID}
                 setMessage={this.setMessage}
+                addNotification={this.addNotification}
               />
             )}
           />
