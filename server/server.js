@@ -52,13 +52,15 @@ io.of('/boardandeditor').on('connection', socket => {
       // console.log(drawHistory)
       socket.join(id);
     } else {
-      socket.emit('err', `This id: ${id} is already in use.`);
+      socket.emit('success', `Your ID: ${id} is successfully hosted for your meeting.`);
     }
   });
 
   // Joins the user to the existing room
   socket.on('join-room', id => {
-    if (id in drawHistory) {
+    if (id === '') {
+      socket.emit('err', `Your ID field cannot be blank.`);
+    } else if (id in drawHistory) {
       // Cancel deletion if data in deleteData
       if (id in deleteData) {
         clearTimeout(deleteData[id]);
@@ -70,10 +72,13 @@ io.of('/boardandeditor').on('connection', socket => {
       // Get data for drawing
       const sendData = drawHistory[id][drawHistory[id].length - 1];
 
+      // Sends success confirmation
+      socket.emit('join-success', id);
+
       // Draws the canvas for the new socket
       socket.emit('draw-line', sendData);
     } else {
-      socket.emit('err', `The entered id: ${id} is invalid.`);
+      socket.emit('err', `Your entered ID: ${id} is invalid.`);
     }
   });
 
