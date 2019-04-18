@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-access-state-in-setstate */
 import React from 'react';
@@ -11,6 +12,7 @@ import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { saveAs } from 'file-saver';
+
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { BoardContext } from '../../contexts';
@@ -72,17 +74,38 @@ class BoardandEditor extends React.Component {
       displayLineColorPicker: false,
       displayFillColorPicker: false,
     };
+    this.notificationDOMRef = React.createRef();
   }
 
   // Listening for drawing on canvas
   componentDidMount() {
     this.genUniqueID();
 
-    window.onbeforeunload = function() {
+    window.onbeforeunload = () => {
       // Set refresh to sessionStorage before reload
       sessionStorage.setItem('refresh', true);
     };
 
+    // On succesful user join
+    socket.on('join-success', id => {
+      const { toggleJoinModal, setMessage } = this.props;
+
+      // set id state to connect to the socket
+      this.setState({
+        uniqueID: id,
+      });
+
+      // Save unique id to sessionStorage
+      sessionStorage.setItem('uniqueID', id);
+
+      // Close the Modal
+      toggleJoinModal();
+
+      // Show notification
+      setMessage(`You are now joined to ID: ${id}`, 'success');
+    });
+
+    // Draws drawings
     socket.on('draw-line', lineData => {
       const { storeData } = this.state;
 
@@ -155,7 +178,16 @@ class BoardandEditor extends React.Component {
 
     // This socket is triggered on error
     socket.on('err', message => {
-      console.log(message);
+      const { setMessage } = this.props;
+      setMessage(message, 'danger');
+      // console.log(message);
+    });
+
+    // This socket is triggered on success
+    socket.on('success', message => {
+      const { setMessage } = this.props;
+      setMessage(message, 'success');
+      // console.log(message);
     });
   }
 
@@ -203,10 +235,13 @@ class BoardandEditor extends React.Component {
   // create room on host button trigger
   createRoom = () => {
     const { uniqueID } = this.state;
-    const { toggleHostModal } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { toggleHostModal, setMessage } = this.props;
 
     // Close the Modal
     toggleHostModal();
+
+    // set state for message and message color and then call add Notification
 
     // socket emit to join the room
     socket.emit('create-room', uniqueID);
@@ -214,20 +249,9 @@ class BoardandEditor extends React.Component {
 
   // join room on host button trigger
   joinRoom = () => {
-    const { joinID, toggleJoinModal } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { joinID } = this.props;
     const id = joinID;
-    // console.log(this.props.joinID);
-
-    // set id state to connect to the socket
-    this.setState({
-      uniqueID: id,
-    });
-
-    // Save unique id to sessionStorage
-    sessionStorage.setItem('uniqueID', id);
-
-    // Close the Modal
-    toggleJoinModal();
 
     // socket emit to join the room
     socket.emit('join-room', id);
@@ -623,4 +647,5 @@ BoardandEditor.propTypes = {
   joinID: PropTypes.string.isRequired,
   toggleHostModal: PropTypes.func.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
 };
