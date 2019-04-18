@@ -1,3 +1,4 @@
+/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -20,8 +21,15 @@ class App extends Component {
       hostModalOpen: false,
       joinModalOpen: false,
       joinID: '',
+      message: '',
+      messageType: '',
+      notificationRef: {},
     };
   }
+
+  setNotificationRef = notificationRef => {
+    this.setState({ notificationRef });
+  };
 
   toggleHostModal = () => {
     const { location, history } = this.props;
@@ -33,6 +41,10 @@ class App extends Component {
       ...prevState,
       hostModalOpen: !prevState.hostModalOpen,
     }));
+  };
+
+  setMessage = (message, messageType) => {
+    // set messages for the notification
   };
 
   toggleJoinModal = () => {
@@ -54,11 +66,30 @@ class App extends Component {
     // console.log(this.state.joinID)
   };
 
+  addNotification = () => {
+    const { notificationRef } = this.state;
+    notificationRef.current.addNotification({
+      title: 'Awesomeness',
+      message: 'Awesome Notifications!',
+      type: 'danger',
+      insert: 'top',
+      container: 'top-center',
+      animationIn: ['animated', 'fadeIn'],
+      animationOut: ['animated', 'fadeOut'],
+      dismiss: { duration: 3000 },
+      dismissable: { click: true },
+    });
+  };
+
   render() {
     const { hostModalOpen, joinModalOpen, joinID } = this.state;
     return (
       <>
-        <NavBar toggleHostModal={this.toggleHostModal} toggleJoinModal={this.toggleJoinModal} />
+        <NavBar
+          toggleHostModal={this.toggleHostModal}
+          toggleJoinModal={this.toggleJoinModal}
+          setNotificationRef={this.setNotificationRef}
+        />
         <Container fluid className="app">
           <Route
             path="/"
@@ -75,6 +106,7 @@ class App extends Component {
                 toggleJoinModal={this.toggleJoinModal}
                 changeJoinID={this.handleIDChange}
                 joinID={joinID}
+                setMessage={this.setMessage}
               />
             )}
           />

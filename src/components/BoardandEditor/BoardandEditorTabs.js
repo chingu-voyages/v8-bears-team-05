@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-access-state-in-setstate */
 import React from 'react';
@@ -11,6 +12,7 @@ import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { saveAs } from 'file-saver';
+
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { BoardContext } from '../../contexts';
@@ -72,6 +74,7 @@ class BoardandEditor extends React.Component {
       displayLineColorPicker: false,
       displayFillColorPicker: false,
     };
+    this.notificationDOMRef = React.createRef();
   }
 
   // Listening for drawing on canvas
@@ -203,10 +206,13 @@ class BoardandEditor extends React.Component {
   // create room on host button trigger
   createRoom = () => {
     const { uniqueID } = this.state;
-    const { toggleHostModal } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { toggleHostModal, setMessage } = this.props;
 
     // Close the Modal
     toggleHostModal();
+
+    // set state for message and message color and then call add Notification
 
     // socket emit to join the room
     socket.emit('create-room', uniqueID);
@@ -214,9 +220,12 @@ class BoardandEditor extends React.Component {
 
   // join room on host button trigger
   joinRoom = () => {
-    const { joinID, toggleJoinModal } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { joinID, toggleJoinModal, setMessage } = this.props;
     const id = joinID;
     // console.log(this.props.joinID);
+
+    // set state for message and message color and then call add Notification
 
     // set id state to connect to the socket
     this.setState({
@@ -623,4 +632,5 @@ BoardandEditor.propTypes = {
   joinID: PropTypes.string.isRequired,
   toggleHostModal: PropTypes.func.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
 };
