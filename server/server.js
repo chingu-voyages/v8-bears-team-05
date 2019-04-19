@@ -29,6 +29,9 @@ app.get('/', (req, res) => {
 // Stores draw history for all users
 const drawHistory = {};
 
+// Stores text editor for all users
+const textStore = {};
+
 // Stores redo history for all users
 const redoHistory = {};
 
@@ -47,6 +50,7 @@ io.of('/boardandeditor').on('connection', socket => {
   socket.on('create-room', id => {
     if (!(id in drawHistory)) {
       drawHistory[id] = [];
+      textStore[id] = '';
       redoHistory[id] = [];
       userOnline[id] = { online: 1 };
       // console.log(drawHistory)
@@ -69,14 +73,18 @@ io.of('/boardandeditor').on('connection', socket => {
       socket.join(id);
 
       userOnline[id].online += 1;
-      // Get data for drawing
+      // Get data for drawing and text
       const sendData = drawHistory[id][drawHistory[id].length - 1];
+      const textData = textStore[id];
 
       // Sends success confirmation
       socket.emit('join-success', id);
 
       // Draws the canvas for the new socket
       socket.emit('draw-line', sendData);
+
+      // Sends the Text Data for the new socket
+      socket.emit('text-editor', textData);
     } else {
       socket.emit('err', `Your entered ID: ${id} is invalid.`);
     }
@@ -125,7 +133,10 @@ io.of('/boardandeditor').on('connection', socket => {
   // Receive data for text editor
   socket.on('text-editor', res => {
     const id = res.room;
-    socket.broadcast.to(id).emit('text-editor', res.data);
+    if (id in textStore && !textStore[id].includes(res.data)) {
+      textStore[id] = res.data;
+      socket.broadcast.to(id).emit('text-editor', res.data);
+    }
   });
 
   // Clean up memory on disconnect
@@ -143,6 +154,7 @@ io.of('/boardandeditor').on('connection', socket => {
         if (userOnline[roomID].online === 0) {
           deleteData[roomID] = setTimeout(() => {
             delete drawHistory[roomID];
+            delete textStore[roomID];
             delete redoHistory[roomID];
             delete userOnline[roomID];
             delete deleteData[roomID];
