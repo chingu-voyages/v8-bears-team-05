@@ -1,8 +1,12 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/no-unused-state */
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import './highlight';
+// import './highlight';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import highlight from 'highlight.js/lib/highlight';
+import 'highlight.js/styles/tomorrow-night-bright.css';
 // import 'highlight.js/styles/tomorrow-night-bright.css';
 import './CodeEditor.css';
 // import PropTypes from 'prop-types';
@@ -10,42 +14,9 @@ import './CodeEditor.css';
 // console.log(window.hljs.listLanguages())
 
 // Applies highlighting to all <pre><code>..</code></pre> blocks on a page.
-window.hljs.initHighlighting();
-
-class CodeEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: '' }; // You can also pass a Quill Delta here
-    this.handleChange = this.handleChange.bind(this);
-    this.theme = 'snow';
-  }
-
-  handleChange(value) {
-    this.setState({ text: value });
-  }
-
-  render() {
-    const { text } = this.state;
-    return (
-      <Container>
-        <div className="code-editor">
-          <ReactQuill
-            value={text}
-            onChange={this.handleChange}
-            theme={this.theme}
-            modules={CodeEditor.modules}
-            formats={CodeEditor.formats}
-            // bounds={'.app'}
-            // placeholder={this.props.placeholder}
-          />
-        </div>
-      </Container>
-    );
-  }
-}
-
-CodeEditor.modules = {
-  syntax: true,
+// window.hljs.initHighlighting();
+const modules = {
+  // syntax: true,
   toolbar: [
     [{ font: [] }, { header: [1, 2, 3, 4, 5, 6, false] }],
     [{ align: [] }, { color: [] }, { background: [] }],
@@ -60,7 +31,7 @@ CodeEditor.modules = {
   },
 };
 
-CodeEditor.formats = [
+const formats = [
   'header',
   'font',
   'size',
@@ -81,6 +52,47 @@ CodeEditor.formats = [
   'video',
   'script',
 ];
+class CodeEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: '', modules: {}, formats: [] }; // You can also pass a Quill Delta here
+    this.handleChange = this.handleChange.bind(this);
+    this.theme = 'snow';
+  }
+
+  componentDidMount() {
+    this.setState({ modules, formats });
+    console.log(highlight);
+    // highlight.configure({
+    //   // optionally configure hljs
+    //   languages: ['javascript', 'ruby', 'python'],
+    // });
+    // highlight.initHighlighting();
+  }
+
+  handleChange(value) {
+    this.setState({ text: value });
+  }
+
+  render() {
+    const { text, modules, formats } = this.state;
+    return (
+      <Container>
+        <div className="code-editor">
+          <ReactQuill
+            value={text}
+            onChange={this.handleChange}
+            theme={this.theme}
+            modules={modules}
+            formats={formats}
+            // bounds={'.app'}
+            // placeholder={this.props.placeholder}
+          />
+        </div>
+      </Container>
+    );
+  }
+}
 
 // CodeEditor.propTypes = {
 //   placeholder: PropTypes.string,
