@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/an-old-hope.css';
 import './CodeEditor.css';
 // import PropTypes from 'prop-types';
+
 const modules = {
   syntax: {
     highlight: text => hljs.highlightAuto(text).value,
