@@ -307,7 +307,8 @@ class BoardandEditor extends React.Component {
   copyPaste = () => {
     const { sketchRef, enableCopyPaste } = this.state;
 
-    if (enableCopyPaste) {
+    const activeObject = sketchRef._fc.getActiveObject();
+    if (activeObject !== null && activeObject !== undefined && enableCopyPaste) {
       sketchRef.copy();
       sketchRef.paste();
     }
