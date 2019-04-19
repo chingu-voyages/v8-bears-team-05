@@ -45,7 +45,19 @@ class App extends Component {
 
   setMessage = (message, messageType) => {
     // set messages for the notification
-    this.setState({ message, messageType });
+
+    const { notificationRef } = this.state;
+    notificationRef.current.addNotification({
+      // title: 'Awesomeness',
+      message,
+      type: messageType,
+      insert: 'top',
+      container: 'top-center',
+      animationIn: ['animated', 'fadeIn'],
+      animationOut: ['animated', 'fadeOut'],
+      dismiss: { duration: 3000 },
+      dismissable: { click: true },
+    });
   };
 
   toggleJoinModal = () => {
@@ -65,21 +77,6 @@ class App extends Component {
       joinID: e.target.value,
     });
     // console.log(this.state.joinID)
-  };
-
-  addNotification = () => {
-    const { notificationRef, message, messageType } = this.state;
-    notificationRef.current.addNotification({
-      title: 'Awesomeness',
-      message: 'Awesome Notifications!',
-      type: 'danger',
-      insert: 'top',
-      container: 'top-center',
-      animationIn: ['animated', 'fadeIn'],
-      animationOut: ['animated', 'fadeOut'],
-      dismiss: { duration: 3000 },
-      dismissable: { click: true },
-    });
   };
 
   render() {

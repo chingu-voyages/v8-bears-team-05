@@ -52,7 +52,7 @@ io.of('/boardandeditor').on('connection', socket => {
       // console.log(drawHistory)
       socket.join(id);
     } else {
-      socket.emit('success', `Your ID: ${id} is successfully hosted for your meeting.`);
+      socket.emit('success', `This ID: ${id} is successfully hosted for your meeting.`);
     }
   });
 
