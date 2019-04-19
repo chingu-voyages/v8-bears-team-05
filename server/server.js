@@ -96,18 +96,22 @@ io.of('/boardandeditor').on('connection', socket => {
   // undo canvas for all users
   socket.on('undo-canvas', res => {
     const id = res.room;
-    redoHistory[id].push(drawHistory[id].pop());
-    // console.log(redoHistory)
-    socket.broadcast.to(id).emit('undo-canvas');
+    if (id in redoHistory && id in drawHistory) {
+      redoHistory[id].push(drawHistory[id].pop());
+      // console.log(redoHistory)
+      socket.broadcast.to(id).emit('undo-canvas');
+    }
   });
 
   // redo canvas for all users
   socket.on('redo-canvas', res => {
     const id = res.room;
-    const data = redoHistory[id].pop();
-    drawHistory[id].push(data);
-    // console.log(redoHistory)
-    socket.broadcast.to(id).emit('redo-canvas');
+    if (id in redoHistory && id in drawHistory) {
+      const data = redoHistory[id].pop();
+      drawHistory[id].push(data);
+      // console.log(redoHistory)
+      socket.broadcast.to(id).emit('redo-canvas');
+    }
   });
 
   // clear canvas for all users
@@ -116,6 +120,12 @@ io.of('/boardandeditor').on('connection', socket => {
     drawHistory[id].length = 0;
     redoHistory[id].length = 0;
     socket.broadcast.to(id).emit('clear-canvas');
+  });
+
+  // Receive data for text editor
+  socket.on('text-editor', res => {
+    const id = res.room;
+    socket.broadcast.to(id).emit('text-editor', res.data);
   });
 
   // Clean up memory on disconnect

@@ -7,11 +7,11 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { Tools } from 'react-sketch';
 import { Col, Row } from 'react-bootstrap';
-import io from 'socket.io-client';
 import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { saveAs } from 'file-saver';
+import socket from '../../sockets';
 
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
@@ -19,14 +19,6 @@ import { BoardContext } from '../../contexts';
 import ToolBox from '../ToolBox/ToolBox';
 import JoinModal from '../JoinModal/JoinModal';
 import MeetingModal from '../MeetingModal/MeetingModal';
-
-const socket = io('http://localhost:7000/boardandeditor', { transports: ['websocket', 'polling'] });
-
-// Front end Data testing purposes...
-// socket.on('timer', data => {
-//   console.log(data[data.length - 1]);
-//   console.log(data);
-// });
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -102,7 +94,7 @@ class BoardandEditor extends React.Component {
       toggleJoinModal();
 
       // Show notification
-      setMessage(`You are now joined to ID: ${id}`, 'success');
+      setMessage(`You are now connected to ID: ${id}`, 'success');
     });
 
     // Draws drawings
@@ -221,8 +213,12 @@ class BoardandEditor extends React.Component {
       const refresh = sessionStorage.getItem('refresh');
 
       if (refresh === 'true') {
+        const { toggleJoinModal } = this.props;
         // socket emit to join the room
         socket.emit('join-room', id);
+
+        // Toggle Join modal
+        toggleJoinModal();
       } else {
         // socket emit to create the room
         socket.emit('create-room', id);
@@ -236,7 +232,7 @@ class BoardandEditor extends React.Component {
   createRoom = () => {
     const { uniqueID } = this.state;
     // eslint-disable-next-line no-unused-vars
-    const { toggleHostModal, setMessage } = this.props;
+    const { toggleHostModal } = this.props;
 
     // Close the Modal
     toggleHostModal();

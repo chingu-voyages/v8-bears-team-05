@@ -7,6 +7,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/an-old-hope.css';
 import './CodeEditor.css';
+import socket from '../../sockets';
+
 // import PropTypes from 'prop-types';
 
 const modules = {
@@ -53,6 +55,8 @@ class CodeEditor extends React.Component {
     super(props);
     this.state = {
       text: '',
+      socket,
+      sendData: {},
       modules: {},
       formats: [],
       theme: 'snow',
@@ -63,13 +67,30 @@ class CodeEditor extends React.Component {
 
   componentDidMount() {
     this.setState({ ...this.state, modules, formats });
+
+    // Update text for every user connected to the ID
+    socket.on('text-editor', data => {
+      this.setState({ ...this.state, text: data });
+    });
   }
 
   // Store text as soon as it changes
   handleChange(value) {
     this.setState({ text: value });
-    // var delta = quill.getContents();
-    // console.log(this.state.text)
+
+    const { text, sendData } = this.state;
+    const id = sessionStorage.getItem('uniqueID');
+
+    // Clears previous timeout
+    if (id in sendData) {
+      clearTimeout(sendData[id]);
+    }
+
+    // Sets new timeout with the Updated text
+    sendData[id] = setTimeout(() => {
+      // Pings all connnected users ecery 1.5 secs
+      socket.emit('text-editor', { room: id, data: text });
+    }, 1500);
   }
 
   render() {
