@@ -73,8 +73,8 @@ class BoardandEditor extends React.Component {
   componentDidMount() {
     this.genUniqueID();
 
+    // Set refresh to sessionStorage before reload
     window.onbeforeunload = () => {
-      // Set refresh to sessionStorage before reload
       sessionStorage.setItem('refresh', true);
     };
 
@@ -183,7 +183,7 @@ class BoardandEditor extends React.Component {
     });
   }
 
-  // Add a comment here @Iliyas
+  // Show/Hide image drop modal
   toggleModal = () => {
     this.setState(prevState => ({
       modalShow: !prevState.modalShow,

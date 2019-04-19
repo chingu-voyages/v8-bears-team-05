@@ -24,7 +24,7 @@ const modules = {
     [{ script: 'sub' }, { script: 'super' }],
   ],
   clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
+    // Toggle to add extra line breaks when pasting HTML:
     matchVisual: false,
   },
 };
