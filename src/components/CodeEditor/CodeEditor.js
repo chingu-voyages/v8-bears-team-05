@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/no-access-state-in-setstate */
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import hljs from 'highlight.js';
@@ -6,43 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/an-old-hope.css';
 import './CodeEditor.css';
 // import PropTypes from 'prop-types';
-
-class CodeEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: '' }; // You can also pass a Quill Delta here
-    this.handleChange = this.handleChange.bind(this);
-    this.theme = 'snow';
-    this.placeholder = 'Let your thoughts flow off your mind. This is where your creativity begins...';
-  }
-
-  // Store text as soon as it changes
-  handleChange(value) {
-    this.setState({ text: value });
-    // var delta = quill.getContents();
-    // console.log(this.state.text)
-  }
-
-  render() {
-    const { text } = this.state;
-    return (
-      <Container>
-        <div className="code-editor">
-          <ReactQuill
-            value={text}
-            onChange={this.handleChange}
-            theme={this.theme}
-            modules={CodeEditor.modules}
-            formats={CodeEditor.formats}
-            placeholder={this.placeholder}
-          />
-        </div>
-      </Container>
-    );
-  }
-}
-
-CodeEditor.modules = {
+const modules = {
   syntax: {
     highlight: text => hljs.highlightAuto(text).value,
   },
@@ -60,7 +26,7 @@ CodeEditor.modules = {
   },
 };
 
-CodeEditor.formats = [
+const formats = [
   'header',
   'font',
   'size',
@@ -81,5 +47,47 @@ CodeEditor.formats = [
   'video',
   'script',
 ];
+class CodeEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: '',
+      modules: {},
+      formats: [],
+      theme: 'snow',
+      placeholder: 'Let your thoughts flow off your mind. This is where your creativity begins...',
+    }; // You can also pass a Quill Delta here
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({ ...this.state, modules, formats });
+  }
+
+  // Store text as soon as it changes
+  handleChange(value) {
+    this.setState({ text: value });
+    // var delta = quill.getContents();
+    // console.log(this.state.text)
+  }
+
+  render() {
+    const { text, modules, formats, theme, placeholder } = this.state;
+    return (
+      <Container>
+        <div className="code-editor">
+          <ReactQuill
+            value={text}
+            onChange={this.handleChange}
+            theme={theme}
+            modules={modules}
+            formats={formats}
+            placeholder={placeholder}
+          />
+        </div>
+      </Container>
+    );
+  }
+}
 
 export default CodeEditor;
