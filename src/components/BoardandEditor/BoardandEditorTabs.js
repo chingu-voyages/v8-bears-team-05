@@ -304,6 +304,15 @@ class BoardandEditor extends React.Component {
     saveAs(sketchRef.toDataURL(), 'doodlelive.png');
   };
 
+  copyPaste = () => {
+    const { sketchRef, enableCopyPaste } = this.state;
+
+    if (enableCopyPaste) {
+      sketchRef.copy();
+      sketchRef.paste();
+    }
+  };
+
   // handle width change
   onRangeChanged = value => {
     this.setState({
@@ -625,6 +634,7 @@ class BoardandEditor extends React.Component {
                   handleLinePickerClick={this.handleLinePickerClick}
                   displayFillColorPicker={displayFillColorPicker}
                   handleFillPickerClick={this.handleFillPickerClick}
+                  copyPaste={this.copyPaste}
                 />
               ) : null}
             </Col>

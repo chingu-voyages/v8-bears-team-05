@@ -19,6 +19,7 @@ import {
   faSearchPlus,
   faSearchMinus,
   faPencilRuler,
+  faCopy,
 } from '@fortawesome/free-solid-svg-icons';
 import Range from 'react-range-progress';
 import { Tools } from 'react-sketch';
@@ -57,6 +58,7 @@ const ToolBox = ({
   displayFillColorPicker,
   handleFillColorChange,
   handleFillPickerClick,
+  copyPaste,
 }) => {
   return (
     <>
@@ -76,6 +78,7 @@ const ToolBox = ({
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
         <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
         <Tool selectTool={highlightTool} tool="highlighter" iconName={faHighlighter} selectedTool={selectedTool} />
+        <Tool selectTool={copyPaste} tool="copy" iconName={faCopy} selectedTool={selectedTool} />
 
         <Tool selectTool={zoomIn} tool="zoomin" iconName={faSearchPlus} selectedTool={selectedTool} />
         <Tool selectTool={zoomOut} tool="zoomout" iconName={faSearchMinus} selectedTool={selectedTool} />
@@ -172,6 +175,7 @@ ToolBox.propTypes = {
   addTextOpen: PropTypes.bool.isRequired,
   clickAddText: PropTypes.func.isRequired,
   addText: PropTypes.func.isRequired,
+  copyPaste: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
   highlightTool: PropTypes.func.isRequired,
   handleLinePickerClick: PropTypes.func.isRequired,
