@@ -168,18 +168,10 @@ class BoardandEditor extends React.Component {
       });
     });
 
-    // This socket is triggered on error
-    socket.on('err', message => {
+    // This socket sends notfication to the users
+    socket.on('notify', res => {
       const { setMessage } = this.props;
-      setMessage(message, 'danger');
-      // console.log(message);
-    });
-
-    // This socket is triggered on success
-    socket.on('success', message => {
-      const { setMessage } = this.props;
-      setMessage(message, 'success');
-      // console.log(message);
+      setMessage(res.message, res.type);
     });
   }
 
