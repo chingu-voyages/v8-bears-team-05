@@ -48,7 +48,12 @@ class Chatapp extends Component {
     const { chatOpen, user, messages, noOfUsers, unreadMessages, text } = this.state;
     return (
       <div className="chat-app">
-        <ChatHeader toggleChat={this.toggleChat} noOfUsers={noOfUsers} unreadMessages={unreadMessages} />
+        <ChatHeader
+          toggleChat={this.toggleChat}
+          noOfUsers={noOfUsers}
+          unreadMessages={unreadMessages}
+          chatOpen={chatOpen}
+        />
         <div style={chatOpen ? { display: 'block' } : { display: 'none' }} className="chat-container">
           <ChatBox user={user} messages={messages} />
           <InputGroup className="mb-1">
