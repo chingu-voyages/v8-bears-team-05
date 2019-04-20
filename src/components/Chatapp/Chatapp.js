@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
@@ -54,7 +55,11 @@ class Chatapp extends Component {
           unreadMessages={unreadMessages}
           chatOpen={chatOpen}
         />
-        <div style={chatOpen ? { display: 'block' } : { display: 'none' }} className="chat-container">
+        <div
+          style={chatOpen ? { display: 'block' } : { display: 'none' }}
+          className="chat-container"
+          onKeyDown={this.handleKeyDown}
+        >
           <ChatBox user={user} messages={messages} />
           <InputGroup className="mb-1">
             <FormControl

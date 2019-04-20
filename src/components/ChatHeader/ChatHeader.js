@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 
 import './ChatHeader.css';
 
-const ChatHeader = ({ toggleChat, unreadMessages, noOfUsers, chatOpen }) => {
+const ChatHeader = ({ toggleChat, unreadMessages, noOfUsers }) => {
   return (
     <div className="chat-header" onClick={toggleChat}>
-      {unreadMessages > 0 && !chatOpen && <span className="notification">{unreadMessages}</span>}
-      <span>Message</span>
-      {noOfUsers > 0 && <span className="online-status">{noOfUsers} online</span>}
+      <span className="unread-count">{unreadMessages}</span>
+      <span> Message(s) </span>
+      <span className="user-online">Online</span>
+      <span className="user-online user-count">{noOfUsers} </span>
     </div>
   );
 };
@@ -19,6 +20,5 @@ ChatHeader.propTypes = {
   toggleChat: PropTypes.func.isRequired,
   unreadMessages: PropTypes.number.isRequired,
   noOfUsers: PropTypes.number.isRequired,
-  chatOpen: PropTypes.bool.isRequired,
 };
 export default ChatHeader;

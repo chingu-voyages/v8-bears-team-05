@@ -12,15 +12,24 @@
   font-size: 1.4rem;
   font-weight: bold;
 }
-.chat-header span.notification {
-  display: inline-block;
-  background-color: firebrick;
+
+.unread-count {
+  padding: 4px;
+
+  margin-right: 5px;
+  align-content: center;
+  background: #500894;
   border-radius: 50%;
-  text-align: center;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.2rem;
 }
-.online-status {
-  text-align: right;
+
+.user-online {
+  float: right !important;
+}
+
+.user-count {
+  padding: 4px;
+  margin-right: 5px;
+  align-content: center;
+  background: #500894;
+  border-radius: 50%;
 }
