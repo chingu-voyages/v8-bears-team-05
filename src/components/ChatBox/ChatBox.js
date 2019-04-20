@@ -23,7 +23,7 @@ const ChatBox = ({ messages, user }) => {
 };
 
 ChatBox.propTypes = {
-  messages: PropTypes.object.isRequired,
+  messages: PropTypes.array.isRequired,
   user: PropTypes.string.isRequired,
 };
 

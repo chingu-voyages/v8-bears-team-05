@@ -8,9 +8,9 @@ import './ChatHeader.css';
 const ChatHeader = ({ toggleChat, unreadMessages, noOfUsers }) => {
   return (
     <div className="chat-header" onClick={toggleChat}>
-      <span>{unreadMessages}</span>
+      {unreadMessages > 0 && <span>{unreadMessages}</span>}
       <span>Message</span>
-      <span>{noOfUsers} online</span>
+      {noOfUsers > 0 && <span>{noOfUsers} online</span>}
     </div>
   );
 };

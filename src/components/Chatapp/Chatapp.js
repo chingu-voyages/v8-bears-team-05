@@ -21,18 +21,19 @@ class Chatapp extends Component {
   addUser = () => {
     // add user
     const { text } = this.state;
-    this.setState({ user: text });
-    this.messageInput.value = '';
+    this.setState({ user: text, text: '' });
   };
 
   sendMessage = () => {
     // send message
     const { text, messages, user } = this.state;
-    this.setState({
-      ...this.state,
-      messages: [...messages, { user, content: text }],
-    });
-    this.messageInput.value = '';
+    if (text) {
+      this.setState({
+        ...this.state,
+        messages: [...messages, { user, content: text }],
+        text: '',
+      });
+    }
   };
 
   setText = e => {
@@ -44,7 +45,7 @@ class Chatapp extends Component {
   };
 
   render() {
-    const { chatOpen, user, messages, noOfUsers, unreadMessages } = this.state;
+    const { chatOpen, user, messages, noOfUsers, unreadMessages, text } = this.state;
     return (
       <div className="chat-app">
         <ChatHeader toggleChat={this.toggleChat} noOfUsers={noOfUsers} unreadMessages={unreadMessages} />
@@ -57,8 +58,8 @@ class Chatapp extends Component {
               onChange={this.setText}
               aria-label="Username"
               aria-describedby="send message"
+              value={text}
               // eslint-disable-next-line no-return-assign
-              ref={r => (this.messageInput = r)}
             />
             <InputGroup.Append>
               <Button variant="primary" onClick={user ? this.sendMessage : this.addUser}>
