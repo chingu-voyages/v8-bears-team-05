@@ -14,10 +14,11 @@
 }
 
 .unread-count {
-  padding: 4px;
-
+  width: 20px;
+  height: 20px;
   margin-right: 5px;
-  align-content: center;
+  text-align: center;
+  display: inline-block;
   background: #500894;
   border-radius: 50%;
 }
@@ -27,9 +28,12 @@
 }
 
 .user-count {
-  padding: 4px;
   margin-right: 5px;
-  align-content: center;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  text-align: center;
   background: #500894;
   border-radius: 50%;
 }
