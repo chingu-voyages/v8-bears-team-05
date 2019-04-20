@@ -1,0 +1,28 @@
+.message {
+  background: #8a2be2;
+  position: relative;
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+  border-radius: 1rem;
+  list-style: none;
+  float: left;
+  clear: both;
+  margin-top: 0.4rem;
+  min-width: 5rem;
+  max-width: 10rem;
+  color: #fff;
+}
+.message.left {
+  text-align: left;
+}
+
+.message h5 {
+  margin: 0;
+  font-size: 1rem;
+  color: rgb(224, 202, 245);
+}
+.message.right {
+  float: right;
+  clear: both;
+  text-align: right;
+}

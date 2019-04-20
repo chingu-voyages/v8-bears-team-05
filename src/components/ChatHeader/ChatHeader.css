@@ -1,0 +1,14 @@
+.chat-header {
+  width: 28rem;
+  height: 4rem;
+  background-color: #8a2be2;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.288);
+}
+.chat-header span {
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: bold;
+}

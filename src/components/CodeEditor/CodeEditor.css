@@ -11,7 +11,7 @@
 
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
-  background-color: rgb(224, 202, 245);;
+  background-color: rgb(224, 202, 245);
 }
 
 .ql-editor {
@@ -23,10 +23,8 @@
   width: 100%;
 
   position: relative;
-  /* overflow: auto; */
 }
 
 .quill {
   height: 100%;
-  /* overflow: auto; */
 }

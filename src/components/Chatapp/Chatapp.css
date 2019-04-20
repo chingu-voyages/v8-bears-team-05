@@ -1,0 +1,15 @@
+.chat-app {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+}
+.send-message {
+  font-size: 2rem;
+}
+.chat-container {
+  width: 28rem;
+}
+.message-input {
+  height: 3rem;
+  font-size: 1.4rem;
+}
