@@ -1,9 +1,7 @@
 .message {
-  background: #8a2be2;
   position: relative;
   padding: 0.5rem 1rem;
   font-size: 1.4rem;
-  border-radius: 1rem;
   list-style: none;
   float: left;
   clear: both;
@@ -12,8 +10,11 @@
   max-width: 10rem;
   color: #fff;
 }
+
 .message.left {
   text-align: left;
+  background: #68408d;
+  border-radius: 0rem 1rem 1rem 1rem;
 }
 
 .message h5 {
@@ -21,8 +22,11 @@
   font-size: 1rem;
   color: rgb(224, 202, 245);
 }
+
 .message.right {
   float: right;
   clear: both;
   text-align: right;
+  background: #9666c2;
+  border-radius: 1rem 0rem 1rem 1rem;
 }
