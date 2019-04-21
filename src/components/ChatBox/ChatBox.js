@@ -1,27 +1,51 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import enterProfile from '../../assets/undraw_profile_data_mk6k.svg';
 import Message from '../Message/Message';
 import './ChatBox.css';
 
-const ChatBox = ({ messages, user }) => {
-  return (
-    <div className="chat-box">
-      {user ? (
-        messages.map((message, index) => <Message message={message} user={user} index={index} key={index} />)
-      ) : (
-        <div className="add-user-prompt">
-          <div className="add-user-border">
-            <img src={enterProfile} alt="" />
-            <span>Add your username to continue...</span>
+class ChatBox extends Component {
+  componentDidMount() {
+    console.log(this.scrollTo);
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    console.log(this.scrollTo);
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.scrollTo.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  render() {
+    const { messages, user } = this.props;
+    return (
+      <div className="chat-box">
+        {user ? (
+          messages.map((message, index) => <Message message={message} user={user} index={index} key={index} />)
+        ) : (
+          <div className="add-user-prompt">
+            <div className="add-user-border">
+              <img src={enterProfile} alt="" />
+              <span>Add your username to continue...</span>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+        )}
+        <div
+          className="scrolltobottom"
+          ref={el => {
+            this.scrollTo = el;
+          }}
+        />
+      </div>
+    );
+  }
+}
 
 ChatBox.propTypes = {
   messages: PropTypes.array.isRequired,

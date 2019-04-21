@@ -121,7 +121,7 @@ class Chatapp extends Component {
   render() {
     const { chatOpen, user, messages, noOfUsers, unreadMessages, text } = this.state;
     return (
-      <div className="chat-app" onBlur={this.toggleChat}>
+      <div className="chat-app">
         <ChatHeader
           toggleChat={this.toggleChat}
           noOfUsers={noOfUsers}
