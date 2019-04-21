@@ -22,6 +22,16 @@ class Chatapp extends Component {
   };
 
   componentDidMount() {
+    this.setUser();
+
+    // Loads up prev chat history for the new user
+    socket.on('join-chat', messages => {
+      this.setState({
+        ...this.state,
+        messages,
+      });
+    });
+
     // Receives new message from the connected users
     socket.on('chat-history', newMessage => {
       const { messages } = this.state;
@@ -32,10 +42,20 @@ class Chatapp extends Component {
     });
   }
 
+  // Resets the user on refresh
+  setUser = () => {
+    if (sessionStorage.getItem('refresh') === 'true') {
+      const user = sessionStorage.getItem('user');
+      this.setState({ user });
+    }
+  };
+
   addUser = () => {
     // add user
     const { text } = this.state;
     this.setState({ user: text, text: '' });
+
+    sessionStorage.setItem('user', text);
   };
 
   sendMessage = () => {

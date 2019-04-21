@@ -80,15 +80,19 @@ io.of('/boardandeditor').on('connection', socket => {
       // Get data for drawing and text
       const sendData = drawHistory[id][drawHistory[id].length - 1];
       const textData = textStore[id];
+      const chatData = chatHistory[id];
 
       // Sends success confirmation
       socket.emit('join-success', id);
 
-      // Draws the canvas for the new socket
+      // Draws the canvas to the new socket
       socket.emit('draw-line', sendData);
 
-      // Sends the Text Data for the new socket
+      // Sends the Text Data to the new socket
       socket.emit('text-editor', textData);
+
+      // Sends the Chat Data to the new socket
+      socket.emit('join-chat', chatData);
     } else {
       socket.emit('err', `Your entered ID: ${id} is invalid.`);
     }
@@ -168,6 +172,7 @@ io.of('/boardandeditor').on('connection', socket => {
           deleteData[roomID] = setTimeout(() => {
             delete drawHistory[roomID];
             delete textStore[roomID];
+            delete chatHistory[roomID];
             delete redoHistory[roomID];
             delete userOnline[roomID];
             delete deleteData[roomID];
