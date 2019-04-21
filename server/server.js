@@ -32,6 +32,9 @@ const drawHistory = {};
 // Stores text editor for all users
 const textStore = {};
 
+// Stores user chat history
+const chatHistory = {};
+
 // Stores redo history for all users
 const redoHistory = {};
 
@@ -51,6 +54,7 @@ io.of('/boardandeditor').on('connection', socket => {
     if (!(id in drawHistory)) {
       drawHistory[id] = [];
       textStore[id] = '';
+      chatHistory[id] = [];
       redoHistory[id] = [];
       userOnline[id] = { online: 1 };
       // console.log(drawHistory)
@@ -136,6 +140,15 @@ io.of('/boardandeditor').on('connection', socket => {
     if (id in textStore && !textStore[id].includes(res.data)) {
       textStore[id] = res.data;
       socket.broadcast.to(id).emit('text-editor', res.data);
+    }
+  });
+
+  // Store chat history of the users
+  socket.on('chat-history', res => {
+    const id = res.room;
+    if (id in chatHistory) {
+      chatHistory[id].push(res.data);
+      socket.broadcast.to(id).emit('chat-history', res.data);
     }
   });
 

@@ -8,6 +8,7 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import ChatHeader from '../ChatHeader/ChatHeader';
 import ChatBox from '../ChatBox/ChatBox';
 import './Chatapp.css';
+import socket from '../../sockets';
 
 class Chatapp extends Component {
   state = {
@@ -18,6 +19,17 @@ class Chatapp extends Component {
     noOfUsers: 1,
     unreadMessages: 0,
   };
+
+  componentDidMount() {
+    // Receives new message from the connected users
+    socket.on('chat-history', newMessage => {
+      const { messages } = this.state;
+      this.setState({
+        ...this.state,
+        messages: [...messages, newMessage],
+      });
+    });
+  }
 
   addUser = () => {
     // add user
@@ -34,6 +46,9 @@ class Chatapp extends Component {
         messages: [...messages, { user, content: text }],
         text: '',
       });
+
+      const id = sessionStorage.getItem('uniqueID');
+      socket.emit('chat-history', { room: id, data: { user, content: text } });
     }
   };
 
