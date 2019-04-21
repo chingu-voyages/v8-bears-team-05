@@ -9,7 +9,7 @@ const ChatBox = ({ messages, user }) => {
   return (
     <div className="chat-box">
       {user ? (
-        messages.map(message => <Message message={message} user={user} />)
+        messages.map((message, index) => <Message message={message} user={user} index={index} />)
       ) : (
         <div className="add-user-prompt">
           <div className="add-user-border">
