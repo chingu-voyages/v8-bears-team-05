@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -9,7 +10,7 @@ const ChatBox = ({ messages, user }) => {
   return (
     <div className="chat-box">
       {user ? (
-        messages.map((message, index) => <Message message={message} user={user} index={index} />)
+        messages.map((message, index) => <Message message={message} user={user} index={index} key={index} />)
       ) : (
         <div className="add-user-prompt">
           <div className="add-user-border">
