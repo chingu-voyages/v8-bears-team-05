@@ -102,7 +102,6 @@ class Chatapp extends Component {
         ...this.state,
         unreadMessages: 0,
       });
-
       // Sets Focus to Message Input
       setTimeout(() => {
         document.querySelector('.message-input').focus();
@@ -130,8 +129,7 @@ class Chatapp extends Component {
           chatOpen={chatOpen}
         />
         <div
-          style={chatOpen ? { display: 'block' } : { display: 'none' }}
-          className="chat-container"
+          className={chatOpen ? 'chat-open chat-container' : 'chat-close chat-container'}
           onKeyDown={this.handleKeyDown}
         >
           <ChatBox user={user} messages={messages} />
