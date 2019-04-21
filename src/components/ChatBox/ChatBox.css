@@ -8,6 +8,25 @@
   justify-content: center;
   align-items: center; */
 }
+.chat-box::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+/* Track */
+.chat-box::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.chat-box::-webkit-scrollbar-thumb {
+  background: rgb(199, 199, 199);
+  border-radius: 2rem;
+}
+
+/* Handle on hover */
+.chat-box::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 .add-user-prompt img {
   width: 15rem;
   height: 15rem;
