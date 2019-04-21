@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-unused-state */
@@ -58,6 +59,13 @@ class Chatapp extends Component {
 
   toggleChat = () => {
     this.setState(prevState => ({ chatOpen: !prevState.chatOpen }));
+  };
+
+  handleKeyDown = e => {
+    const { user } = this.state;
+    if (e.which === 13) {
+      user ? this.sendMessage() : this.addUser();
+    }
   };
 
   render() {
