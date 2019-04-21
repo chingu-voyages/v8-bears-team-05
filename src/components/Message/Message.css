@@ -13,7 +13,7 @@
 
 .message.left {
   text-align: left;
-  background: #68408d;
+  background: #8044b8;
   border-radius: 0rem 1rem 1rem 1rem;
 }
 
@@ -27,6 +27,6 @@
   float: right;
   clear: both;
   text-align: right;
-  background: #9666c2;
+  background: #9e58e0;
   border-radius: 1rem 0rem 1rem 1rem;
 }

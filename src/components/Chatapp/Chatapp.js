@@ -30,6 +30,15 @@ class Chatapp extends Component {
         ...this.state,
         messages,
       });
+
+      // Set Unread count
+      const { chatOpen } = this.state;
+      if (!chatOpen) {
+        this.setState({
+          ...this.state,
+          unreadMessages: messages.length,
+        });
+      }
     });
 
     // Receives new message from the connected users
@@ -39,6 +48,15 @@ class Chatapp extends Component {
         ...this.state,
         messages: [...messages, newMessage],
       });
+
+      // Add Unread count
+      const { chatOpen, unreadMessages } = this.state;
+      if (!chatOpen) {
+        this.setState({
+          ...this.state,
+          unreadMessages: unreadMessages + 1,
+        });
+      }
     });
   }
 
@@ -78,6 +96,15 @@ class Chatapp extends Component {
   };
 
   toggleChat = () => {
+    // Set Unread count to 0
+    const { chatOpen } = this.state;
+    if (!chatOpen) {
+      this.setState({
+        ...this.state,
+        unreadMessages: 0,
+      });
+    }
+
     this.setState(prevState => ({ chatOpen: !prevState.chatOpen }));
   };
 
