@@ -103,6 +103,11 @@ class Chatapp extends Component {
         ...this.state,
         unreadMessages: 0,
       });
+
+      // Sets Focus to Message Input
+      setTimeout(() => {
+        document.querySelector('.message-input').focus();
+      }, 100);
     }
 
     this.setState(prevState => ({ chatOpen: !prevState.chatOpen }));
