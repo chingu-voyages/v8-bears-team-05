@@ -96,7 +96,13 @@ io.of('/boardandeditor').on('connection', socket => {
       socket.emit('text-editor', textData);
 
       // Sends the Chat Data to the new socket
-      socket.emit('join-chat', chatData);
+      socket.emit('join-chat', { online: userOnline[id].online, messages: chatData });
+
+      // Updates Online Count of every user except newly added user
+      socket.to(id).emit('online-count', userOnline[id].online);
+
+      // Notifies all users except the newly added user
+      socket.to(id).emit('notify', { message: `A new user has been connected to this ID: ${id}.`, type: 'success' });
     } else {
       socket.emit('notify', { message: `Your entered ID: ${id} is invalid.`, type: 'danger' });
     }
@@ -170,6 +176,9 @@ io.of('/boardandeditor').on('connection', socket => {
       // console.log(roomID)
       if (roomID in userOnline) {
         userOnline[roomID].online -= 1;
+
+        // Updates Online Count of every user except newly added user
+        socket.to(roomID).emit('online-count', userOnline[roomID].online);
 
         // Wipe data if the user does not come back within a minute
         if (userOnline[roomID].online === 0) {

@@ -14,7 +14,7 @@ import socket from '../../sockets';
 class Chatapp extends Component {
   state = {
     messages: [],
-    user: '',
+    user: sessionStorage.getItem('user') || '',
     text: '',
     chatOpen: false,
     noOfUsers: 1,
@@ -22,13 +22,12 @@ class Chatapp extends Component {
   };
 
   componentDidMount() {
-    this.setUser();
-
     // Loads up prev chat history for the new user
-    socket.on('join-chat', messages => {
+    socket.on('join-chat', res => {
       this.setState({
         ...this.state,
-        messages,
+        messages: res.messages,
+        noOfUsers: res.online,
       });
 
       // Set Unread count
@@ -36,9 +35,17 @@ class Chatapp extends Component {
       if (!chatOpen) {
         this.setState({
           ...this.state,
-          unreadMessages: messages.length,
+          unreadMessages: res.messages.length,
         });
       }
+    });
+
+    // Updates number of online users
+    socket.on('online-count', count => {
+      this.setState({
+        ...this.state,
+        noOfUsers: count,
+      });
     });
 
     // Receives new message from the connected users
@@ -59,14 +66,6 @@ class Chatapp extends Component {
       }
     });
   }
-
-  // Resets the user on refresh
-  setUser = () => {
-    if (sessionStorage.getItem('refresh') === 'true') {
-      const user = sessionStorage.getItem('user');
-      this.setState({ user });
-    }
-  };
 
   addUser = () => {
     // add user
