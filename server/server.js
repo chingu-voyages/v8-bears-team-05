@@ -59,15 +59,19 @@ io.of('/boardandeditor').on('connection', socket => {
       userOnline[id] = { online: 1 };
       // console.log(drawHistory)
       socket.join(id);
+      socket.emit('notify', {
+        message: `You aren't connected to the server yet. Tap 'Host a meeting' or 'Join a Meeting' to start the meeting.`,
+        type: 'warning',
+      });
     } else {
-      socket.emit('success', `This ID: ${id} is successfully hosted for your meeting.`);
+      socket.emit('notify', { message: `This ID: ${id} is successfully hosted for your meeting.`, type: 'success' });
     }
   });
 
   // Joins the user to the existing room
   socket.on('join-room', id => {
     if (id === '') {
-      socket.emit('err', `Your ID field cannot be blank.`);
+      socket.emit('notify', { message: `Your ID field cannot be blank.`, type: 'danger' });
     } else if (id in drawHistory) {
       // Cancel deletion if data in deleteData
       if (id in deleteData) {
@@ -94,7 +98,7 @@ io.of('/boardandeditor').on('connection', socket => {
       // Sends the Chat Data to the new socket
       socket.emit('join-chat', chatData);
     } else {
-      socket.emit('err', `Your entered ID: ${id} is invalid.`);
+      socket.emit('notify', { message: `Your entered ID: ${id} is invalid.`, type: 'danger' });
     }
   });
 
