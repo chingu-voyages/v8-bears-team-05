@@ -64,6 +64,15 @@ class Chatapp extends Component {
           unreadMessages: unreadMessages + 1,
         });
       }
+      const { scrollHeight } = this.chatlist;
+      const height = this.chatlist.clientHeight;
+      const maxScrollTop = scrollHeight - height;
+      console.log(this.chatlist.scrollTop, maxScrollTop);
+      if (maxScrollTop - this.chatlist.scrollTop <= 50) {
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 100);
+      }
     });
   }
 
@@ -87,7 +96,9 @@ class Chatapp extends Component {
 
       const id = sessionStorage.getItem('uniqueID');
       socket.emit('chat-history', { room: id, data: { user, content: text } });
-      this.scrollToBottom();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 10);
     }
   };
 
@@ -147,7 +158,7 @@ class Chatapp extends Component {
               this.chatlist = el;
             }}
           />
-          <InputGroup className="mb-1">
+          <InputGroup className="mb-2">
             <FormControl
               className="message-input"
               placeholder="send message..."
