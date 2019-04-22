@@ -87,6 +87,7 @@ class Chatapp extends Component {
 
       const id = sessionStorage.getItem('uniqueID');
       socket.emit('chat-history', { room: id, data: { user, content: text } });
+      this.scrollToBottom();
     }
   };
 
@@ -118,6 +119,13 @@ class Chatapp extends Component {
     }
   };
 
+  scrollToBottom = () => {
+    const { scrollHeight } = this.chatlist;
+    const height = this.chatlist.clientHeight;
+    const maxScrollTop = scrollHeight - height;
+    this.chatlist.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  };
+
   render() {
     const { chatOpen, user, messages, noOfUsers, unreadMessages, text } = this.state;
     return (
@@ -132,7 +140,13 @@ class Chatapp extends Component {
           className={chatOpen ? 'chat-open chat-container' : 'chat-close chat-container'}
           onKeyDown={this.handleKeyDown}
         >
-          <ChatBox user={user} messages={messages} />
+          <ChatBox
+            user={user}
+            messages={messages}
+            chatListRef={el => {
+              this.chatlist = el;
+            }}
+          />
           <InputGroup className="mb-1">
             <FormControl
               className="message-input"

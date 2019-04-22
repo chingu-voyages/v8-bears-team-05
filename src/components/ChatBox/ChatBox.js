@@ -2,30 +2,17 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
 import enterProfile from '../../assets/undraw_profile_data_mk6k.svg';
 import Message from '../Message/Message';
 import './ChatBox.css';
 
 class ChatBox extends Component {
-  componentDidMount() {
-    console.log(this.scrollTo);
-    this.scrollToBottom();
-  }
-
-  componentDidUpdate() {
-    console.log(this.scrollTo);
-    this.scrollToBottom();
-  }
-
-  scrollToBottom = () => {
-    this.scrollTo.scrollIntoView({ behavior: 'smooth' });
-  };
-
   render() {
-    const { messages, user } = this.props;
+    const { messages, user, chatListRef } = this.props;
     return (
-      <div className="chat-box">
+      <div className="chat-box" ref={chatListRef}>
         {user ? (
           messages.map((message, index) => <Message message={message} user={user} index={index} key={index} />)
         ) : (
@@ -36,12 +23,6 @@ class ChatBox extends Component {
             </div>
           </div>
         )}
-        <div
-          className="scrolltobottom"
-          ref={el => {
-            this.scrollTo = el;
-          }}
-        />
       </div>
     );
   }
@@ -49,6 +30,7 @@ class ChatBox extends Component {
 
 ChatBox.propTypes = {
   messages: PropTypes.array.isRequired,
+  chatListRef: PropTypes.array.isRequired,
   user: PropTypes.string.isRequired,
 };
 

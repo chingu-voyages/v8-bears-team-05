@@ -24,3 +24,7 @@
   transition: max-height 0.15s ease-out;
   overflow: hidden;
 }
+.scrolltobottom {
+  position: relative;
+  bottom: 40px;
+}
