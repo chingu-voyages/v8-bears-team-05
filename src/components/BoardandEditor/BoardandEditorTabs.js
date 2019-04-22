@@ -545,6 +545,13 @@ class BoardandEditor extends React.Component {
     sketchRef.addText(text);
   };
 
+  handleKeyDown = e => {
+    if (e.which === 13) {
+      e.preventDefault();
+      this.joinRoom();
+    }
+  };
+
   render() {
     const {
       key,
@@ -575,6 +582,7 @@ class BoardandEditor extends React.Component {
           toggleJoinModal={toggleJoinModal}
           joinRoom={this.joinRoom}
           changeJoinID={changeJoinID}
+          handleKeyDown={this.handleKeyDown}
         />
         <Container id="board">
           <Row>
