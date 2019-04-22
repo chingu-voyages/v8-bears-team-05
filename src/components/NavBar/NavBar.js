@@ -43,7 +43,6 @@ class NavBar extends Component {
                 <Nav.Link href="" onClick={toggleHostModal}>
                   Host a meeting
                 </Nav.Link>
-                <Nav.Link href="#whiteboard">White Board</Nav.Link>
                 <Nav.Link href="#signin">Sign in</Nav.Link>
                 <Button variant="success" href="#signup">
                   Sign up
