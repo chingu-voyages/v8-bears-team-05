@@ -147,7 +147,7 @@ class Chatapp extends Component {
   render() {
     const { chatOpen, user, messages, noOfUsers, unreadMessages, text } = this.state;
     return (
-      <Draggable axis="x" bounds={{ left: -910, right: 30 }}>
+      <Draggable axis="x" bounds={{ left: -910, right: 30 }} disabled={chatOpen}>
         <div className="chat-app">
           <ChatHeader
             toggleChat={this.toggleChat}
