@@ -2,7 +2,7 @@ import React from 'react';
 import './Logo.css';
 
 const logo = () => {
-  return <div className="logo">Collab Live</div>;
+  return <div className="logo">Doodle Live</div>;
 };
 
 export default logo;
