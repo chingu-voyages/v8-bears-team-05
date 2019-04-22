@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import Draggable from 'react-draggable';
 import ChatHeader from '../ChatHeader/ChatHeader';
 import ChatBox from '../ChatBox/ChatBox';
 import './Chatapp.css';
@@ -146,42 +147,44 @@ class Chatapp extends Component {
   render() {
     const { chatOpen, user, messages, noOfUsers, unreadMessages, text } = this.state;
     return (
-      <div className="chat-app">
-        <ChatHeader
-          toggleChat={this.toggleChat}
-          noOfUsers={noOfUsers}
-          unreadMessages={unreadMessages}
-          chatOpen={chatOpen}
-        />
-        <div
-          className={chatOpen ? 'chat-open chat-container' : 'chat-close chat-container'}
-          onKeyDown={this.handleKeyDown}
-        >
-          <ChatBox
-            user={user}
-            messages={messages}
-            chatListRef={el => {
-              this.chatlist = el;
-            }}
+      <Draggable axis="x" bounds={{ left: -910, right: 30 }}>
+        <div className="chat-app">
+          <ChatHeader
+            toggleChat={this.toggleChat}
+            noOfUsers={noOfUsers}
+            unreadMessages={unreadMessages}
+            chatOpen={chatOpen}
           />
-          <InputGroup className="mb-2">
-            <FormControl
-              className="message-input"
-              placeholder="send message..."
-              onChange={this.setText}
-              aria-label="Username"
-              aria-describedby="send message"
-              value={text}
-              // eslint-disable-next-line no-return-assign
+          <div
+            className={chatOpen ? 'chat-open chat-container' : 'chat-close chat-container'}
+            onKeyDown={this.handleKeyDown}
+          >
+            <ChatBox
+              user={user}
+              messages={messages}
+              chatListRef={el => {
+                this.chatlist = el;
+              }}
             />
-            <InputGroup.Append>
-              <Button variant="primary" onClick={user ? this.sendMessage : this.addUser}>
-                <FontAwesomeIcon icon={faPaperPlane} />
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
+            <InputGroup className="mb-2">
+              <FormControl
+                className="message-input"
+                placeholder="send message..."
+                onChange={this.setText}
+                aria-label="Username"
+                aria-describedby="send message"
+                value={text}
+                // eslint-disable-next-line no-return-assign
+              />
+              <InputGroup.Append>
+                <Button variant="primary" onClick={user ? this.sendMessage : this.addUser}>
+                  <FontAwesomeIcon icon={faPaperPlane} />
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </div>
         </div>
-      </div>
+      </Draggable>
     );
   }
 }

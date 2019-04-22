@@ -11,6 +11,7 @@ import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { saveAs } from 'file-saver';
+
 import socket from '../../sockets';
 import Chatapp from '../Chatapp/Chatapp';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
@@ -630,6 +631,7 @@ class BoardandEditor extends React.Component {
                   copyPaste={this.copyPaste}
                 />
               ) : null}
+
               <Chatapp />
             </Col>
           </Row>
