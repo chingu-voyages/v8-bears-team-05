@@ -30,7 +30,7 @@ class ChatBox extends Component {
 
 ChatBox.propTypes = {
   messages: PropTypes.array.isRequired,
-  chatListRef: PropTypes.array.isRequired,
+  chatListRef: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
 };
 
