@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-access-state-in-setstate */
 import React from 'react';
@@ -6,25 +7,18 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { Tools } from 'react-sketch';
 import { Col, Row } from 'react-bootstrap';
-import io from 'socket.io-client';
 import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { saveAs } from 'file-saver';
+import socket from '../../sockets';
+
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { BoardContext } from '../../contexts';
 import ToolBox from '../ToolBox/ToolBox';
 import JoinModal from '../JoinModal/JoinModal';
 import MeetingModal from '../MeetingModal/MeetingModal';
-
-const socket = io('http://localhost:7000/boardandeditor', { transports: ['websocket', 'polling'] });
-
-// Front end Data testing purposes...
-// socket.on('timer', data => {
-//   console.log(data[data.length - 1]);
-//   console.log(data);
-// });
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -72,17 +66,38 @@ class BoardandEditor extends React.Component {
       displayLineColorPicker: false,
       displayFillColorPicker: false,
     };
+    this.notificationDOMRef = React.createRef();
   }
 
   // Listening for drawing on canvas
   componentDidMount() {
     this.genUniqueID();
 
-    window.onbeforeunload = function() {
-      // Set refresh to sessionStorage before reload
+    // Set refresh to sessionStorage before reload
+    window.onbeforeunload = () => {
       sessionStorage.setItem('refresh', true);
     };
 
+    // On succesful user join
+    socket.on('join-success', id => {
+      const { toggleJoinModal, setMessage } = this.props;
+
+      // set id state to connect to the socket
+      this.setState({
+        uniqueID: id,
+      });
+
+      // Save unique id to sessionStorage
+      sessionStorage.setItem('uniqueID', id);
+
+      // Close the Modal
+      toggleJoinModal();
+
+      // Show notification
+      setMessage(`You are now connected to ID: ${id}`, 'success');
+    });
+
+    // Draws drawings
     socket.on('draw-line', lineData => {
       const { storeData } = this.state;
 
@@ -153,13 +168,14 @@ class BoardandEditor extends React.Component {
       });
     });
 
-    // This socket is triggered on error
-    socket.on('err', message => {
-      console.log(message);
+    // This socket sends notfication to the users
+    socket.on('notify', res => {
+      const { setMessage } = this.props;
+      setMessage(res.message, res.type);
     });
   }
 
-  // Add a comment here @Iliyas
+  // Show/Hide image drop modal
   toggleModal = () => {
     this.setState(prevState => ({
       modalShow: !prevState.modalShow,
@@ -189,8 +205,12 @@ class BoardandEditor extends React.Component {
       const refresh = sessionStorage.getItem('refresh');
 
       if (refresh === 'true') {
+        const { toggleJoinModal } = this.props;
         // socket emit to join the room
         socket.emit('join-room', id);
+
+        // Toggle Join modal
+        toggleJoinModal();
       } else {
         // socket emit to create the room
         socket.emit('create-room', id);
@@ -203,10 +223,13 @@ class BoardandEditor extends React.Component {
   // create room on host button trigger
   createRoom = () => {
     const { uniqueID } = this.state;
+    // eslint-disable-next-line no-unused-vars
     const { toggleHostModal } = this.props;
 
     // Close the Modal
     toggleHostModal();
+
+    // set state for message and message color and then call add Notification
 
     // socket emit to join the room
     socket.emit('create-room', uniqueID);
@@ -214,20 +237,9 @@ class BoardandEditor extends React.Component {
 
   // join room on host button trigger
   joinRoom = () => {
-    const { joinID, toggleJoinModal } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { joinID } = this.props;
     const id = joinID;
-    // console.log(this.props.joinID);
-
-    // set id state to connect to the socket
-    this.setState({
-      uniqueID: id,
-    });
-
-    // Save unique id to sessionStorage
-    sessionStorage.setItem('uniqueID', id);
-
-    // Close the Modal
-    toggleJoinModal();
 
     // socket emit to join the room
     socket.emit('join-room', id);
@@ -282,6 +294,16 @@ class BoardandEditor extends React.Component {
 
     // console.log(sketchRef.toDataURL());
     saveAs(sketchRef.toDataURL(), 'doodlelive.png');
+  };
+
+  copyPaste = () => {
+    const { sketchRef, enableCopyPaste } = this.state;
+
+    const activeObject = sketchRef._fc.getActiveObject();
+    if (activeObject !== null && activeObject !== undefined && enableCopyPaste) {
+      sketchRef.copy();
+      sketchRef.paste();
+    }
   };
 
   // handle width change
@@ -605,6 +627,7 @@ class BoardandEditor extends React.Component {
                   handleLinePickerClick={this.handleLinePickerClick}
                   displayFillColorPicker={displayFillColorPicker}
                   handleFillPickerClick={this.handleFillPickerClick}
+                  copyPaste={this.copyPaste}
                 />
               ) : null}
             </Col>
@@ -623,4 +646,5 @@ BoardandEditor.propTypes = {
   joinID: PropTypes.string.isRequired,
   toggleHostModal: PropTypes.func.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
 };

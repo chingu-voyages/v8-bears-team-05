@@ -1,0 +1,32 @@
+.ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #fefcfc;
+  font-size: 16px;
+  height: 87%;
+}
+
+.ql-snow.ql-toolbar {
+  display: block;
+
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background-color: rgb(224, 202, 245);;
+}
+
+.ql-editor {
+  height: 100%;
+  width: 65vw;
+}
+
+.code-editor {
+  width: 100%;
+
+  position: relative;
+  /* overflow: auto; */
+}
+
+.quill {
+  height: 100%;
+  /* overflow: auto; */
+}

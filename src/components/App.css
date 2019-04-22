@@ -4,8 +4,29 @@
   border-color: #d3d3d3;
   border-width: 0 1px 1px 1px;
   height: 80vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.code-editor {
+  border: 0;
+}
+.notification-item-root {
+  position: relative;
+  top: -2.5rem;
+  width: 70rem;
+}
+.notification-success {
+  border-left: 0;
+}
+.notification-danger {
+  border-left: 0;
+}
+.notification-title {
+  display: none;
+}
+.notification-content {
+  text-align: center;
 }
