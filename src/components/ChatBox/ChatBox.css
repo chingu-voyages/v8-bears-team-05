@@ -3,6 +3,8 @@
   border: 1px solid #b6b6b6;
   border-bottom: none;
   background-color: #fff;
+  background-image: url('../../assets/chat-back.png');
+  background-position: 50% 70%;
   overflow-y: auto;
   position: relative;
   /* display: flex;

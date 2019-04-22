@@ -5,16 +5,19 @@
   list-style: none;
   float: left;
   clear: both;
-  margin-top: 0.4rem;
-  min-width: 5rem;
-  max-width: 10rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  min-width: 2rem;
+  max-width: 20rem;
   color: #fff;
+  word-wrap: break-word;
 }
 
 .message.left {
   text-align: left;
   background: #8044b8;
   border-radius: 0rem 1rem 1rem 1rem;
+  margin-left: 2px;
 }
 
 .message h5 {
@@ -29,4 +32,5 @@
   text-align: right;
   background: #9e58e0;
   border-radius: 1rem 0rem 1rem 1rem;
+  margin-right: 2px;
 }
