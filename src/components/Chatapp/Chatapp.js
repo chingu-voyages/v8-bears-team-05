@@ -78,10 +78,16 @@ class Chatapp extends Component {
 
   addUser = () => {
     // add user
-    const { text } = this.state;
+    let { text } = this.state;
+
+    // Capitalize initials
+    text = text.charAt(0).toUpperCase() + text.slice(1);
     this.setState({ user: text, text: '' });
 
     sessionStorage.setItem('user', text);
+
+    const id = sessionStorage.getItem('uniqueID');
+    socket.emit('chat-notify', { room: id, data: text });
   };
 
   sendMessage = () => {

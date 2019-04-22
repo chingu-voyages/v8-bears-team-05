@@ -102,7 +102,7 @@ io.of('/boardandeditor').on('connection', socket => {
       socket.to(id).emit('online-count', userOnline[id].online);
 
       // Notifies all users except the newly added user
-      socket.to(id).emit('notify', { message: `A new user has been connected to this ID: ${id}.`, type: 'success' });
+      socket.to(id).emit('notify', { message: `A new user has been connected to this ID: ${id}.`, type: 'info' });
     } else {
       socket.emit('notify', { message: `Your entered ID: ${id} is invalid.`, type: 'danger' });
     }
@@ -164,6 +164,12 @@ io.of('/boardandeditor').on('connection', socket => {
       chatHistory[id].push(res.data);
       socket.broadcast.to(id).emit('chat-history', res.data);
     }
+  });
+
+  // Notify others about user available to chat
+  socket.on('chat-notify', res => {
+    const id = res.room;
+    socket.broadcast.to(id).emit('notify', { message: `${res.data} is now available to chat.`, type: 'default' });
   });
 
   // Clean up memory on disconnect
