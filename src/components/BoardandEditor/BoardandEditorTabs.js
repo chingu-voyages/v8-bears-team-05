@@ -177,7 +177,6 @@ class BoardandEditor extends React.Component {
 
       // Stop trigger when join or host Modal open
       if (res.toggle === false && (joinModalOpen || hostModalOpen)) {
-        console.log(res.toggletoggle);
         return;
       }
       setMessage(res.message, res.type);
@@ -568,7 +567,7 @@ class BoardandEditor extends React.Component {
       displayLineColorPicker,
       displayFillColorPicker,
     } = this.state;
-    const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal, changeJoinID } = this.props;
+    const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal, changeJoinID, setMessage } = this.props;
     return (
       <div style={{ position: 'relative' }}>
         <MeetingModal
@@ -606,7 +605,7 @@ class BoardandEditor extends React.Component {
                   </BoardContext.Provider>
                 </Tab>
                 <Tab eventKey="codeeditor" title="TextEditor">
-                  <CodeEditor />
+                  <CodeEditor setMessage={setMessage} />
                 </Tab>
               </Tabs>
             </Col>
