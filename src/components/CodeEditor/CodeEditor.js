@@ -103,7 +103,7 @@ class CodeEditor extends React.Component {
     const { setMessage } = this.props;
 
     if (text === '<p><br></p>' || text === '') {
-      setMessage('Please scribble something before you download this document.', 'warning');
+      setMessage('Scribble before you download this document.', 'warning');
     } else {
       const html = document.querySelector('.ql-editor').innerHTML;
       let finalHtml = '<html><head><meta charset="UTF-8"></head><body>';

@@ -104,7 +104,7 @@ class BoardandEditor extends React.Component {
     socket.on('draw-line', lineData => {
       const { storeData } = this.state;
 
-      if (!storeData.includes(lineData)) {
+      if (!storeData.includes(lineData) && lineData !== null) {
         this.setState({
           controlledValue: lineData,
         });
@@ -294,10 +294,17 @@ class BoardandEditor extends React.Component {
   };
 
   downloadImage = () => {
-    const { sketchRef } = this.state;
+    const { sketchRef, storeData } = this.state;
+    const { setMessage } = this.props;
 
-    // console.log(sketchRef.toDataURL());
-    saveAs(sketchRef.toDataURL(), 'doodlelive.png');
+    if (storeData.length !== 0) {
+      // console.log(sketchRef.toDataURL());
+      saveAs(sketchRef.toDataURL(), 'doodlelive.png');
+      console.log(storeData.length);
+      console.log(storeData);
+    } else {
+      setMessage('Doodle before you download this image.', 'warning');
+    }
   };
 
   copyPaste = () => {
