@@ -81,7 +81,7 @@ class BoardandEditor extends React.Component {
 
     // On succesful user join
     socket.on('join-success', id => {
-      const { toggleJoinModal, setMessage } = this.props;
+      const { joinModalOpen, toggleJoinModal, setMessage } = this.props;
 
       // set id state to connect to the socket
       this.setState({
@@ -92,10 +92,12 @@ class BoardandEditor extends React.Component {
       sessionStorage.setItem('uniqueID', id);
 
       // Close the Modal
-      toggleJoinModal();
+      if (joinModalOpen) {
+        toggleJoinModal();
 
-      // Show notification
-      setMessage(`You are now connected to ID: ${id}`, 'success');
+        // Show notification
+        setMessage(`Yippee! You are now connected to ID: ${id}`, 'success');
+      }
     });
 
     // Draws drawings
@@ -171,7 +173,13 @@ class BoardandEditor extends React.Component {
 
     // This socket sends notfication to the users
     socket.on('notify', res => {
-      const { setMessage } = this.props;
+      const { setMessage, joinModalOpen, hostModalOpen } = this.props;
+
+      // Stop trigger when join or host Modal open
+      if (res.toggle === false && (joinModalOpen || hostModalOpen)) {
+        console.log(res.toggletoggle);
+        return;
+      }
       setMessage(res.message, res.type);
     });
   }
@@ -206,12 +214,8 @@ class BoardandEditor extends React.Component {
       const refresh = sessionStorage.getItem('refresh');
 
       if (refresh === 'true') {
-        const { toggleJoinModal } = this.props;
         // socket emit to join the room
         socket.emit('join-room', id);
-
-        // Toggle Join modal
-        toggleJoinModal();
       } else {
         // socket emit to create the room
         socket.emit('create-room', id);

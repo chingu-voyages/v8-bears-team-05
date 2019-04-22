@@ -62,6 +62,7 @@ io.of('/boardandeditor').on('connection', socket => {
       socket.emit('notify', {
         message: `You aren't connected to the server yet. Tap 'Host a meeting' or 'Join a Meeting' to start the meeting.`,
         type: 'warning',
+        toggle: false,
       });
     } else {
       socket.emit('notify', { message: `This ID: ${id} is successfully hosted for your meeting.`, type: 'success' });
