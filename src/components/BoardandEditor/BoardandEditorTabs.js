@@ -557,6 +557,13 @@ class BoardandEditor extends React.Component {
     sketchRef.addText(text);
   };
 
+  handleKeyEnter = e => {
+    if (e.which === 13) {
+      e.preventDefault();
+      this.addText();
+    }
+  };
+
   handleKeyDown = e => {
     if (e.which === 13) {
       e.preventDefault();
@@ -668,6 +675,7 @@ class BoardandEditor extends React.Component {
                   displayFillColorPicker={displayFillColorPicker}
                   handleFillPickerClick={this.handleFillPickerClick}
                   copyPaste={this.copyPaste}
+                  handleKeyEnter={this.handleKeyEnter}
                 />
               ) : null}
 
