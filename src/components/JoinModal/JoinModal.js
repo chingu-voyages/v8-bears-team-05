@@ -20,7 +20,12 @@ const JoinModal = ({ joinModalOpen, toggleJoinModal, joinRoom, changeJoinID, han
         <Form>
           <Form.Group className="join-modal-form" onKeyDown={handleKeyDown}>
             <Form.Label className="join-modal-title">Enter ID</Form.Label>
-            <Form.Control type="text" placeholder="Enter ID here..." onChange={e => changeJoinID(e)} />
+            <Form.Control
+              className="input-id"
+              type="text"
+              placeholder="Enter ID here..."
+              onChange={e => changeJoinID(e)}
+            />
 
             <Button variant="primary" className="join-modal-button" onClick={joinRoom}>
               Join
