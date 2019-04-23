@@ -64,9 +64,18 @@ class App extends Component {
 
   toggleJoinModal = () => {
     const { location, history } = this.props;
+    const { joinModalOpen } = this.state;
     if (location.pathname === '/') {
       history.push('/boardandeditor');
     }
+
+    if (!joinModalOpen) {
+      // Sets Focus to ID Input
+      setTimeout(() => {
+        document.querySelector('.input-id').focus();
+      }, 100);
+    }
+
     this.setState(prevState => ({
       ...prevState,
       joinModalOpen: !prevState.joinModalOpen,
