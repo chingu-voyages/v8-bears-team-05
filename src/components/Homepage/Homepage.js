@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
@@ -44,6 +45,8 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
             </div>
           </div>
           <main>
+            <h1 className="feature-title">FEATURES</h1>
+            <hr />
             <div className="feature container-fluid">
               <Card>
                 <Card.Body>
@@ -105,7 +108,7 @@ Homepage.propTypes = {
   history: PropTypes.object.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
   authenticateModalOpen: PropTypes.bool.isRequired,
-  typeofauthentication: PropTypes.array.isRequired,
+  typeofauthentication: PropTypes.string,
 };
 
 export default withRouter(Homepage);

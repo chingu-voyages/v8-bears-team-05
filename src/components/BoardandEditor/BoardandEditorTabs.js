@@ -686,5 +686,6 @@ BoardandEditor.propTypes = {
   setMessage: PropTypes.func.isRequired,
   authenticateModalOpen: PropTypes.bool.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
-  typeofauthentication: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  typeofauthentication: PropTypes.string,
 };
