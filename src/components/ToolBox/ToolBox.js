@@ -91,7 +91,7 @@ const ToolBox = ({
       <Collapse in={addTextOpen}>
         <Form>
           <Form.Group className="form-group">
-            <Form.Control type="text" placeholder="Enter Text here..." onChange={setText} />
+            <Form.Control className="input-text" type="text" placeholder="Enter Text here..." onChange={setText} />
             <Button variant="light" onClick={addText}>
               <FontAwesomeIcon icon={faPlus} />
             </Button>

@@ -544,6 +544,11 @@ class BoardandEditor extends React.Component {
         selectedTool: e.target.getAttribute('value'),
       });
     }
+
+    // Sets Focus to Input Text
+    setTimeout(() => {
+      document.querySelector('.input-text').focus();
+    }, 100);
   };
 
   addText = () => {
