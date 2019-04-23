@@ -20,6 +20,7 @@ import { BoardContext } from '../../contexts';
 import ToolBox from '../ToolBox/ToolBox';
 import JoinModal from '../JoinModal/JoinModal';
 import MeetingModal from '../MeetingModal/MeetingModal';
+import AuthenticateModal from '../authenticateModal/authenticateModal';
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -574,7 +575,17 @@ class BoardandEditor extends React.Component {
       displayLineColorPicker,
       displayFillColorPicker,
     } = this.state;
-    const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal, changeJoinID, setMessage } = this.props;
+    const {
+      hostModalOpen,
+      joinModalOpen,
+      toggleHostModal,
+      toggleJoinModal,
+      changeJoinID,
+      setMessage,
+      authenticateModalOpen,
+      typeofauthentication,
+      toggleAuthenticateModal,
+    } = this.props;
     return (
       <div style={{ position: 'relative' }}>
         <MeetingModal
@@ -589,6 +600,11 @@ class BoardandEditor extends React.Component {
           joinRoom={this.joinRoom}
           changeJoinID={changeJoinID}
           handleKeyDown={this.handleKeyDown}
+        />
+        <AuthenticateModal
+          authenticateModalOpen={authenticateModalOpen}
+          toggleAuthenticateModal={toggleAuthenticateModal}
+          typeofauthentication={typeofauthentication}
         />
         <Container id="board">
           <Row>
@@ -668,4 +684,7 @@ BoardandEditor.propTypes = {
   toggleHostModal: PropTypes.func.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
+  authenticateModalOpen: PropTypes.bool.isRequired,
+  toggleAuthenticateModal: PropTypes.func.isRequired,
+  typeofauthentication: PropTypes.string.isRequired,
 };

@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import BoardandEditor from './BoardandEditor/BoardandEditorTabs';
 import Homepage from './Homepage/Homepage';
 import NavBar from './NavBar/NavBar';
+import AuthenticateModal from './authenticateModal/authenticateModal';
 
 import './App.css';
 
@@ -24,6 +25,7 @@ class App extends Component {
       message: '',
       messageType: '',
       notificationRef: {},
+      authenticateModalOpen: false,
     };
   }
 
@@ -79,20 +81,45 @@ class App extends Component {
     // console.log(this.state.joinID)
   };
 
+  toggleAuthenticateModal = value => {
+    this.setState(prevState => ({
+      authenticateModalOpen: !prevState.authenticateModalOpen,
+      typeofauthentication: value,
+    }));
+  };
+
   render() {
-    const { hostModalOpen, joinModalOpen, joinID } = this.state;
+    const {
+      hostModalOpen,
+      joinModalOpen,
+      joinID,
+      authenticateModalOpen,
+      toggleAuthenticateModal,
+      typeofauthentication,
+    } = this.state;
     return (
       <>
         <NavBar
           toggleHostModal={this.toggleHostModal}
           toggleJoinModal={this.toggleJoinModal}
           setNotificationRef={this.setNotificationRef}
+          authenticateModalOpen={authenticateModalOpen}
+          toggleAuthenticateModal={this.toggleAuthenticateModal}
         />
+
         <Container fluid className="app">
           <Route
             path="/"
             exact
-            render={() => <Homepage joinModalOpen={joinModalOpen} toggleJoinModal={this.toggleJoinModal} />}
+            render={() => (
+              <Homepage
+                joinModalOpen={joinModalOpen}
+                toggleJoinModal={this.toggleJoinModal}
+                toggleAuthenticateModal={this.toggleAuthenticateModal}
+                authenticateModalOpen={authenticateModalOpen}
+                typeofauthentication={typeofauthentication}
+              />
+            )}
           />
           <Route
             path="/boardandeditor"
@@ -105,6 +132,9 @@ class App extends Component {
                 changeJoinID={this.handleIDChange}
                 joinID={joinID}
                 setMessage={this.setMessage}
+                authenticateModalOpen={authenticateModalOpen}
+                toggleAuthenticateModal={this.toggleAuthenticateModal}
+                typeofauthentication={typeofauthentication}
               />
             )}
           />

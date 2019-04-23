@@ -10,8 +10,9 @@ import undrawPairProgramming from '../../assets/undraw_pair_programming_njlp.svg
 import whiteboard from '../../assets/whiteboard.svg';
 import code from '../../assets/software.svg';
 import videoCall from '../../assets/video-call (1).svg';
+import AuthenticateModal from '../authenticateModal/authenticateModal';
 
-const Homepage = ({ history }) => {
+const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typeofauthentication }) => {
   const onStart = () => {
     history.push('/boardandeditor');
     sessionStorage.setItem('refresh', false);
@@ -19,6 +20,11 @@ const Homepage = ({ history }) => {
 
   return (
     <>
+      <AuthenticateModal
+        authenticateModalOpen={authenticateModalOpen}
+        toggleAuthenticateModal={toggleAuthenticateModal}
+        typeofauthentication={typeofauthentication}
+      />
       <div>
         <div>
           <div className="hero-container container">
@@ -97,6 +103,9 @@ const Homepage = ({ history }) => {
 
 Homepage.propTypes = {
   history: PropTypes.object.isRequired,
+  toggleAuthenticateModal: PropTypes.func.isRequired,
+  authenticateModalOpen: PropTypes.bool.isRequired,
+  typeofauthentication: PropTypes.array.isRequired,
 };
 
 export default withRouter(Homepage);
