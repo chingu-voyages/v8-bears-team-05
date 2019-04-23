@@ -69,7 +69,7 @@ class Chatapp extends Component {
       const height = this.chatlist.clientHeight;
       const maxScrollTop = scrollHeight - height;
       // console.log(this.chatlist.scrollTop, maxScrollTop);
-      if (maxScrollTop - this.chatlist.scrollTop <= 100) {
+      if (maxScrollTop - this.chatlist.scrollTop <= 250) {
         setTimeout(() => {
           this.scrollToBottom();
         }, 100);
