@@ -9,6 +9,7 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import Draggable from 'react-draggable';
 import ChatHeader from '../ChatHeader/ChatHeader';
 import ChatBox from '../ChatBox/ChatBox';
+import messageReceived from '../../assets/App Store Purchase Sound Effect.wav';
 import './Chatapp.css';
 import socket from '../../sockets';
 
@@ -68,6 +69,10 @@ class Chatapp extends Component {
       const { scrollHeight } = this.chatlist;
       const height = this.chatlist.clientHeight;
       const maxScrollTop = scrollHeight - height;
+
+      const messageReceivedAudio = new Audio(messageReceived);
+      messageReceivedAudio.volume = 0.3;
+      messageReceivedAudio.play();
       // console.log(this.chatlist.scrollTop, maxScrollTop);
       if (maxScrollTop - this.chatlist.scrollTop <= 250) {
         setTimeout(() => {
