@@ -88,6 +88,11 @@ class App extends Component {
     }));
   };
 
+  goToHome = () => {
+    const { history } = this.props;
+    history.push('/');
+  };
+
   render() {
     const {
       hostModalOpen,
@@ -105,6 +110,7 @@ class App extends Component {
           setNotificationRef={this.setNotificationRef}
           authenticateModalOpen={authenticateModalOpen}
           toggleAuthenticateModal={this.toggleAuthenticateModal}
+          goToHome={this.goToHome}
         />
 
         <Container fluid className="app">

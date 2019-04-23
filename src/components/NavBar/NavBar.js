@@ -21,14 +21,14 @@ class NavBar extends Component {
   }
 
   render() {
-    const { toggleHostModal, toggleJoinModal, toggleAuthenticateModal } = this.props;
+    const { toggleHostModal, toggleJoinModal, toggleAuthenticateModal, goToHome } = this.props;
 
     return (
       <>
         <ReactNotification ref={this.notificationDOMRef} />
         <Navbar className="py-4" bg="light" expand="lg">
           <Container>
-            <Navbar.Brand href="#">
+            <Navbar.Brand href="" onClick={goToHome}>
               <Logo />
             </Navbar.Brand>
 
@@ -63,6 +63,7 @@ NavBar.propTypes = {
   toggleJoinModal: PropTypes.func.isRequired,
   setNotificationRef: PropTypes.func.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
+  goToHome: PropTypes.func.isRequired,
 };
 
 export default NavBar;
