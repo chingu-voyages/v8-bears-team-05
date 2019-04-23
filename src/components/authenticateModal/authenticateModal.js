@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -16,7 +17,7 @@ const authenticateModal = ({ authenticateModalOpen, toggleAuthenticateModal, typ
 authenticateModal.propTypes = {
   authenticateModalOpen: PropTypes.bool.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
-  typeofauthentication: PropTypes.string.isRequired,
+  typeofauthentication: PropTypes.string,
 };
 
 export default authenticateModal;
