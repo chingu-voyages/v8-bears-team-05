@@ -234,8 +234,6 @@ class BoardandEditor extends React.Component {
     // Close the Modal
     toggleHostModal();
 
-    // set state for message and message color and then call add Notification
-
     // socket emit to join the room
     socket.emit('create-room', uniqueID);
   };
@@ -243,11 +241,16 @@ class BoardandEditor extends React.Component {
   // join room on host button trigger
   joinRoom = () => {
     // eslint-disable-next-line no-unused-vars
-    const { joinID } = this.props;
+    const { joinID, setMessage } = this.props;
     const id = joinID;
+    const prevID = sessionStorage.getItem('uniqueID');
 
-    // socket emit to join the room
-    socket.emit('join-room', id);
+    if (prevID !== id) {
+      // socket emit to join the room
+      socket.emit('join-room', id);
+    } else {
+      setMessage(`You are already connected to this ID: ${id}.`, 'danger');
+    }
   };
 
   handleLinePickerClick = () => {
@@ -301,8 +304,6 @@ class BoardandEditor extends React.Component {
     if (storeData.length !== 0) {
       // console.log(sketchRef.toDataURL());
       saveAs(sketchRef.toDataURL(), 'doodlelive.png');
-      console.log(storeData.length);
-      console.log(storeData);
     } else {
       setMessage('Doodle before you download this image.', 'warning');
     }
