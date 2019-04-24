@@ -21,21 +21,23 @@ class NavBar extends Component {
   }
 
   render() {
-    const { toggleHostModal, toggleJoinModal } = this.props;
+    const { toggleHostModal, toggleJoinModal, toggleAuthenticateModal, goToHome, pushToAbout } = this.props;
 
     return (
       <>
         <ReactNotification ref={this.notificationDOMRef} />
         <Navbar className="py-4" bg="light" expand="lg">
           <Container>
-            <Navbar.Brand href="#">
+            <Navbar.Brand href="" onClick={goToHome}>
               <Logo />
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
               <Nav>
-                <Nav.Link href="#aboutus">About us</Nav.Link>
+                <Nav.Link href="#aboutus" onClick={pushToAbout}>
+                  About us
+                </Nav.Link>
 
                 <Nav.Link href="" onClick={toggleJoinModal}>
                   Join a meeting
@@ -43,9 +45,10 @@ class NavBar extends Component {
                 <Nav.Link href="" onClick={toggleHostModal}>
                   Host a meeting
                 </Nav.Link>
-                <Nav.Link href="#whiteboard">White Board</Nav.Link>
-                <Nav.Link href="#signin">Sign in</Nav.Link>
-                <Button variant="success" href="#signup">
+                <Nav.Link href="" onClick={() => toggleAuthenticateModal('Sign in')}>
+                  Sign in
+                </Nav.Link>
+                <Button variant="success" href="" onClick={() => toggleAuthenticateModal('Sign up')}>
                   Sign up
                 </Button>
               </Nav>
@@ -61,6 +64,9 @@ NavBar.propTypes = {
   toggleHostModal: PropTypes.func.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
   setNotificationRef: PropTypes.func.isRequired,
+  toggleAuthenticateModal: PropTypes.func.isRequired,
+  goToHome: PropTypes.func.isRequired,
+  pushToAbout: PropTypes.func.isRequired,
 };
 
 export default NavBar;

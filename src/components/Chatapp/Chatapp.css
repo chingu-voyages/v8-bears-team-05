@@ -1,0 +1,30 @@
+.chat-app {
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+}
+.send-message {
+  font-size: 2rem;
+}
+.chat-container {
+  width: 28rem;
+}
+.message-input {
+  height: 3rem;
+  font-size: 1.4rem;
+}
+.chat-open {
+  max-height: 50rem;
+  height: auto;
+  transition: max-height 0.25s ease-in;
+}
+.chat-close {
+  max-height: 0;
+
+  transition: max-height 0.15s ease-out;
+  overflow: hidden;
+}
+.scrolltobottom {
+  position: relative;
+  bottom: 40px;
+}

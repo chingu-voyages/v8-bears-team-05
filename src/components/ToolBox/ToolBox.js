@@ -57,6 +57,7 @@ const ToolBox = ({
   handleLineColorChange,
   displayFillColorPicker,
   handleFillColorChange,
+  handleKeyEnter,
   handleFillPickerClick,
   copyPaste,
 }) => {
@@ -90,8 +91,8 @@ const ToolBox = ({
       </div>
       <Collapse in={addTextOpen}>
         <Form>
-          <Form.Group className="form-group">
-            <Form.Control type="text" placeholder="Enter Text here..." onChange={setText} />
+          <Form.Group className="form-group" onKeyDown={handleKeyEnter}>
+            <Form.Control className="input-text" type="text" placeholder="Enter Text here..." onChange={setText} />
             <Button variant="light" onClick={addText}>
               <FontAwesomeIcon icon={faPlus} />
             </Button>
@@ -183,5 +184,6 @@ ToolBox.propTypes = {
   displayFillColorPicker: PropTypes.bool.isRequired,
   handleFillPickerClick: PropTypes.func.isRequired,
   handleFillColorChange: PropTypes.func.isRequired,
+  handleKeyEnter: PropTypes.func.isRequired,
 };
 export default ToolBox;

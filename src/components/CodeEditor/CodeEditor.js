@@ -1,12 +1,15 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/no-access-state-in-setstate */
 import React from 'react';
-import Container from 'react-bootstrap/Container';
+import { Container, Button } from 'react-bootstrap';
 import hljs from 'highlight.js';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/an-old-hope.css';
 import './CodeEditor.css';
+import htmlDocx from 'html-docx-js/dist/html-docx';
+import { saveAs } from 'file-saver';
+import PropTypes from 'prop-types';
 import socket from '../../sockets';
 
 // import PropTypes from 'prop-types';
@@ -63,6 +66,7 @@ class CodeEditor extends React.Component {
       placeholder: 'Let your thoughts flow off your mind. This is where your creativity begins...',
     }; // You can also pass a Quill Delta here
     this.handleChange = this.handleChange.bind(this);
+    this.SaveDoc = this.SaveDoc.bind(this);
   }
 
   componentDidMount() {
@@ -88,15 +92,37 @@ class CodeEditor extends React.Component {
 
     // Sets new timeout with the Updated text
     sendData[id] = setTimeout(() => {
-      // Pings all connnected users ecery 1.5 secs
+      // Pings all connnected users ecery 1 secs
       socket.emit('text-editor', { room: id, data: text });
-    }, 1500);
+    }, 1000);
+  }
+
+  // Save as word document
+  SaveDoc() {
+    const { text } = this.state;
+    const { setMessage } = this.props;
+
+    if (text === '<p><br></p>' || text === '') {
+      setMessage('Scribble before you download this document.', 'warning');
+    } else {
+      const html = document.querySelector('.ql-editor').innerHTML;
+      let finalHtml = '<html><head><meta charset="UTF-8"></head><body>';
+      finalHtml += html;
+      finalHtml += '</body></html>';
+
+      const converted = htmlDocx.asBlob(finalHtml);
+      const docName = 'doodleDoc.docx';
+      saveAs(converted, docName);
+    }
   }
 
   render() {
     const { text, modules, formats, theme, placeholder } = this.state;
     return (
       <Container>
+        <Button className="save-word" onClick={this.SaveDoc}>
+          Save As Word Docx
+        </Button>
         <div className="code-editor">
           <ReactQuill
             value={text}
@@ -113,3 +139,7 @@ class CodeEditor extends React.Component {
 }
 
 export default CodeEditor;
+
+CodeEditor.propTypes = {
+  setMessage: PropTypes.func.isRequired,
+};

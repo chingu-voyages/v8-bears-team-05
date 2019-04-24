@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './JoinModal.css';
 // import { join } from 'path';
 
-const JoinModal = ({ joinModalOpen, toggleJoinModal, joinRoom, changeJoinID }) => {
+const JoinModal = ({ joinModalOpen, toggleJoinModal, joinRoom, changeJoinID, handleKeyDown }) => {
   return (
     <Modal
       show={joinModalOpen}
@@ -18,9 +18,14 @@ const JoinModal = ({ joinModalOpen, toggleJoinModal, joinRoom, changeJoinID }) =
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="join-modal-form">
+          <Form.Group className="join-modal-form" onKeyDown={handleKeyDown}>
             <Form.Label className="join-modal-title">Enter ID</Form.Label>
-            <Form.Control type="text" placeholder="Enter ID here..." onChange={e => changeJoinID(e)} />
+            <Form.Control
+              className="input-id"
+              type="text"
+              placeholder="Enter ID here..."
+              onChange={e => changeJoinID(e)}
+            />
 
             <Button variant="primary" className="join-modal-button" onClick={joinRoom}>
               Join
@@ -37,6 +42,7 @@ JoinModal.propTypes = {
   toggleJoinModal: PropTypes.func.isRequired,
   joinRoom: PropTypes.func.isRequired,
   changeJoinID: PropTypes.func.isRequired,
+  handleKeyDown: PropTypes.func.isRequired,
 };
 
 export default JoinModal;

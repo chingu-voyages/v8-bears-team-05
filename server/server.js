@@ -32,6 +32,9 @@ const drawHistory = {};
 // Stores text editor for all users
 const textStore = {};
 
+// Stores user chat history
+const chatHistory = {};
+
 // Stores redo history for all users
 const redoHistory = {};
 
@@ -51,6 +54,7 @@ io.of('/boardandeditor').on('connection', socket => {
     if (!(id in drawHistory)) {
       drawHistory[id] = [];
       textStore[id] = '';
+      chatHistory[id] = [];
       redoHistory[id] = [];
       userOnline[id] = { online: 1 };
       // console.log(drawHistory)
@@ -58,6 +62,7 @@ io.of('/boardandeditor').on('connection', socket => {
       socket.emit('notify', {
         message: `You aren't connected to the server yet. Tap 'Host a meeting' or 'Join a Meeting' to start the meeting.`,
         type: 'warning',
+        toggle: false,
       });
     } else {
       socket.emit('notify', { message: `This ID: ${id} is successfully hosted for your meeting.`, type: 'success' });
@@ -80,15 +85,25 @@ io.of('/boardandeditor').on('connection', socket => {
       // Get data for drawing and text
       const sendData = drawHistory[id][drawHistory[id].length - 1];
       const textData = textStore[id];
+      const chatData = chatHistory[id];
 
       // Sends success confirmation
       socket.emit('join-success', id);
 
-      // Draws the canvas for the new socket
+      // Draws the canvas to the new socket
       socket.emit('draw-line', sendData);
 
-      // Sends the Text Data for the new socket
+      // Sends the Text Data to the new socket
       socket.emit('text-editor', textData);
+
+      // Sends the Chat Data to the new socket
+      socket.emit('join-chat', { online: userOnline[id].online, messages: chatData });
+
+      // Updates Online Count of every user except newly added user
+      socket.to(id).emit('online-count', userOnline[id].online);
+
+      // Notifies all users except the newly added user
+      socket.to(id).emit('notify', { message: `A new user has been connected to this ID: ${id}.`, type: 'info' });
     } else {
       socket.emit('notify', { message: `Your entered ID: ${id} is invalid.`, type: 'danger' });
     }
@@ -143,6 +158,21 @@ io.of('/boardandeditor').on('connection', socket => {
     }
   });
 
+  // Store chat history of the users
+  socket.on('chat-history', res => {
+    const id = res.room;
+    if (id in chatHistory) {
+      chatHistory[id].push(res.data);
+      socket.broadcast.to(id).emit('chat-history', res.data);
+    }
+  });
+
+  // Notify others about user available to chat
+  socket.on('chat-notify', res => {
+    const id = res.room;
+    socket.broadcast.to(id).emit('notify', { message: `${res.data} is now available to chat.`, type: 'default' });
+  });
+
   // Clean up memory on disconnect
   socket.on('disconnecting', () => {
     // console.log(Object.keys(socket.rooms));
@@ -154,11 +184,15 @@ io.of('/boardandeditor').on('connection', socket => {
       if (roomID in userOnline) {
         userOnline[roomID].online -= 1;
 
+        // Updates Online Count of every user except newly added user
+        socket.to(roomID).emit('online-count', userOnline[roomID].online);
+
         // Wipe data if the user does not come back within a minute
         if (userOnline[roomID].online === 0) {
           deleteData[roomID] = setTimeout(() => {
             delete drawHistory[roomID];
             delete textStore[roomID];
+            delete chatHistory[roomID];
             delete redoHistory[roomID];
             delete userOnline[roomID];
             delete deleteData[roomID];

@@ -11,14 +11,16 @@ import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { saveAs } from 'file-saver';
-import socket from '../../sockets';
 
+import socket from '../../sockets';
+import Chatapp from '../Chatapp/Chatapp';
 import WhiteBoard from '../WhiteBoard/WhiteBoard';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { BoardContext } from '../../contexts';
 import ToolBox from '../ToolBox/ToolBox';
 import JoinModal from '../JoinModal/JoinModal';
 import MeetingModal from '../MeetingModal/MeetingModal';
+import AuthenticateModal from '../authenticateModal/authenticateModal';
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -80,7 +82,7 @@ class BoardandEditor extends React.Component {
 
     // On succesful user join
     socket.on('join-success', id => {
-      const { toggleJoinModal, setMessage } = this.props;
+      const { joinModalOpen, toggleJoinModal, setMessage } = this.props;
 
       // set id state to connect to the socket
       this.setState({
@@ -91,17 +93,19 @@ class BoardandEditor extends React.Component {
       sessionStorage.setItem('uniqueID', id);
 
       // Close the Modal
-      toggleJoinModal();
+      if (joinModalOpen) {
+        toggleJoinModal();
 
-      // Show notification
-      setMessage(`You are now connected to ID: ${id}`, 'success');
+        // Show notification
+        setMessage(`Yippee! You are now connected to ID: ${id}`, 'success');
+      }
     });
 
     // Draws drawings
     socket.on('draw-line', lineData => {
       const { storeData } = this.state;
 
-      if (!storeData.includes(lineData)) {
+      if (!storeData.includes(lineData) && lineData !== null) {
         this.setState({
           controlledValue: lineData,
         });
@@ -170,7 +174,12 @@ class BoardandEditor extends React.Component {
 
     // This socket sends notfication to the users
     socket.on('notify', res => {
-      const { setMessage } = this.props;
+      const { setMessage, joinModalOpen, hostModalOpen } = this.props;
+
+      // Stop trigger when join or host Modal open
+      if (res.toggle === false && (joinModalOpen || hostModalOpen)) {
+        return;
+      }
       setMessage(res.message, res.type);
     });
   }
@@ -205,12 +214,8 @@ class BoardandEditor extends React.Component {
       const refresh = sessionStorage.getItem('refresh');
 
       if (refresh === 'true') {
-        const { toggleJoinModal } = this.props;
         // socket emit to join the room
         socket.emit('join-room', id);
-
-        // Toggle Join modal
-        toggleJoinModal();
       } else {
         // socket emit to create the room
         socket.emit('create-room', id);
@@ -290,10 +295,17 @@ class BoardandEditor extends React.Component {
   };
 
   downloadImage = () => {
-    const { sketchRef } = this.state;
+    const { sketchRef, storeData } = this.state;
+    const { setMessage } = this.props;
 
-    // console.log(sketchRef.toDataURL());
-    saveAs(sketchRef.toDataURL(), 'doodlelive.png');
+    if (storeData.length !== 0) {
+      // console.log(sketchRef.toDataURL());
+      saveAs(sketchRef.toDataURL(), 'doodlelive.png');
+      console.log(storeData.length);
+      console.log(storeData);
+    } else {
+      setMessage('Doodle before you download this image.', 'warning');
+    }
   };
 
   copyPaste = () => {
@@ -532,12 +544,31 @@ class BoardandEditor extends React.Component {
         selectedTool: e.target.getAttribute('value'),
       });
     }
+
+    // Sets Focus to Input Text
+    setTimeout(() => {
+      document.querySelector('.input-text').focus();
+    }, 100);
   };
 
   addText = () => {
     const { sketchRef, text } = this.state;
     this.setState({ selectedTool: Tools.Select, addTextOpen: false });
     sketchRef.addText(text);
+  };
+
+  handleKeyEnter = e => {
+    if (e.which === 13) {
+      e.preventDefault();
+      this.addText();
+    }
+  };
+
+  handleKeyDown = e => {
+    if (e.which === 13) {
+      e.preventDefault();
+      this.joinRoom();
+    }
   };
 
   render() {
@@ -556,9 +587,19 @@ class BoardandEditor extends React.Component {
       displayLineColorPicker,
       displayFillColorPicker,
     } = this.state;
-    const { hostModalOpen, joinModalOpen, toggleHostModal, toggleJoinModal, changeJoinID } = this.props;
+    const {
+      hostModalOpen,
+      joinModalOpen,
+      toggleHostModal,
+      toggleJoinModal,
+      changeJoinID,
+      setMessage,
+      authenticateModalOpen,
+      typeofauthentication,
+      toggleAuthenticateModal,
+    } = this.props;
     return (
-      <>
+      <div style={{ position: 'relative' }}>
         <MeetingModal
           hostModalOpen={hostModalOpen}
           toggleHostModal={toggleHostModal}
@@ -570,6 +611,12 @@ class BoardandEditor extends React.Component {
           toggleJoinModal={toggleJoinModal}
           joinRoom={this.joinRoom}
           changeJoinID={changeJoinID}
+          handleKeyDown={this.handleKeyDown}
+        />
+        <AuthenticateModal
+          authenticateModalOpen={authenticateModalOpen}
+          toggleAuthenticateModal={toggleAuthenticateModal}
+          typeofauthentication={typeofauthentication}
         />
         <Container id="board">
           <Row>
@@ -592,8 +639,8 @@ class BoardandEditor extends React.Component {
                     />
                   </BoardContext.Provider>
                 </Tab>
-                <Tab eventKey="codeeditor" title="CodeEditor">
-                  <CodeEditor />
+                <Tab eventKey="codeeditor" title="TextEditor">
+                  <CodeEditor setMessage={setMessage} />
                 </Tab>
               </Tabs>
             </Col>
@@ -628,12 +675,15 @@ class BoardandEditor extends React.Component {
                   displayFillColorPicker={displayFillColorPicker}
                   handleFillPickerClick={this.handleFillPickerClick}
                   copyPaste={this.copyPaste}
+                  handleKeyEnter={this.handleKeyEnter}
                 />
               ) : null}
+
+              <Chatapp />
             </Col>
           </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }
@@ -647,4 +697,8 @@ BoardandEditor.propTypes = {
   toggleHostModal: PropTypes.func.isRequired,
   toggleJoinModal: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
+  authenticateModalOpen: PropTypes.bool.isRequired,
+  toggleAuthenticateModal: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  typeofauthentication: PropTypes.string,
 };

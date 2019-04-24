@@ -55,6 +55,15 @@
   z-index: 200;
 }
 
+main hr {
+  width: 8rem;
+  border-width: 0.6rem;
+  border-color: #e22bdf;
+}
+.feature-title {
+  text-align: center;
+  font-size: 3.4rem;
+}
 .feature {
   display: flex;
   align-items: center;
