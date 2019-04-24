@@ -99,10 +99,11 @@ class Chatapp extends Component {
   sendMessage = () => {
     // send message
     const { text, messages, user } = this.state;
-    if (text) {
+
+    if (text.trim()) {
       this.setState({
         ...this.state,
-        messages: [...messages, { user, content: text }],
+        messages: [...messages, { user, content: text.trim() }],
         text: '',
       });
 
