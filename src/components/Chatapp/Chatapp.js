@@ -9,7 +9,7 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import Draggable from 'react-draggable';
 import ChatHeader from '../ChatHeader/ChatHeader';
 import ChatBox from '../ChatBox/ChatBox';
-import messageReceived from '../../assets/App Store Purchase Sound Effect.wav';
+import messageReceived from '../../assets/Pling-KevanGC-1485374730.wav';
 import './Chatapp.css';
 import socket from '../../sockets';
 
