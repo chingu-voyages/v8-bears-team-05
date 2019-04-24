@@ -1,0 +1,25 @@
+.aboutus {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.aboutus h1 {
+  text-transform: uppercase;
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.aboutus hr {
+  width: 10rem;
+  border-width: 0.6rem;
+  border-color: #e22bdf;
+  margin-top: 0;
+}
+
+.aboutus p {
+  font-size: 1.8rem;
+  width: 70%;
+}

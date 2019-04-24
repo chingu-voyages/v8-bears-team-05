@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import BoardandEditor from './BoardandEditor/BoardandEditorTabs';
 import Homepage from './Homepage/Homepage';
 import NavBar from './NavBar/NavBar';
-import AuthenticateModal from './authenticateModal/authenticateModal';
+import AboutUs from './About/About';
 
 import './App.css';
 
@@ -102,6 +102,11 @@ class App extends Component {
     history.push('/');
   };
 
+  pushToAbout = () => {
+    const { history } = this.props;
+    history.push('/aboutus');
+  };
+
   render() {
     const {
       hostModalOpen,
@@ -120,6 +125,7 @@ class App extends Component {
           authenticateModalOpen={authenticateModalOpen}
           toggleAuthenticateModal={this.toggleAuthenticateModal}
           goToHome={this.goToHome}
+          pushToAbout={this.pushToAbout}
         />
 
         <Container fluid className="app">
@@ -153,6 +159,7 @@ class App extends Component {
               />
             )}
           />
+          <Route path="/aboutus" component={AboutUs} />
         </Container>
       </>
     );

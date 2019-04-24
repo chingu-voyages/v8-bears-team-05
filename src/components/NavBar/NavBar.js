@@ -21,7 +21,7 @@ class NavBar extends Component {
   }
 
   render() {
-    const { toggleHostModal, toggleJoinModal, toggleAuthenticateModal, goToHome } = this.props;
+    const { toggleHostModal, toggleJoinModal, toggleAuthenticateModal, goToHome, pushToAbout } = this.props;
 
     return (
       <>
@@ -35,7 +35,9 @@ class NavBar extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
               <Nav>
-                <Nav.Link href="#aboutus">About us</Nav.Link>
+                <Nav.Link href="#aboutus" onClick={pushToAbout}>
+                  About us
+                </Nav.Link>
 
                 <Nav.Link href="" onClick={toggleJoinModal}>
                   Join a meeting
@@ -64,6 +66,7 @@ NavBar.propTypes = {
   setNotificationRef: PropTypes.func.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
   goToHome: PropTypes.func.isRequired,
+  pushToAbout: PropTypes.func.isRequired,
 };
 
 export default NavBar;
