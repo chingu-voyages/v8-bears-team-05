@@ -14,18 +14,15 @@
 
 .tool-options {
   width: 100%;
-  /* height: 4rem; */
-  margin-top: 2rem;
   flex-wrap: wrap;
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   padding: 10px 0.5rem 25px 0rem;
-  margin-top: 2rem;
+  margin: 2rem 0 3rem 0;
 }
 .tool-options p {
   font-size: 1.5rem;
