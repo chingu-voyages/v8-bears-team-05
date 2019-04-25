@@ -13,7 +13,7 @@ const cors = require('cors');
 // const server = app.listen(port)
 // server.listen(port);
 
-io.set('origins', '*:*');
+// io.set('origins', '*:*');
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../build')));
