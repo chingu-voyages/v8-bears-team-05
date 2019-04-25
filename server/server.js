@@ -11,7 +11,7 @@ const io = require('socket.io').listen(server);
 const cors = require('cors');
 
 // const server = app.listen(port)
-server.listen(port);
+// server.listen(port);
 
 io.set('origins', '*:*');
 
