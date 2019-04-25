@@ -49,7 +49,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
         <main>
           <h1 className="feature-title">FEATURES</h1>
           <hr />
-          <div className="feature container-fluid">
+          <div className="feature container-fluid reverse">
             <Card>
               <Card.Body>
                 <Card.Title>Interactive White Board</Card.Title>
@@ -75,7 +75,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
               </Card.Body>
             </Card>
           </div>
-          <div className="feature container-fluid">
+          <div className="feature container-fluid reverse">
             <Card>
               <Card.Body>
                 <Card.Title>Live Chat Integration</Card.Title>
@@ -89,7 +89,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
               <img src={videoCall} alt="" />
             </div>
           </div>
-          <div className="feature container-fluid">
+          <div className="feature container-fluid ">
             <div className="feature-image">
               <img src={Form} alt="" />
             </div>
@@ -104,7 +104,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
             </Card>
           </div>
 
-          <div className="feature container-fluid">
+          <div className="feature container-fluid reverse">
             <Card>
               <Card.Body>
                 <Card.Title>Live code with Automatic Syntax Highlighting</Card.Title>

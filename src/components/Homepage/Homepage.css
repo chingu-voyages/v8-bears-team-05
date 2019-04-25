@@ -70,13 +70,13 @@ main hr {
 }
 .feature.container-fluid {
   width: 80%;
-  height: 70vh;
+  height: 60vh;
 }
 
 .feature .card {
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.6);
-  width: 35rem;
-  height: 35rem;
+  width: 30rem;
+  height: 30rem;
   padding: 2rem;
 }
 
@@ -88,8 +88,8 @@ main hr {
 }
 .feature .card-title {
   font-size: 2.6rem;
- position:relative;
- top:-2rem;
+  position: relative;
+  top: -2rem;
   text-align: center;
 }
 .feature .card-text {
@@ -175,8 +175,12 @@ footer {
     height: 25rem;
     padding: 1rem;
     margin-top: 3rem;
+    margin-bottom: 1rem;
   }
 
+  .feature.reverse {
+    flex-direction: column-reverse;
+  }
   .feature .card-body {
     display: flex;
     flex-direction: column;
