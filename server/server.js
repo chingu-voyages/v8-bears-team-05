@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 // app.use(express.static(path.join(__dirname, '../public')));
 
 // eslint-disable-next-line no-console
-app.listen(port, () => console.log(`Express server is running on http://localhost:${port}/`));
+server.listen(port, () => console.log(`Express server is running on http://localhost:${port}/`));
 
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
