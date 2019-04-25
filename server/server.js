@@ -7,7 +7,7 @@ const port = process.env.PORT || 4000;
 const http = require('http');
 
 const server = http.createServer(app);
-const io = require('socket.io')(server, { transports: ['websocket', 'polling'] });
+const io = require('socket.io')(server);
 const cors = require('cors');
 
 // const server = app.listen(port)

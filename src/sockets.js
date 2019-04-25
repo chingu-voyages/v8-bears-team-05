@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
 
-const socket = io('/boardandeditor', { transports: ['websocket', 'polling'] });
+const socket = io();
 
 export default socket;
