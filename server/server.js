@@ -11,7 +11,7 @@ const io = require('socket.io').listen(server);
 const cors = require('cors');
 
 // const server = app.listen(port)
-server.listen(process.env.PORT || 4000);
+// server.listen(port);
 
 io.set('origins', '*:*');
 
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 // app.use(express.static(path.join(__dirname, '../public')));
 
 // eslint-disable-next-line no-console
-app.listen(port, () => console.log(`Express server is running on http://localhost:${port}/`));
+server.listen(port, () => console.log(`Express server is running on http://localhost:${port}/`));
 
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
