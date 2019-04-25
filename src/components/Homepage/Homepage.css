@@ -5,10 +5,6 @@
   height: 100vh;
 }
 
-.hero-header-container {
-  width: 50%;
-}
-
 .hero-header-container h1 {
   font-size: 4.6rem;
   margin-bottom: 1rem;
@@ -38,11 +34,14 @@
   background-color: #e22bdf !important;
 }
 
+.hero-illustrations {
+}
+
 .undrawDesignThinking {
   width: 400px;
   height: 300px;
   position: relative;
-  top: 5rem;
+  top: 3rem;
   left: -12rem;
 }
 
@@ -71,13 +70,13 @@ main hr {
 }
 .feature.container-fluid {
   width: 80%;
-  height: 80vh;
+  height: 60vh;
 }
 
 .feature .card {
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.6);
-  width: 35rem;
-  height: 35rem;
+  width: 30rem;
+  height: 30rem;
   padding: 2rem;
 }
 
@@ -89,6 +88,8 @@ main hr {
 }
 .feature .card-title {
   font-size: 2.6rem;
+  position: relative;
+  top: -2rem;
   text-align: center;
 }
 .feature .card-text {
@@ -98,9 +99,8 @@ main hr {
 .feature-image img {
   width: 25rem;
   height: 25rem;
-  fill: #8a2be2;
+  fill: #8a2be2 !important;
 }
-
 footer {
   background-color: #8a2be2;
   height: 4rem;
@@ -114,4 +114,189 @@ footer {
   font-size: 1.4rem;
   color: #fff;
   padding: 0 3rem;
+}
+
+@media screen and (max-width: 992px) {
+  .hero-header-container {
+    width: 100%;
+  }
+
+  .undrawDesignThinking {
+    width: 30rem;
+    height: 30rem;
+    position: relative;
+    top: 3rem;
+    left: -14rem;
+  }
+
+  .undrawPairProgramming {
+    width: 30rem;
+    height: 30rem;
+    position: relative;
+    top: -10rem;
+    left: 6rem;
+    z-index: 200;
+  }
+  .hero-illustrations {
+    width: 100%;
+  }
+  .hero-header-container h1 {
+    font-size: 4rem;
+    width: 100%;
+    margin-bottom: 0.6rem;
+  }
+  .hero-header-container h4 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #676767;
+  }
+
+  .hero-header-container .btn {
+    width: 15rem;
+    height: 5rem;
+    border-radius: 6rem;
+    font-size: 1.8rem;
+    background-color: #e22bdf;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+  .feature {
+    display: flex;
+    flex-direction: column;
+  }
+  .feature.container-fluid {
+    height: 120vh;
+  }
+  .feature .card {
+    box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.6);
+    width: 80%;
+    height: 25rem;
+    padding: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature.reverse {
+    flex-direction: column-reverse;
+  }
+  .feature .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-image {
+    margin: 5rem 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  .hero-container {
+    flex-direction: column-reverse;
+  }
+
+  .undrawDesignThinking {
+    width: 30rem;
+    height: 30rem;
+    position: relative;
+    top: 23rem;
+    left: 5rem;
+  }
+
+  .undrawPairProgramming {
+    width: 30rem;
+    height: 30rem;
+    position: relative;
+    top: 10rem;
+    left: 20rem;
+    z-index: 200;
+  }
+  .hero-illustrations {
+    width: 100%;
+    height: auto;
+  }
+  .hero-header-container {
+    margin-top: 2rem;
+  }
+
+  main {
+    margin-top: 10rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .hero-header-container {
+    text-align: center;
+  }
+  .hero-header-container h1 {
+    font-size: 3rem;
+    width: 100%;
+    margin-bottom: 0.6rem;
+  }
+  .hero-header-container h4 {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    color: #676767;
+  }
+
+  .hero-header-container .btn {
+    width: 12rem;
+    height: 4rem;
+    border-radius: 6rem;
+    font-size: 1.5rem;
+    background-color: #e22bdf;
+  }
+  .undrawDesignThinking {
+    width: 20rem;
+    height: 20rem;
+    position: relative;
+    top: 5rem;
+    left: 5rem;
+  }
+
+  .undrawPairProgramming {
+    width: 20rem;
+    height: 20rem;
+    position: relative;
+    top: 20rem;
+    left: 2rem;
+    z-index: 200;
+  }
+  .feature .card {
+    width: 100%;
+    margin-top: 6rem;
+  }
+  .feature .card-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+  .feature .card-text {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  .feature-image {
+    margin-top: 8rem;
+    margin-bottom: 5rem;
+  }
+  .feature-image img {
+    width: 20rem;
+    height: 20rem;
+  }
+  footer a {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .undrawDesignThinking {
+    top: 10rem;
+    left: 4rem;
+  }
+
+  .undrawPairProgramming {
+    top: 3rem;
+    left: 10rem;
+    z-index: 200;
+  }
 }
