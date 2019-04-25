@@ -3,16 +3,17 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 4000;
-const server = app.listen(port);
-// const http = require('http');
+// const server = app.listen(port)
+const http = require('http');
 
-// const server = http.createServer(app);
+const server = http.createServer(app);
 const io = require('socket.io').listen(server);
 const cors = require('cors');
 
 // const server = app.listen(port)
+server.listen(port);
 
-// io.set('origins', '*:*');
+io.set('origins', '*:*');
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../build')));
