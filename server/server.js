@@ -15,8 +15,6 @@ const cors = require('cors');
 
 // io.set('origins', '*:*');
 
-app.use(cors());
-app.use(express.static(path.join(__dirname, '../build')));
 // app.use(express.static(path.join(__dirname, '../public')));
 
 // eslint-disable-next-line no-console
@@ -31,6 +29,9 @@ if (process.env.NODE_ENV === 'production') {
       next();
     }
   });
+
+  app.use(cors());
+  app.use(express.static(path.join(__dirname, '../build')));
 
   // Set static folder
   app.use(express.static(path.join(__dirname, '../build')));
