@@ -23,6 +23,15 @@ app.use(express.static(path.join(__dirname, '../build')));
 server.listen(port, () => console.log(`Express server is running on http://localhost:${port}/`));
 
 if (process.env.NODE_ENV === 'production') {
+  // Set force redirections to HTTPS
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+      next();
+    }
+  });
+
   // Set static folder
   app.use(express.static(path.join(__dirname, '../build')));
 
