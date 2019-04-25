@@ -9,9 +9,11 @@ import './Homepage.css';
 import undrawDesignThinking from '../../assets/undraw_design_thinking_x8f6.svg';
 import undrawPairProgramming from '../../assets/undraw_pair_programming_njlp.svg';
 import whiteboard from '../../assets/whiteboard.svg';
-import code from '../../assets/software.svg';
 import videoCall from '../../assets/video-call (1).svg';
 import AuthenticateModal from '../authenticateModal/authenticateModal';
+import Form from '../../assets/form.svg';
+import Live from '../../assets/live.svg';
+import blueprint from '../../assets/blueprint.svg';
 
 const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typeofauthentication }) => {
   const onStart = () => {
@@ -62,7 +64,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
           </div>
           <div className="feature container-fluid">
             <div className="feature-image">
-              <img src={code} alt="" />
+              <img src={blueprint} alt="" />
             </div>
             <Card>
               <Card.Body>
@@ -89,7 +91,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
           </div>
           <div className="feature container-fluid">
             <div className="feature-image">
-              <img src={code} alt="" />
+              <img src={Form} alt="" />
             </div>
             <Card>
               <Card.Body>
@@ -101,6 +103,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
               </Card.Body>
             </Card>
           </div>
+
           <div className="feature container-fluid">
             <Card>
               <Card.Body>
@@ -111,6 +114,9 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
                 </Card.Text>
               </Card.Body>
             </Card>
+            <div className="feature-image">
+              <img src={Live} alt="" />
+            </div>
           </div>
         </main>
 

@@ -88,6 +88,8 @@ main hr {
 }
 .feature .card-title {
   font-size: 2.6rem;
+ position:relative;
+ top:-5rem;
   text-align: center;
 }
 .feature .card-text {
@@ -97,9 +99,8 @@ main hr {
 .feature-image img {
   width: 25rem;
   height: 25rem;
-  fill: #8a2be2;
+  fill: #8a2be2 !important;
 }
-
 footer {
   background-color: #8a2be2;
   height: 4rem;
