@@ -70,7 +70,7 @@ main hr {
 }
 .feature.container-fluid {
   width: 80%;
-  height: 80vh;
+  height: 70vh;
 }
 
 .feature .card {
@@ -89,7 +89,7 @@ main hr {
 .feature .card-title {
   font-size: 2.6rem;
  position:relative;
- top:-5rem;
+ top:-2rem;
   text-align: center;
 }
 .feature .card-text {
