@@ -2,7 +2,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './Homepage.css';
@@ -52,9 +52,7 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
               <Card.Body>
                 <Card.Title>Interactive White Board</Card.Title>
                 <Card.Text>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt explicabo
+                  Our users can host unlimited meetings to share their ideas remotely with no sign-ups required.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -68,11 +66,9 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
             </div>
             <Card>
               <Card.Body>
-                <Card.Title>BROWSER BASED CODE EDITOR</Card.Title>
+                <Card.Title>Sketch & Share</Card.Title>
                 <Card.Text>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt explicabo
+                  Our users can doodle collaboratively on the infinite canvas and save them as images locally.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -80,11 +76,10 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
           <div className="feature container-fluid">
             <Card>
               <Card.Body>
-                <Card.Title>STAY CONNECTED WHEREVER YOU GO</Card.Title>
+                <Card.Title>Live Chat Integration</Card.Title>
                 <Card.Text>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt explicabo
+                  Our users can chat live with their connected peers in the meetings making the session more engaging
+                  and fun for everyone.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -92,12 +87,34 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
               <img src={videoCall} alt="" />
             </div>
           </div>
+          <div className="feature container-fluid">
+            <div className="feature-image">
+              <img src={code} alt="" />
+            </div>
+            <Card>
+              <Card.Body>
+                <Card.Title>Share notes with our rich text editor</Card.Title>
+                <Card.Text>
+                  Our users can edit texts, embed images and videos in a rich text editor which can be saved in a
+                  well-formatted MS word® supported docx file.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="feature container-fluid">
+            <Card>
+              <Card.Body>
+                <Card.Title>Live code with Automatic Syntax Highlighting</Card.Title>
+                <Card.Text>
+                  Our users can code live on the code block with automatic syntax highlighting available for 24+
+                  commonly used languages and explain things easily on the whiteboard.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
         </main>
-        <footer>
-          <Link to="/">Home</Link>
-          <Link to="/joinameeting">Join A Meeting</Link>
-          <Link to="/hostameeeting">Host A Meeting</Link>
-        </footer>
+
+        <footer>Copyright © 2019 | All Rights Reserved.</footer>
       </div>
     </>
   );

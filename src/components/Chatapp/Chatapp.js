@@ -42,6 +42,13 @@ class Chatapp extends Component {
       }
     });
 
+    // Add user after verifying the username
+    socket.on('add-user', username => {
+      this.setState({ user: username, text: '' });
+
+      sessionStorage.setItem('user', username);
+    });
+
     // Updates number of online users
     socket.on('online-count', count => {
       this.setState({
@@ -88,9 +95,9 @@ class Chatapp extends Component {
 
     // Capitalize initials
     text = text.charAt(0).toUpperCase() + text.slice(1);
-    this.setState({ user: text, text: '' });
+    // this.setState({ user: text, text: '' });
 
-    sessionStorage.setItem('user', text);
+    // sessionStorage.setItem('user', text);
 
     const id = sessionStorage.getItem('uniqueID');
     socket.emit('chat-notify', { room: id, data: text });
@@ -99,10 +106,11 @@ class Chatapp extends Component {
   sendMessage = () => {
     // send message
     const { text, messages, user } = this.state;
-    if (text) {
+
+    if (text.trim()) {
       this.setState({
         ...this.state,
-        messages: [...messages, { user, content: text }],
+        messages: [...messages, { user, content: text.trim() }],
         text: '',
       });
 

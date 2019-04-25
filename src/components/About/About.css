@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
+  text-align: left;
   align-items: center;
 }
 
@@ -19,7 +19,27 @@
   margin-top: 0;
 }
 
+.about-img {
+  padding-bottom: 10rem;
+  height: auto;
+  width: 100%;
+}
+
 .aboutus p {
   font-size: 1.8rem;
   width: 70%;
+}
+
+.aboutus p:last-child {
+  margin-bottom: 20rem;
+}
+
+footer {
+  background-color: #8a2be2;
+  width: 99.9%;
+  overflow-x: hidden;
+  padding: 0 0 0 0;
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: #fff;
 }
