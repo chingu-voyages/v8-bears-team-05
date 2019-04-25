@@ -55,7 +55,7 @@ const userOnline = {};
 const deleteData = {};
 
 // Listens socket req on Port 7000
-io.listen(7000);
+// io.listen(7000);
 
 // Connect with boardeditor front-end
 io.of('/boardandeditor').on('connection', socket => {
