@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 // const server = app.listen(port)
 const http = require('http');
 
@@ -21,10 +21,25 @@ app.use(express.static(path.join(__dirname, '../public')));
 // eslint-disable-next-line no-console
 app.listen(port, () => console.log(`Express server is running on http://localhost:${port}/`));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
-  // console.log('testing...');
-});
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, '../build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+
+  io.configure(() => {
+    io.set('transports', ['xhr-polling']);
+    io.set('polling duration', 10);
+  });
+} else {
+  app.use(express.static(path.join(__dirname, '../public')));
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+  });
+}
 
 // Stores draw history for all users
 const drawHistory = {};
