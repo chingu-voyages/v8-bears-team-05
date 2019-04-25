@@ -15,8 +15,8 @@ const cors = require('cors');
 io.set('origins', '*:*');
 
 app.use(cors());
-// app.use(express.static(path.join(__dirname, '../build')));
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../build')));
+// app.use(express.static(path.join(__dirname, '../public')));
 
 // eslint-disable-next-line no-console
 app.listen(port, () => console.log(`Express server is running on http://localhost:${port}/`));
