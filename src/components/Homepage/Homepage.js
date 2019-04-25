@@ -26,79 +26,78 @@ const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typ
         toggleAuthenticateModal={toggleAuthenticateModal}
         typeofauthentication={typeofauthentication}
       />
+
       <div>
-        <div>
-          <div className="hero-container container">
-            <div className="hero-header-container">
-              <h1>
-                Take your team work <br />
-                to Next level
-              </h1>
-              <h4>work together anywhere , any time.</h4>
-              <Button className="try-btn" onClick={onStart}>
-                START NOW
-              </Button>
-            </div>
-            <div>
-              <img className="undrawDesignThinking" src={undrawDesignThinking} alt="" />
-              <img className="undrawPairProgramming" src={undrawPairProgramming} alt="" />
+        <div className="hero-container container">
+          <div className="hero-header-container" md={6} sm={12}>
+            <h1>
+              Take your team work <br />
+              to Next level
+            </h1>
+            <h4>work together anywhere , anytime.</h4>
+            <Button className="try-btn" onClick={onStart}>
+              START NOW
+            </Button>
+          </div>
+          <div className="hero-illustrations" md={6} sm={12}>
+            <img className="undrawDesignThinking" src={undrawDesignThinking} alt="" />
+            <img className="undrawPairProgramming" src={undrawPairProgramming} alt="" />
+          </div>
+        </div>
+        <main>
+          <h1 className="feature-title">FEATURES</h1>
+          <hr />
+          <div className="feature container-fluid">
+            <Card>
+              <Card.Body>
+                <Card.Title>Interactive White Board</Card.Title>
+                <Card.Text>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+                  sunt explicabo
+                </Card.Text>
+              </Card.Body>
+            </Card>
+            <div className="feature-image">
+              <img src={whiteboard} alt="" />
             </div>
           </div>
-          <main>
-            <h1 className="feature-title">FEATURES</h1>
-            <hr />
-            <div className="feature container-fluid">
-              <Card>
-                <Card.Body>
-                  <Card.Title>Interactive White Board</Card.Title>
-                  <Card.Text>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                    totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                    dicta sunt explicabo
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-              <div className="feature-image">
-                <img src={whiteboard} alt="" />
-              </div>
+          <div className="feature container-fluid">
+            <div className="feature-image">
+              <img src={code} alt="" />
             </div>
-            <div className="feature container-fluid">
-              <div className="feature-image">
-                <img src={code} alt="" />
-              </div>
-              <Card>
-                <Card.Body>
-                  <Card.Title>BROWSER BASED CODE EDITOR</Card.Title>
-                  <Card.Text>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                    totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                    dicta sunt explicabo
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+            <Card>
+              <Card.Body>
+                <Card.Title>BROWSER BASED CODE EDITOR</Card.Title>
+                <Card.Text>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+                  sunt explicabo
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="feature container-fluid">
+            <Card>
+              <Card.Body>
+                <Card.Title>STAY CONNECTED WHEREVER YOU GO</Card.Title>
+                <Card.Text>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+                  sunt explicabo
+                </Card.Text>
+              </Card.Body>
+            </Card>
+            <div className="feature-image">
+              <img src={videoCall} alt="" />
             </div>
-            <div className="feature container-fluid">
-              <Card>
-                <Card.Body>
-                  <Card.Title>STAY CONNECTED WHEREVER YOU GO</Card.Title>
-                  <Card.Text>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                    totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                    dicta sunt explicabo
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-              <div className="feature-image">
-                <img src={videoCall} alt="" />
-              </div>
-            </div>
-          </main>
-          <footer>
-            <Link to="/">Home</Link>
-            <Link to="/joinameeting">Join A Meeting</Link>
-            <Link to="/hostameeeting">Host A Meeting</Link>
-          </footer>
-        </div>
+          </div>
+        </main>
+        <footer>
+          <Link to="/">Home</Link>
+          <Link to="/joinameeting">Join A Meeting</Link>
+          <Link to="/hostameeeting">Host A Meeting</Link>
+        </footer>
       </div>
     </>
   );
