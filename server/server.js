@@ -28,11 +28,6 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build', 'index.html'));
   });
-
-  io.configure(() => {
-    io.set('transports', ['xhr-polling']);
-    io.set('polling duration', 10);
-  });
 } else {
   app.use(express.static(path.join(__dirname, '../public')));
 
