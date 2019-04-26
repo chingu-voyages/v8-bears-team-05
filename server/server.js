@@ -174,7 +174,7 @@ io.of('/boardandeditor').on('connection', socket => {
   // Receive data for text editor
   socket.on('text-editor', res => {
     const id = res.room;
-    if (id in textStore && !textStore[id].includes(res.data)) {
+    if (id in textStore) {
       textStore[id] = res.data;
       socket.broadcast.to(id).emit('text-editor', res.data);
     }

@@ -117,6 +117,9 @@ footer {
 }
 
 @media screen and (max-width: 992px) {
+  .hero-container {
+    height: 80vh;
+  }
   .hero-header-container {
     width: 100%;
   }
@@ -167,7 +170,7 @@ footer {
     flex-direction: column;
   }
   .feature.container-fluid {
-    height: 120vh;
+    height: 60vh;
   }
   .feature .card {
     box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.6);
@@ -220,13 +223,18 @@ footer {
   .hero-header-container {
     margin-top: 2rem;
   }
-
+  .feature.container-fluid {
+    height: 80vh;
+  }
   main {
     margin-top: 10rem;
   }
 }
 
 @media screen and (max-width: 576px) {
+  .hero-container {
+    height: 60vh;
+  }
   .hero-header-container {
     text-align: center;
   }
