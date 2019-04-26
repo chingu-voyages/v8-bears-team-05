@@ -12,6 +12,14 @@
   margin-bottom: 1rem;
 }
 
+
+.aboutus h2 {
+  font-size: 2.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-weight: 650;
+}
+
 .aboutus hr {
   width: 10rem;
   border-width: 0.6rem;

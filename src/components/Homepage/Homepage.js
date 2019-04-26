@@ -45,9 +45,9 @@ const Homepage = ({
           <div className="hero-header-container" md={6} sm={12}>
             <h1>
               Take your team work <br />
-              to Next level
+              to the Next level
             </h1>
-            <h4>work together anywhere , anytime.</h4>
+            <h4>Work together anywhere, anytime.</h4>
             <Button className="try-btn" onClick={onStart}>
               START NOW
             </Button>

@@ -23,11 +23,13 @@ const About = ({ expanded, toggleNavbar }) => {
           from March 2019 to May 2019.
         </p>
         <p>
+          <h2>About our Project</h2>
           <b>Doodle Live</b> provides the platform to the users to collaborate and share their ideas, wireframes,
           sketches, flow charts or anything they like with the unlimited number of friends, colleagues, subordinates
           and/or students.
         </p>
         <p>
+          <h2>Main Features</h2>
           Doodle Live comes packed with a <b>Whiteboard, Text Editor, Code Block and an integrated chat app</b> with
           equal access as we believe everyone to be equal, so everyone should have the same rights and restrictions to
           share their thoughts with others.
@@ -37,6 +39,7 @@ const About = ({ expanded, toggleNavbar }) => {
           There are <b>16+ tools</b> available just for doodling in the canvas.
         </p>
         <p>
+          <h2>Extra Functionalities</h2>
           Our users can also <b>edit texts, embed images & videos</b> in a rich text editor which can be saved in a
           well-formatted MS word® supported docx file.
         </p>
@@ -49,7 +52,7 @@ const About = ({ expanded, toggleNavbar }) => {
         <p>
           Keep doodling, keep sharing!
           <br />
-          #DoodleLive
+          <b>#DoodleLive</b>
         </p>
       </Container>
       <footer>Copyright © 2019 | All Rights Reserved.</footer>
