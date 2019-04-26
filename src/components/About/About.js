@@ -1,11 +1,17 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import './About.css';
 import { Container } from 'react-bootstrap';
 import about from '../../assets/undraw_good_team_m7uu.svg';
 
-const About = () => {
+const About = ({ expanded, toggleNavbar }) => {
+  useEffect(() => {
+    console.log('component updated');
+    expanded && toggleNavbar();
+  }, []);
   return (
     <div>
       <Container className="aboutus">
@@ -49,6 +55,11 @@ const About = () => {
       <footer>Copyright © 2019 | All Rights Reserved.</footer>
     </div>
   );
+};
+
+About.propTypes = {
+  toggleNavbar: PropTypes.func.isRequired,
+  expanded: PropTypes.bool.isRequired,
 };
 
 export default About;

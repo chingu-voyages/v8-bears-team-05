@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-access-state-in-setstate */
@@ -182,6 +183,8 @@ class BoardandEditor extends React.Component {
       }
       setMessage(res.message, res.type);
     });
+    const { toggleNavbar, expanded } = this.props;
+    expanded && toggleNavbar();
   }
 
   // Show/Hide image drop modal
@@ -702,4 +705,6 @@ BoardandEditor.propTypes = {
   toggleAuthenticateModal: PropTypes.func.isRequired,
   // eslint-disable-next-line react/require-default-props
   typeofauthentication: PropTypes.string,
+  toggleNavbar: PropTypes.func.isRequired,
+  expanded: PropTypes.bool.isRequired,
 };

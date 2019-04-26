@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -15,12 +16,22 @@ import Form from '../../assets/form.svg';
 import Live from '../../assets/live.svg';
 import blueprint from '../../assets/blueprint.svg';
 
-const Homepage = ({ history, authenticateModalOpen, toggleAuthenticateModal, typeofauthentication }) => {
+const Homepage = ({
+  history,
+  authenticateModalOpen,
+  toggleAuthenticateModal,
+  typeofauthentication,
+  expanded,
+  toggleNavbar,
+}) => {
   const onStart = () => {
     history.push('/boardandeditor');
     sessionStorage.setItem('refresh', false);
   };
-
+  useEffect(() => {
+    console.log('component updated');
+    expanded && toggleNavbar();
+  }, []);
   return (
     <>
       <AuthenticateModal
@@ -131,6 +142,8 @@ Homepage.propTypes = {
   toggleAuthenticateModal: PropTypes.func.isRequired,
   authenticateModalOpen: PropTypes.bool.isRequired,
   typeofauthentication: PropTypes.string,
+  toggleNavbar: PropTypes.func.isRequired,
+  expanded: PropTypes.bool.isRequired,
 };
 
 export default withRouter(Homepage);

@@ -21,12 +21,20 @@ class NavBar extends Component {
   }
 
   render() {
-    const { toggleHostModal, toggleJoinModal, toggleAuthenticateModal, goToHome, pushToAbout } = this.props;
+    const {
+      toggleHostModal,
+      toggleJoinModal,
+      toggleAuthenticateModal,
+      goToHome,
+      pushToAbout,
+      expanded,
+      toggleNavbar,
+    } = this.props;
 
     return (
       <>
         <ReactNotification ref={this.notificationDOMRef} />
-        <Navbar className="py-4" bg="light" expand="lg">
+        <Navbar className="py-4" bg="light" expand="lg" expanded={expanded} onToggle={toggleNavbar}>
           <Container>
             <Navbar.Brand href="" onClick={goToHome}>
               <Logo />
@@ -67,6 +75,8 @@ NavBar.propTypes = {
   toggleAuthenticateModal: PropTypes.func.isRequired,
   goToHome: PropTypes.func.isRequired,
   pushToAbout: PropTypes.func.isRequired,
+  toggleNavbar: PropTypes.func.isRequired,
+  expanded: PropTypes.bool.isRequired,
 };
 
 export default NavBar;

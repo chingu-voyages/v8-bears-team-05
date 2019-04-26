@@ -26,6 +26,7 @@ class App extends Component {
       messageType: '',
       notificationRef: {},
       authenticateModalOpen: false,
+      expanded: false,
     };
   }
 
@@ -107,6 +108,11 @@ class App extends Component {
     history.push('/aboutus');
   };
 
+  toggleNavbar = () => {
+    const { expanded } = this.state;
+    this.setState({ ...this.state, expanded: !expanded });
+  };
+
   render() {
     const {
       hostModalOpen,
@@ -115,6 +121,7 @@ class App extends Component {
       authenticateModalOpen,
       toggleAuthenticateModal,
       typeofauthentication,
+      expanded,
     } = this.state;
     return (
       <>
@@ -126,6 +133,8 @@ class App extends Component {
           toggleAuthenticateModal={this.toggleAuthenticateModal}
           goToHome={this.goToHome}
           pushToAbout={this.pushToAbout}
+          toggleNavbar={this.toggleNavbar}
+          expanded={expanded}
         />
 
         <Container fluid className="app">
@@ -139,6 +148,8 @@ class App extends Component {
                 toggleAuthenticateModal={this.toggleAuthenticateModal}
                 authenticateModalOpen={authenticateModalOpen}
                 typeofauthentication={typeofauthentication}
+                toggleNavbar={this.toggleNavbar}
+                expanded={expanded}
               />
             )}
           />
@@ -156,10 +167,12 @@ class App extends Component {
                 authenticateModalOpen={authenticateModalOpen}
                 toggleAuthenticateModal={this.toggleAuthenticateModal}
                 typeofauthentication={typeofauthentication}
+                toggleNavbar={this.toggleNavbar}
+                expanded={expanded}
               />
             )}
           />
-          <Route path="/aboutus" component={AboutUs} />
+          <Route path="/aboutus" render={() => <AboutUs expanded={expanded} toggleNavbar={this.toggleNavbar} />} />
         </Container>
       </>
     );
