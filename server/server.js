@@ -136,6 +136,7 @@ io.of('/boardandeditor').on('connection', socket => {
     // Save the drawn paths to the drawHistory
     const id = res.room;
     console.log(id);
+    console.log(drawHistory);
     if (id in drawHistory && !drawHistory[id].includes(res.data)) {
       drawHistory[id].push(res.data);
       socket.broadcast.to(id).emit('draw-line', res.data);
@@ -167,6 +168,8 @@ io.of('/boardandeditor').on('connection', socket => {
   // clear canvas for all users
   socket.on('clear-canvas', res => {
     const id = res.room;
+    console.log(id);
+    console.log(drawHistory);
     drawHistory[id].length = 0;
     redoHistory[id].length = 0;
     socket.broadcast.to(id).emit('clear-canvas');
