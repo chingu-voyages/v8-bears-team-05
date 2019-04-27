@@ -135,6 +135,7 @@ io.of('/boardandeditor').on('connection', socket => {
   socket.on('store-data', res => {
     // Save the drawn paths to the drawHistory
     const id = res.room;
+    console.log(id);
     if (id in drawHistory && !drawHistory[id].includes(res.data)) {
       drawHistory[id].push(res.data);
       socket.broadcast.to(id).emit('draw-line', res.data);
