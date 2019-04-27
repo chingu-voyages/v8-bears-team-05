@@ -387,11 +387,11 @@ footer {
     justify-content: center;
   }
   .feature.container-fluid {
-    height: 70rem;
+    height: 60rem;
   }
   .feature .card {
     width: 100%;
-    margin-top: 6rem;
+    margin-top: 0;
   }
   .feature .card-title {
     font-size: 2rem;
@@ -409,8 +409,9 @@ footer {
     width: 20rem;
     height: 20rem;
   }
-  footer a {
+  footer {
     font-size: 1rem;
+    margin-top: 5rem;
   }
 }
 /*
