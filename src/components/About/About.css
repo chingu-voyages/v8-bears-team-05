@@ -37,9 +37,14 @@
   font-size: 1.8rem;
   width: 70%;
 }
+@media screen and (max-width: 500px) {
+  .aboutus p {
+    width: 95%;
+  }
+}
 
 .aboutus p:last-child {
-  margin-bottom: 20rem;
+  margin-bottom: 15rem;
 }
 
 footer {

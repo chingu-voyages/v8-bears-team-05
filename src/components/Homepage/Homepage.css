@@ -34,9 +34,6 @@
   background-color: #e22bdf !important;
 }
 
-.hero-illustrations {
-}
-
 .undrawDesignThinking {
   width: 400px;
   height: 300px;
@@ -69,7 +66,7 @@ main hr {
   justify-content: space-between;
 }
 .feature.container-fluid {
-  width: 60%;
+  width: 70%;
   height: 40rem;
 }
 
@@ -118,28 +115,27 @@ footer {
 
 @media screen and (max-width: 1030px) {
   .hero-container {
-    height: 60rem;
+    height: 70rem;
   }
-  /*
 
   .undrawDesignThinking {
-    width: 30rem;
+    width: 35rem;
     height: 30rem;
     position: relative;
-    top: 3rem;
+    top: 0;
     left: -14rem;
   }
 
   .undrawPairProgramming {
-    width: 30rem;
+    width: 35rem;
     height: 30rem;
     position: relative;
-    top: -10rem;
+    top: -5rem;
     left: 6rem;
     z-index: 200;
   }
  
-  .hero-header-container h1 {
+  /* .hero-header-container h1 {
     font-size: 4rem;
     width: 100%;
     margin-bottom: 0.6rem;
@@ -196,22 +192,22 @@ footer {
 @media screen and (max-width: 770px) {
   .hero-container {
     flex-direction: column-reverse;
-    height: 70rem;
+    height: 55rem;
   }
 
   .undrawDesignThinking {
-    width: 30rem;
+    width: 25rem;
     height: 30rem;
     position: relative;
-    top: 2rem;
+    top: 0;
     left: 5rem;
   }
 
   .undrawPairProgramming {
-    width: 30rem;
+    width: 25rem;
     height: 30rem;
     position: relative;
-    top: 20rem;
+    top: 12rem;
     left: -1rem;
     z-index: 200;
   }
@@ -227,26 +223,27 @@ footer {
     flex-direction: column;
   }
   .feature.container-fluid {
-    height: 60rem;
+    height: 65rem;
+    margin-bottom: 8rem;
   }
   .feature .card {
     box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.6);
-    width: 80%;
-    height: 25rem;
+    width: 70%;
+    height: 45rem;
     padding: 1rem;
-    margin-top: 3rem;
+    margin-top: 0;
     margin-bottom: 2rem;
   }
   .feature-image {
     margin-top: 6rem;
     margin-bottom: 5rem;
   }
-  /* .hero-header-container h1 {
-    font-size: 3rem;
+  .hero-header-container h1 {
+    font-size: 3.6rem;
     width: 100%;
     margin-bottom: 0.6rem;
   }
-  .hero-header-container h4 {
+  /* .hero-header-container h4 {
     font-size: 1.6rem;
     margin-bottom: 2rem;
     color: #676767;
@@ -269,9 +266,9 @@ footer {
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 570px) {
   .hero-container {
-    height: 50rem;
+    height: 55rem;
   }
   .hero-header-container {
     text-align: center;
@@ -295,15 +292,15 @@ footer {
     background-color: #e22bdf;
   }
   .undrawDesignThinking {
-    width: 20rem;
+    width: 25rem;
     height: 20rem;
     position: relative;
-    top: 10rem;
+    top: 5rem;
     left: -1rem;
   }
 
   .undrawPairProgramming {
-    width: 20rem;
+    width: 25rem;
     height: 20rem;
     position: relative;
     top: 3rem;
@@ -319,14 +316,14 @@ footer {
   }
   .feature .card {
     width: 100%;
-    margin-top: 6rem;
+    margin-top: 0;
   }
   .feature .card-title {
     font-size: 2rem;
     text-align: center;
   }
   .feature .card-text {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-align: center;
   }
   .feature-image {
@@ -339,6 +336,24 @@ footer {
   }
   footer a {
     font-size: 1rem;
+  }
+}
+@media screen and (max-width: 420px) {
+  .undrawDesignThinking {
+    width: 22rem;
+    height: 25rem;
+    position: relative;
+    top: 10rem;
+    left: -1rem;
+  }
+
+  .undrawPairProgramming {
+    width: 20rem;
+    height: 25rem;
+    position: relative;
+    top: 1rem;
+    left: 13rem;
+    z-index: 200;
   }
 }
 @media screen and (max-width: 360px) {
@@ -387,18 +402,18 @@ footer {
     justify-content: center;
   }
   .feature.container-fluid {
-    height: 70rem;
+    height: 60rem;
   }
   .feature .card {
     width: 100%;
-    margin-top: 6rem;
+    margin-top: 0;
   }
   .feature .card-title {
     font-size: 2rem;
     text-align: center;
   }
   .feature .card-text {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-align: center;
   }
   .feature-image {
@@ -409,8 +424,9 @@ footer {
     width: 20rem;
     height: 20rem;
   }
-  footer a {
+  footer {
     font-size: 1rem;
+    margin-top: 5rem;
   }
 }
 /*
