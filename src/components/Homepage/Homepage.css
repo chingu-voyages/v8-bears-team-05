@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  height: 60rem;
 }
 
 .hero-header-container h1 {
@@ -32,9 +32,6 @@
 .hero-header-container .btn:active {
   opacity: 0.9;
   background-color: #e22bdf !important;
-}
-
-.hero-illustrations {
 }
 
 .undrawDesignThinking {
@@ -69,8 +66,8 @@ main hr {
   justify-content: space-between;
 }
 .feature.container-fluid {
-  width: 80%;
-  height: 60vh;
+  width: 70%;
+  height: 40rem;
 }
 
 .feature .card {
@@ -116,34 +113,29 @@ footer {
   padding: 0 3rem;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1030px) {
   .hero-container {
-    height: 80vh;
-  }
-  .hero-header-container {
-    width: 100%;
+    height: 70rem;
   }
 
   .undrawDesignThinking {
-    width: 30rem;
+    width: 35rem;
     height: 30rem;
     position: relative;
-    top: 3rem;
+    top: 0;
     left: -14rem;
   }
 
   .undrawPairProgramming {
-    width: 30rem;
+    width: 35rem;
     height: 30rem;
     position: relative;
-    top: -10rem;
+    top: -5rem;
     left: 6rem;
     z-index: 200;
   }
-  .hero-illustrations {
-    width: 100%;
-  }
-  .hero-header-container h1 {
+ 
+  /* .hero-header-container h1 {
     font-size: 4rem;
     width: 100%;
     margin-bottom: 0.6rem;
@@ -168,10 +160,12 @@ footer {
   .feature {
     display: flex;
     flex-direction: column;
-  }
+  }*/
   .feature.container-fluid {
-    height: 60vh;
+    height: 40rem;
+    width: 80%;
   }
+  /*
   .feature .card {
     box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.6);
     width: 80%;
@@ -193,27 +187,28 @@ footer {
 
   .feature-image {
     margin: 5rem 0;
-  }
+  }*/
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 770px) {
   .hero-container {
     flex-direction: column-reverse;
+    height: 55rem;
   }
 
   .undrawDesignThinking {
-    width: 30rem;
+    width: 25rem;
     height: 30rem;
     position: relative;
-    top: 23rem;
+    top: 0;
     left: 5rem;
   }
 
   .undrawPairProgramming {
-    width: 30rem;
+    width: 25rem;
     height: 30rem;
     position: relative;
-    top: 10rem;
-    left: 20rem;
+    top: 12rem;
+    left: -1rem;
     z-index: 200;
   }
   .hero-illustrations {
@@ -223,17 +218,147 @@ footer {
   .hero-header-container {
     margin-top: 2rem;
   }
+  .feature {
+    display: flex;
+    flex-direction: column;
+  }
   .feature.container-fluid {
-    height: 80vh;
+    height: 65rem;
+    margin-bottom: 8rem;
+  }
+  .feature .card {
+    box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.6);
+    width: 70%;
+    height: 45rem;
+    padding: 1rem;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+  .feature-image {
+    margin-top: 6rem;
+    margin-bottom: 5rem;
+  }
+  .hero-header-container h1 {
+    font-size: 3.6rem;
+    width: 100%;
+    margin-bottom: 0.6rem;
+  }
+  /* .hero-header-container h4 {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    color: #676767;
+  } */
+  .hero-header-container {
+    text-align: center;
+  }
+  .hero-header-container .btn {
+    width: 12rem;
+    height: 4rem;
+    border-radius: 6rem;
+    font-size: 1.5rem;
+    background-color: #e22bdf;
+  }
+  .feature.reverse {
+    flex-direction: column-reverse;
   }
   main {
     margin-top: 10rem;
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 570px) {
   .hero-container {
-    height: 60vh;
+    height: 55rem;
+  }
+  .hero-header-container {
+    text-align: center;
+  }
+  .hero-header-container h1 {
+    font-size: 3rem;
+    width: 100%;
+    margin-bottom: 0.6rem;
+  }
+  .hero-header-container h4 {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    color: #676767;
+  }
+
+  .hero-header-container .btn {
+    width: 12rem;
+    height: 4rem;
+    border-radius: 6rem;
+    font-size: 1.5rem;
+    background-color: #e22bdf;
+  }
+  .undrawDesignThinking {
+    width: 25rem;
+    height: 20rem;
+    position: relative;
+    top: 5rem;
+    left: -1rem;
+  }
+
+  .undrawPairProgramming {
+    width: 25rem;
+    height: 20rem;
+    position: relative;
+    top: 3rem;
+    left: 13rem;
+    z-index: 200;
+  }
+  .feature {
+    align-items: center;
+    justify-content: center;
+  }
+  .feature.container-fluid {
+    height: 70rem;
+  }
+  .feature .card {
+    width: 100%;
+    margin-top: 0;
+  }
+  .feature .card-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+  .feature .card-text {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  .feature-image {
+    margin-top: 8rem;
+    margin-bottom: 5rem;
+  }
+  .feature-image img {
+    width: 20rem;
+    height: 20rem;
+  }
+  footer a {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 420px) {
+  .undrawDesignThinking {
+    width: 22rem;
+    height: 25rem;
+    position: relative;
+    top: 10rem;
+    left: -1rem;
+  }
+
+  .undrawPairProgramming {
+    width: 20rem;
+    height: 25rem;
+    position: relative;
+    top: 1rem;
+    left: 13rem;
+    z-index: 200;
+  }
+}
+@media screen and (max-width: 360px) {
+  .hero-container {
+    height: 50rem;
   }
   .hero-header-container {
     text-align: center;
@@ -260,28 +385,35 @@ footer {
     width: 20rem;
     height: 20rem;
     position: relative;
-    top: 5rem;
-    left: 5rem;
+    top: 10rem;
+    left: -1rem;
   }
 
   .undrawPairProgramming {
     width: 20rem;
     height: 20rem;
     position: relative;
-    top: 20rem;
-    left: 2rem;
+    top: 3rem;
+    left: 13rem;
     z-index: 200;
+  }
+  .feature {
+    align-items: center;
+    justify-content: center;
+  }
+  .feature.container-fluid {
+    height: 60rem;
   }
   .feature .card {
     width: 100%;
-    margin-top: 6rem;
+    margin-top: 0;
   }
   .feature .card-title {
     font-size: 2rem;
     text-align: center;
   }
   .feature .card-text {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-align: center;
   }
   .feature-image {
@@ -292,10 +424,12 @@ footer {
     width: 20rem;
     height: 20rem;
   }
-  footer a {
+  footer {
     font-size: 1rem;
+    margin-top: 5rem;
   }
 }
+/*
 @media screen and (max-width: 500px) {
   .undrawDesignThinking {
     top: 10rem;
@@ -307,4 +441,7 @@ footer {
     left: 10rem;
     z-index: 200;
   }
-}
+  .feature .card {
+    height: 40rem;
+  }
+} */
