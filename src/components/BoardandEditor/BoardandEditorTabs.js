@@ -575,6 +575,13 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  changeTab = tabKey => {
+    this.setState({ key: tabKey });
+    if (tabKey === 'codeeditor') {
+      this.cvsRef.style.position = 'absolute';
+    }
+  };
+
   render() {
     const {
       key,
@@ -625,7 +632,7 @@ class BoardandEditor extends React.Component {
         <Container id="board">
           <Row>
             <Col md={9}>
-              <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
+              <Tabs id="controlled-tab-example" activeKey={key} onSelect={this.changeTab}>
                 <Tab eventKey="whiteboard" title="Whiteboard">
                   <BoardContext.Provider
                     value={{ show: modalShow, toggleModal: this.toggleModal, imageDrop: this.imageDrop }}
@@ -640,6 +647,7 @@ class BoardandEditor extends React.Component {
                       loadSketch={this.setSketchRef}
                       controlledValue={controlledValue}
                       saveImage={this.downloadImage}
+                      canvasRef={ref => (this.cvsRef = ref)}
                     />
                   </BoardContext.Provider>
                 </Tab>
