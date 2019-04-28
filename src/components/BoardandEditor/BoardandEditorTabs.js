@@ -579,6 +579,8 @@ class BoardandEditor extends React.Component {
     this.setState({ key: tabKey });
     if (tabKey === 'codeeditor') {
       this.cvsRef.style.position = 'absolute';
+    } else {
+      this.cvsRef.style.position = 'static';
     }
   };
 
