@@ -17,7 +17,7 @@ class WhiteBoard extends Component {
 
   render() {
     let { lineColor, lineWidth, tool } = this.props;
-    const { sketchChange, controlledValue, saveImage, fillColor, canvasRef } = this.props;
+    const { sketchChange, controlledValue, saveImage, fillColor } = this.props;
     switch (tool) {
       case 'highlighter':
         tool = Tools.Pencil;
@@ -40,7 +40,7 @@ class WhiteBoard extends Component {
     }
 
     return (
-      <Container className="white-board" ref={canvasRef}>
+      <Container className="white-board">
         <Modal />
         <Button className="save-button" onClick={saveImage}>
           Save As Image
@@ -75,7 +75,7 @@ WhiteBoard.propTypes = {
   saveImage: PropTypes.func.isRequired,
   loadSketch: PropTypes.func.isRequired,
   sketchChange: PropTypes.func.isRequired,
-  canvasRef: PropTypes.func.isRequired,
+
   controlledValue: PropTypes.string,
 };
 WhiteBoard.defaultProps = {
