@@ -35,7 +35,7 @@ class BoardandEditor extends React.Component {
       fillColor: 'rgba(245, 229, 27, 100)',
       eraserColor: null,
       // fillColor: '#68CCCA',
-      // backgroundColor: 'transparent',
+      backgroundColor: '#fff',
       // shadowWidth: 0,
       // shadowOffset: 0,
       selectedTool: Tools.Pencil,
@@ -172,7 +172,7 @@ class BoardandEditor extends React.Component {
         ...this.state,
         controlledValue: null,
         storeData: [],
-        // backgroundColor: 'transparent',
+        backgroundColor: '#fff',
         // fillWithBackgroundColor: false,
         canUndo: sketchRef.canUndo(),
         canRedo: sketchRef.canRedo(),
@@ -502,15 +502,22 @@ class BoardandEditor extends React.Component {
     const { sketchRef, uniqueID } = this.state;
     sketchRef.clear();
     // sketchRef.setBackgroundFromDataUrl('');
-    this.setState({
-      ...this.state,
-      controlledValue: null,
-      storeData: [],
-      // backgroundColor: 'transparent',
-      // fillWithBackgroundColor: false,
-      canUndo: sketchRef.canUndo(),
-      canRedo: sketchRef.canRedo(),
-    });
+    this.setState(
+      {
+        controlledValue: null,
+        storeData: [],
+        backgroundColor: 'transparent',
+        // fillWithBackgroundColor: false,
+        canUndo: sketchRef.canUndo(),
+        canRedo: sketchRef.canRedo(),
+      },
+      () => {
+        // Resets the canvas background
+        this.setState({
+          backgroundColor: '#fff',
+        });
+      }
+    );
 
     socket.emit('clear-canvas', { room: uniqueID });
   };
@@ -600,6 +607,7 @@ class BoardandEditor extends React.Component {
       lineWidth,
       lineColor,
       fillColor,
+      backgroundColor,
       eraserColor,
       selectedTool,
       sketchRef,
@@ -658,6 +666,7 @@ class BoardandEditor extends React.Component {
                       lineWidth={lineWidth}
                       lineColor={lineColor}
                       fillColor={fillColor}
+                      backgroundColor={backgroundColor}
                       eraserColor={eraserColor}
                       tool={selectedTool}
                       sketchChange={this.onSketchChange}

@@ -17,7 +17,7 @@ class WhiteBoard extends Component {
 
   render() {
     let { lineColor, lineWidth, tool } = this.props;
-    const { sketchChange, controlledValue, saveImage, fillColor } = this.props;
+    const { sketchChange, controlledValue, saveImage, fillColor, backgroundColor } = this.props;
     switch (tool) {
       case 'highlighter':
         tool = Tools.Pencil;
@@ -50,7 +50,7 @@ class WhiteBoard extends Component {
           className="canvas"
           ref={comp => (this._sketch = comp)}
           lineColor={lineColor}
-          backgroundColor="#fff"
+          backgroundColor={backgroundColor}
           fillColor={fillColor}
           lineWidth={lineWidth}
           width="100%"
@@ -70,6 +70,7 @@ WhiteBoard.propTypes = {
 
   lineColor: PropTypes.string.isRequired,
   fillColor: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   tool: PropTypes.node,
   saveImage: PropTypes.func.isRequired,
