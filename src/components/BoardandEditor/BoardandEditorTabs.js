@@ -588,7 +588,7 @@ class BoardandEditor extends React.Component {
   };
 
   onTabChange = tabKey => {
-    if (window.innerWidth < 1040 && tabKey === 'codeeditor') {
+    if (window.innerWidth < 480 && tabKey === 'codeeditor') {
       return this.toggleAvailabilityModal();
     }
     return this.setState({ key: tabKey });

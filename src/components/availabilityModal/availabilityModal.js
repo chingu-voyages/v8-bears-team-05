@@ -7,9 +7,18 @@ const AvailabilityModal = ({ availabilityModalOpen, toggleAvailabilityModal }) =
   return (
     <Modal show={availabilityModalOpen} onHide={toggleAvailabilityModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Not Available</Modal.Title>
+        <Modal.Title>
+          <font size="4">Not Available on Mobile</font>
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body>This Feature is only avalaible in desktop version!!</Modal.Body>
+      <Modal.Body>
+        <font size="3">
+          This Feature is only available on our Desktop Version as of now...{' '}
+          <span role="img" aria-labelledby="sad-emoji">
+            😢
+          </span>
+        </font>
+      </Modal.Body>
     </Modal>
   );
 };
