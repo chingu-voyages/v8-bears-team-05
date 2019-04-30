@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
@@ -22,6 +23,7 @@ import ToolBox from '../ToolBox/ToolBox';
 import JoinModal from '../JoinModal/JoinModal';
 import MeetingModal from '../MeetingModal/MeetingModal';
 import AuthenticateModal from '../authenticateModal/authenticateModal';
+import AvailabilityModal from '../availabilityModal/availabilityModal';
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -68,6 +70,7 @@ class BoardandEditor extends React.Component {
       uniqueID: '',
       displayLineColorPicker: false,
       displayFillColorPicker: false,
+      availabilityModalOpen: false,
     };
     this.notificationDOMRef = React.createRef();
   }
@@ -75,6 +78,9 @@ class BoardandEditor extends React.Component {
   // Listening for drawing on canvas
   componentDidMount() {
     this.genUniqueID();
+
+    // Set scroll to the top
+    window.scrollTo(0, 0);
 
     // Set refresh to sessionStorage before reload
     window.onbeforeunload = () => {
@@ -555,6 +561,12 @@ class BoardandEditor extends React.Component {
     }, 100);
   };
 
+  toggleAvailabilityModal = () => {
+    this.setState(prevState => ({
+      availabilityModalOpen: !prevState.availabilityModalOpen,
+    }));
+  };
+
   addText = () => {
     const { sketchRef, text } = this.state;
     this.setState({ selectedTool: Tools.Select, addTextOpen: false });
@@ -575,6 +587,13 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  onTabChange = tabKey => {
+    if (window.innerWidth < 480 && tabKey === 'codeeditor') {
+      return this.toggleAvailabilityModal();
+    }
+    return this.setState({ key: tabKey });
+  };
+
   render() {
     const {
       key,
@@ -590,6 +609,7 @@ class BoardandEditor extends React.Component {
       uniqueID,
       displayLineColorPicker,
       displayFillColorPicker,
+      availabilityModalOpen,
     } = this.state;
     const {
       hostModalOpen,
@@ -622,10 +642,14 @@ class BoardandEditor extends React.Component {
           toggleAuthenticateModal={toggleAuthenticateModal}
           typeofauthentication={typeofauthentication}
         />
+        <AvailabilityModal
+          availabilityModalOpen={availabilityModalOpen}
+          toggleAvailabilityModal={this.toggleAvailabilityModal}
+        />
         <Container id="board">
           <Row>
             <Col md={9}>
-              <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
+              <Tabs id="controlled-tab-example" activeKey={key} onSelect={this.onTabChange}>
                 <Tab eventKey="whiteboard" title="Whiteboard">
                   <BoardContext.Provider
                     value={{ show: modalShow, toggleModal: this.toggleModal, imageDrop: this.imageDrop }}

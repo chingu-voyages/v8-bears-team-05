@@ -43,7 +43,7 @@ class NavBar extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
               <Nav>
-                <Nav.Link href="#aboutus" onClick={pushToAbout}>
+                <Nav.Link href="" onClick={pushToAbout}>
                   About us
                 </Nav.Link>
 
