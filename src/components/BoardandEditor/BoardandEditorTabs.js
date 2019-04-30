@@ -76,6 +76,9 @@ class BoardandEditor extends React.Component {
   componentDidMount() {
     this.genUniqueID();
 
+    // Set scroll to the top
+    window.scrollTo(0, 0);
+
     // Set refresh to sessionStorage before reload
     window.onbeforeunload = () => {
       sessionStorage.setItem('refresh', true);
