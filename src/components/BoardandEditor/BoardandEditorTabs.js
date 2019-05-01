@@ -595,7 +595,24 @@ class BoardandEditor extends React.Component {
   };
 
   onTabChange = tabKey => {
-    if (window.innerWidth < 480 && tabKey === 'codeeditor') {
+    // Detect mobiles and tablets
+    const detectmob = () => {
+      if (
+        navigator.userAgent.match(/Android/i) ||
+        navigator.userAgent.match(/webOS/i) ||
+        navigator.userAgent.match(/iPhone/i) ||
+        navigator.userAgent.match(/iPad/i) ||
+        navigator.userAgent.match(/iPod/i) ||
+        navigator.userAgent.match(/BlackBerry/i) ||
+        navigator.userAgent.match(/Windows Phone/i)
+      ) {
+        return true;
+      }
+
+      return false;
+    };
+
+    if (detectmob() && tabKey === 'codeeditor') {
       return this.toggleAvailabilityModal();
     }
     return this.setState({ key: tabKey });
