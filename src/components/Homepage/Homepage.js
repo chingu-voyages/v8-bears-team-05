@@ -17,7 +17,7 @@ import Live from '../../assets/live.svg';
 import blueprint from '../../assets/blueprint.svg';
 
 const Homepage = ({
-  history,
+  // history,
   authenticateModalOpen,
   toggleAuthenticateModal,
   typeofauthentication,
@@ -25,11 +25,11 @@ const Homepage = ({
   toggleNavbar,
 }) => {
   const onStart = () => {
-    history.push('/boardandeditor');
+    // history.push('/boardandeditor');
     sessionStorage.setItem('refresh', false);
   };
   useEffect(() => {
-    console.log('component updated');
+    // console.log('component updated');
     expanded && toggleNavbar();
   }, []);
   return (
@@ -48,9 +48,11 @@ const Homepage = ({
               to the Next level
             </h1>
             <h4>Work together anywhere, anytime.</h4>
-            <Button className="try-btn" onClick={onStart}>
-              START NOW
-            </Button>
+            <a href="/boardandeditor">
+              <Button className="try-btn" onClick={onStart}>
+                START NOW
+              </Button>
+            </a>
           </div>
           <div className="hero-illustrations" md={6} sm={12}>
             <img className="undrawDesignThinking" src={undrawDesignThinking} alt="" />
@@ -138,7 +140,7 @@ const Homepage = ({
 };
 
 Homepage.propTypes = {
-  history: PropTypes.object.isRequired,
+  // history: PropTypes.object.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
   authenticateModalOpen: PropTypes.bool.isRequired,
   typeofauthentication: PropTypes.string,

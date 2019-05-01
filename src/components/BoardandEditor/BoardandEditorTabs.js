@@ -210,7 +210,8 @@ class BoardandEditor extends React.Component {
       // const ids = ['rishabh', 'keshav'];
       // const id = ids[Math.floor(Math.random() * ids.length)];
 
-      const id = sessionStorage.getItem('uniqueID') || nanoid(6);
+      const prevID = sessionStorage.getItem('uniqueID');
+      const id = prevID || nanoid(6);
 
       // Save unique id to sessionStorage
       sessionStorage.setItem('uniqueID', id);
@@ -225,10 +226,9 @@ class BoardandEditor extends React.Component {
       if (refresh === 'true') {
         // socket emit to join the room
         socket.emit('join-room', id);
-      } else {
+      } else if (prevID !== id) {
         // socket emit to create the room
         socket.emit('create-room', id);
-        // console.log(typeof refresh)
       }
       sessionStorage.setItem('refresh', false);
     }
@@ -612,8 +612,11 @@ class BoardandEditor extends React.Component {
       return false;
     };
 
-    if (detectmob() && tabKey === 'codeeditor') {
-      return this.toggleAvailabilityModal();
+    // if (detectmob() && tabKey === 'codeeditor') {
+    //   return this.toggleAvailabilityModal();
+    // }
+    if (tabKey === 'whiteboard' && detectmob()) {
+      window.location.reload();
     }
     return this.setState({ key: tabKey });
   };
