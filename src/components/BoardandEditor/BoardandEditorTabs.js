@@ -203,6 +203,7 @@ class BoardandEditor extends React.Component {
   // Get an id for unique teams
   genUniqueID = () => {
     const { uniqueID } = this.state;
+    const { toggleHostModal, toggleJoinModal } = this.props;
 
     // Check for an existing id
     if (uniqueID === '') {
@@ -229,8 +230,22 @@ class BoardandEditor extends React.Component {
       } else if (prevID !== id) {
         // socket emit to create the room
         socket.emit('create-room', id);
+      } else {
+        socket.emit('join-room', id);
       }
       sessionStorage.setItem('refresh', false);
+    }
+
+    // Checks if the navbar host or join modals were clicked
+    if (sessionStorage.getItem('join-modal') === 'true') {
+      // Toggle join at a timeout due to join-room success close toggle command
+      setTimeout(() => {
+        toggleJoinModal();
+      }, 500);
+      sessionStorage.setItem('join-modal', false);
+    } else if (sessionStorage.getItem('host-modal') === 'true') {
+      toggleHostModal();
+      sessionStorage.setItem('host-modal', false);
     }
   };
 

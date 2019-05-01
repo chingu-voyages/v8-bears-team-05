@@ -34,18 +34,6 @@ class App extends Component {
     this.setState({ notificationRef });
   };
 
-  toggleHostModal = () => {
-    const { location, history } = this.props;
-
-    if (location.pathname === '/' || '/aboutus') {
-      history.push('/boardandeditor');
-    }
-    this.setState(prevState => ({
-      ...prevState,
-      hostModalOpen: !prevState.hostModalOpen,
-    }));
-  };
-
   setMessage = (message, messageType) => {
     // set messages for the notification
 
@@ -63,12 +51,22 @@ class App extends Component {
     });
   };
 
+  // Set join modal toggle session to true
+  setJoinModal = () => {
+    sessionStorage.setItem('join-modal', true);
+  };
+
+  // Set host modal toggle session to true
+  setHostModal = () => {
+    sessionStorage.setItem('host-modal', true);
+  };
+
   toggleJoinModal = () => {
-    const { location, history } = this.props;
+    // const { location, history } = this.props;
     const { joinModalOpen } = this.state;
-    if (location.pathname === '/' || '/aboutus') {
-      history.push('/boardandeditor');
-    }
+    // if (location.pathname === '/' || '/aboutus') {
+    //   history.push('/boardandeditor');
+    // }
 
     if (!joinModalOpen) {
       // Sets Focus to ID Input
@@ -80,6 +78,18 @@ class App extends Component {
     this.setState(prevState => ({
       ...prevState,
       joinModalOpen: !prevState.joinModalOpen,
+    }));
+  };
+
+  toggleHostModal = () => {
+    // const { location, history } = this.props;
+
+    // if (location.pathname === '/' || '/aboutus') {
+    //   history.push('/boardandeditor');
+    // }
+    this.setState(prevState => ({
+      ...prevState,
+      hostModalOpen: !prevState.hostModalOpen,
     }));
   };
 
@@ -126,8 +136,8 @@ class App extends Component {
     return (
       <>
         <NavBar
-          toggleHostModal={this.toggleHostModal}
-          toggleJoinModal={this.toggleJoinModal}
+          setHostModal={this.setHostModal}
+          setJoinModal={this.setJoinModal}
           setNotificationRef={this.setNotificationRef}
           authenticateModalOpen={authenticateModalOpen}
           toggleAuthenticateModal={this.toggleAuthenticateModal}
@@ -192,7 +202,7 @@ class App extends Component {
 
 App.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
+  // location: PropTypes.object.isRequired,
 };
 
 export default withRouter(App);
