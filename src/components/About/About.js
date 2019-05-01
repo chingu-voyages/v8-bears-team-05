@@ -1,19 +1,26 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Container } from 'react-bootstrap';
 
 import './About.css';
-import { Container } from 'react-bootstrap';
+import AuthenticateModal from '../authenticateModal/authenticateModal';
 import about from '../../assets/undraw_good_team_m7uu.svg';
 
-const About = ({ expanded, toggleNavbar }) => {
+const About = ({ expanded, toggleNavbar, authenticateModalOpen, toggleAuthenticateModal, typeofauthentication }) => {
   useEffect(() => {
     console.log('component updated');
     expanded && toggleNavbar();
   }, []);
   return (
     <div>
+      <AuthenticateModal
+        authenticateModalOpen={authenticateModalOpen}
+        toggleAuthenticateModal={toggleAuthenticateModal}
+        typeofauthentication={typeofauthentication}
+      />
       <Container className="aboutus">
         <h1>About us</h1>
         <hr />
@@ -63,6 +70,9 @@ const About = ({ expanded, toggleNavbar }) => {
 About.propTypes = {
   toggleNavbar: PropTypes.func.isRequired,
   expanded: PropTypes.bool.isRequired,
+  toggleAuthenticateModal: PropTypes.func.isRequired,
+  authenticateModalOpen: PropTypes.bool.isRequired,
+  typeofauthentication: PropTypes.string,
 };
 
 export default About;

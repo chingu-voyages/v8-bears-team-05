@@ -37,7 +37,7 @@ class App extends Component {
   toggleHostModal = () => {
     const { location, history } = this.props;
 
-    if (location.pathname === '/') {
+    if (location.pathname === '/' || '/aboutus') {
       history.push('/boardandeditor');
     }
     this.setState(prevState => ({
@@ -66,7 +66,7 @@ class App extends Component {
   toggleJoinModal = () => {
     const { location, history } = this.props;
     const { joinModalOpen } = this.state;
-    if (location.pathname === '/') {
+    if (location.pathname === '/' || '/aboutus') {
       history.push('/boardandeditor');
     }
 
@@ -172,7 +172,18 @@ class App extends Component {
               />
             )}
           />
-          <Route path="/aboutus" render={() => <AboutUs expanded={expanded} toggleNavbar={this.toggleNavbar} />} />
+          <Route
+            path="/aboutus"
+            render={() => (
+              <AboutUs
+                expanded={expanded}
+                toggleNavbar={this.toggleNavbar}
+                toggleAuthenticateModal={this.toggleAuthenticateModal}
+                authenticateModalOpen={authenticateModalOpen}
+                typeofauthentication={typeofauthentication}
+              />
+            )}
+          />
         </Container>
       </>
     );
