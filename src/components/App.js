@@ -53,12 +53,23 @@ class App extends Component {
 
   // Set join modal toggle session to true
   setJoinModal = () => {
-    sessionStorage.setItem('join-modal', true);
+    if (window.location.pathname === '/' || window.location.pathname === '/aboutus') {
+      // console.log(window.location.pathname)
+      window.location.href = '/boardandeditor';
+      sessionStorage.setItem('join-modal', true);
+    } else {
+      this.toggleJoinModal();
+    }
   };
 
   // Set host modal toggle session to true
   setHostModal = () => {
-    sessionStorage.setItem('host-modal', true);
+    if (window.location.pathname === '/' || window.location.pathname === '/aboutus') {
+      window.location.href = '/boardandeditor';
+      sessionStorage.setItem('host-modal', true);
+    } else {
+      this.toggleHostModal();
+    }
   };
 
   toggleJoinModal = () => {
