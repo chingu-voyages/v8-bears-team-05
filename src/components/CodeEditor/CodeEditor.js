@@ -104,7 +104,7 @@ class CodeEditor extends React.Component {
     sendData[id] = setTimeout(() => {
       // Pings all connnected users ecery 1 secs
       socket.emit('text-editor', { room: id, data: text });
-    }, 1000);
+    }, 500);
   }
 
   // Save as word document
