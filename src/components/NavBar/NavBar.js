@@ -47,10 +47,10 @@ class NavBar extends Component {
                   About us
                 </Nav.Link>
 
-                <Nav.Link href="/boardandeditor" onClick={setJoinModal}>
+                <Nav.Link href="" onClick={setJoinModal}>
                   Join a meeting
                 </Nav.Link>
-                <Nav.Link href="/boardandeditor" onClick={setHostModal}>
+                <Nav.Link href="" onClick={setHostModal}>
                   Host a meeting
                 </Nav.Link>
                 <Nav.Link href="" onClick={() => toggleAuthenticateModal('Sign in')}>
