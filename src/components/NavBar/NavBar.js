@@ -22,8 +22,8 @@ class NavBar extends Component {
 
   render() {
     const {
-      toggleHostModal,
-      toggleJoinModal,
+      setHostModal,
+      setJoinModal,
       toggleAuthenticateModal,
       goToHome,
       pushToAbout,
@@ -47,10 +47,10 @@ class NavBar extends Component {
                   About us
                 </Nav.Link>
 
-                <Nav.Link href="" onClick={toggleJoinModal}>
+                <Nav.Link href="/boardandeditor" onClick={setJoinModal}>
                   Join a meeting
                 </Nav.Link>
-                <Nav.Link href="" onClick={toggleHostModal}>
+                <Nav.Link href="/boardandeditor" onClick={setHostModal}>
                   Host a meeting
                 </Nav.Link>
                 <Nav.Link href="" onClick={() => toggleAuthenticateModal('Sign in')}>
@@ -69,8 +69,8 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  toggleHostModal: PropTypes.func.isRequired,
-  toggleJoinModal: PropTypes.func.isRequired,
+  setHostModal: PropTypes.func.isRequired,
+  setJoinModal: PropTypes.func.isRequired,
   setNotificationRef: PropTypes.func.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
   goToHome: PropTypes.func.isRequired,

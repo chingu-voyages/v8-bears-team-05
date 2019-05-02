@@ -203,6 +203,7 @@ class BoardandEditor extends React.Component {
   // Get an id for unique teams
   genUniqueID = () => {
     const { uniqueID } = this.state;
+    const { toggleHostModal, toggleJoinModal } = this.props;
 
     // Check for an existing id
     if (uniqueID === '') {
@@ -210,7 +211,8 @@ class BoardandEditor extends React.Component {
       // const ids = ['rishabh', 'keshav'];
       // const id = ids[Math.floor(Math.random() * ids.length)];
 
-      const id = sessionStorage.getItem('uniqueID') || nanoid(6);
+      const prevID = sessionStorage.getItem('uniqueID');
+      const id = prevID || nanoid(6);
 
       // Save unique id to sessionStorage
       sessionStorage.setItem('uniqueID', id);
@@ -225,12 +227,25 @@ class BoardandEditor extends React.Component {
       if (refresh === 'true') {
         // socket emit to join the room
         socket.emit('join-room', id);
-      } else {
+      } else if (prevID !== id) {
         // socket emit to create the room
         socket.emit('create-room', id);
-        // console.log(typeof refresh)
+      } else {
+        socket.emit('join-room', id);
       }
       sessionStorage.setItem('refresh', false);
+    }
+
+    // Checks if the navbar host or join modals were clicked
+    if (sessionStorage.getItem('join-modal') === 'true') {
+      // Toggle join at a timeout due to join-room success close toggle command
+      setTimeout(() => {
+        toggleJoinModal();
+      }, 500);
+      sessionStorage.setItem('join-modal', false);
+    } else if (sessionStorage.getItem('host-modal') === 'true') {
+      toggleHostModal();
+      sessionStorage.setItem('host-modal', false);
     }
   };
 
@@ -595,8 +610,28 @@ class BoardandEditor extends React.Component {
   };
 
   onTabChange = tabKey => {
-    if (window.innerWidth < 480 && tabKey === 'codeeditor') {
-      return this.toggleAvailabilityModal();
+    // Detect mobiles and tablets
+    const detectmob = () => {
+      if (
+        navigator.userAgent.match(/Android/i) ||
+        navigator.userAgent.match(/webOS/i) ||
+        navigator.userAgent.match(/iPhone/i) ||
+        navigator.userAgent.match(/iPad/i) ||
+        navigator.userAgent.match(/iPod/i) ||
+        navigator.userAgent.match(/BlackBerry/i) ||
+        navigator.userAgent.match(/Windows Phone/i)
+      ) {
+        return true;
+      }
+
+      return false;
+    };
+
+    // if (detectmob() && tabKey === 'codeeditor') {
+    //   return this.toggleAvailabilityModal();
+    // }
+    if (tabKey === 'whiteboard' && detectmob()) {
+      window.location.reload();
     }
     return this.setState({ key: tabKey });
   };
