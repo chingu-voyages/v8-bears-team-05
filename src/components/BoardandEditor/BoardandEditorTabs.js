@@ -71,6 +71,7 @@ class BoardandEditor extends React.Component {
       displayLineColorPicker: false,
       displayFillColorPicker: false,
       availabilityModalOpen: false,
+      copied: false,
     };
     this.notificationDOMRef = React.createRef();
   }
@@ -636,6 +637,10 @@ class BoardandEditor extends React.Component {
     return this.setState({ key: tabKey });
   };
 
+  copyUniqueId = () => {
+    this.setState({ copied: true });
+  };
+
   render() {
     const {
       key,
@@ -672,6 +677,7 @@ class BoardandEditor extends React.Component {
           toggleHostModal={toggleHostModal}
           uniqueID={uniqueID}
           createRoom={this.createRoom}
+          copyToClipboard={this.copyUniqueId}
         />
         <JoinModal
           joinModalOpen={joinModalOpen}
