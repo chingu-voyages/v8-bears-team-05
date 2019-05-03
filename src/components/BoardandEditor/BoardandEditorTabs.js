@@ -100,11 +100,13 @@ class BoardandEditor extends React.Component {
       sessionStorage.setItem('uniqueID', id);
 
       // Close the Modal
-      if (joinModalOpen) {
+      if (joinModalOpen && sessionStorage.getItem('join-modal') === 'false') {
         toggleJoinModal();
 
         // Show notification
         setMessage(`Yippee! You are now connected to ID: ${id}`, 'success');
+      } else {
+        sessionStorage.setItem('join-modal', false);
       }
     });
 
@@ -185,6 +187,7 @@ class BoardandEditor extends React.Component {
 
       // Stop trigger when join or host Modal open
       if (res.toggle === false && (joinModalOpen || hostModalOpen)) {
+        sessionStorage.setItem('join-modal', false);
         return;
       }
       setMessage(res.message, res.type);
@@ -238,11 +241,8 @@ class BoardandEditor extends React.Component {
 
     // Checks if the navbar host or join modals were clicked
     if (sessionStorage.getItem('join-modal') === 'true') {
-      // Toggle join at a timeout due to join-room success close toggle command
-      setTimeout(() => {
-        toggleJoinModal();
-      }, 500);
-      sessionStorage.setItem('join-modal', false);
+      // Session storage set to false in create-room notify and join-room success to prevent closing the modal automatically accompanied with not required notification.
+      toggleJoinModal();
     } else if (sessionStorage.getItem('host-modal') === 'true') {
       toggleHostModal();
       sessionStorage.setItem('host-modal', false);
@@ -615,8 +615,8 @@ class BoardandEditor extends React.Component {
       if (
         navigator.userAgent.match(/Android/i) ||
         navigator.userAgent.match(/webOS/i) ||
-        navigator.userAgent.match(/iPhone/i) ||
-        navigator.userAgent.match(/iPad/i) ||
+        // navigator.userAgent.match(/iPhone/i) ||
+        // navigator.userAgent.match(/iPad/i) ||
         navigator.userAgent.match(/iPod/i) ||
         navigator.userAgent.match(/BlackBerry/i) ||
         navigator.userAgent.match(/Windows Phone/i)
