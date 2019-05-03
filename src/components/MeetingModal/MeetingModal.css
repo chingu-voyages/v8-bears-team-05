@@ -9,3 +9,21 @@
   font-size: 1.6rem;
   margin-top: 1rem;
 }
+.meeting-input {
+  display: inline-block;
+  width: 90%;
+}
+.hostid-copy {
+  font-size: 2.7rem;
+  margin-left: 0.7rem;
+  color: #a4a4a4;
+  cursor: pointer;
+  padding: 0.5rem;
+  position: relative;
+  top: 0.5rem;
+}
+
+.hostid-copy:hover {
+  background-color: #d3d3d3;
+  color: #000;
+}
