@@ -112,7 +112,12 @@ footer {
   color: #fff;
   padding: 0 3rem;
 }
-
+@media screen and (max-width: 1500px) {
+  .feature,
+  .feature.reverse {
+    justify-content: space-around;
+  }
+}
 @media screen and (max-width: 1030px) {
   .hero-container {
     height: 70rem;
@@ -134,7 +139,7 @@ footer {
     left: 6rem;
     z-index: 200;
   }
- 
+
   /* .hero-header-container h1 {
     font-size: 4rem;
     width: 100%;
