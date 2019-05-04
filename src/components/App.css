@@ -1,7 +1,6 @@
 html,
 body {
   overflow-x: hidden;
-  height: 100%;
 }
 .white-board,
 .code-editor {
@@ -37,5 +36,4 @@ body {
 }
 .app,
 #root {
-  height: 100%;
 }

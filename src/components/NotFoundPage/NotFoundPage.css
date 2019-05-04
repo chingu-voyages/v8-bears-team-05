@@ -3,10 +3,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100%;
+  height: 500px;
 }
 .not-found-container img {
-  width: 40%;
+  width: 80%;
   height: auto;
   min-height: 200px;
 }
@@ -15,4 +15,14 @@
   font-size: 5rem;
   text-align: center;
   font-weight: bold;
+}
+@media screen and (max-width: 1000px) {
+  .not-found-container p {
+    font-size: 4.2rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .not-found-container p {
+    font-size: 3rem;
+  }
 }
