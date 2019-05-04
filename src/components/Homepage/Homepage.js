@@ -67,7 +67,8 @@ const Homepage = ({
               <Card.Body>
                 <Card.Title>Interactive White Board</Card.Title>
                 <Card.Text>
-                  Our users can host unlimited meetings to share their ideas remotely with no sign-ups required.
+                  Our users can host meetings with unlimited users to share their ideas remotely with no sign-ups
+                  required.
                 </Card.Text>
               </Card.Body>
             </Card>
