@@ -1,0 +1,18 @@
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+.not-found-container img {
+  width: 40%;
+  height: auto;
+  min-height: 200px;
+}
+.not-found-container p {
+  font-family: monospace;
+  font-size: 5rem;
+  text-align: center;
+  font-weight: bold;
+}

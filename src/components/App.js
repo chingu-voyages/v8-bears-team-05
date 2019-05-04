@@ -5,14 +5,14 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
-import { withRouter, Route } from 'react-router-dom';
+import { withRouter, Route, Switch } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import BoardandEditor from './BoardandEditor/BoardandEditorTabs';
 import Homepage from './Homepage/Homepage';
 import NavBar from './NavBar/NavBar';
 import AboutUs from './About/About';
-
+import NotFoundPage from './NotFoundPage/NotFoundPage';
 import './App.css';
 
 class App extends Component {
@@ -159,52 +159,55 @@ class App extends Component {
         />
 
         <Container fluid className="app">
-          <Route
-            path="/"
-            exact
-            render={() => (
-              <Homepage
-                joinModalOpen={joinModalOpen}
-                toggleJoinModal={this.toggleJoinModal}
-                toggleAuthenticateModal={this.toggleAuthenticateModal}
-                authenticateModalOpen={authenticateModalOpen}
-                typeofauthentication={typeofauthentication}
-                toggleNavbar={this.toggleNavbar}
-                expanded={expanded}
-              />
-            )}
-          />
-          <Route
-            path="/boardandeditor"
-            render={() => (
-              <BoardandEditor
-                hostModalOpen={hostModalOpen}
-                joinModalOpen={joinModalOpen}
-                toggleHostModal={this.toggleHostModal}
-                toggleJoinModal={this.toggleJoinModal}
-                changeJoinID={this.handleIDChange}
-                joinID={joinID}
-                setMessage={this.setMessage}
-                authenticateModalOpen={authenticateModalOpen}
-                toggleAuthenticateModal={this.toggleAuthenticateModal}
-                typeofauthentication={typeofauthentication}
-                toggleNavbar={this.toggleNavbar}
-                expanded={expanded}
-              />
-            )}
-          />
-          <Route
-            path="/aboutus"
-            render={() => (
-              <AboutUs
-                expanded={expanded}
-                toggleNavbar={this.toggleNavbar}
-                toggleAuthenticateModal={this.toggleAuthenticateModal}
-                authenticateModalOpen={authenticateModalOpen}
-                typeofauthentication={typeofauthentication}
-              />
-            )}
-          />
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <Homepage
+                  joinModalOpen={joinModalOpen}
+                  toggleJoinModal={this.toggleJoinModal}
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  authenticateModalOpen={authenticateModalOpen}
+                  typeofauthentication={typeofauthentication}
+                  toggleNavbar={this.toggleNavbar}
+                  expanded={expanded}
+                />
+              )}
+            />
+            <Route
+              path="/boardandeditor"
+              render={() => (
+                <BoardandEditor
+                  hostModalOpen={hostModalOpen}
+                  joinModalOpen={joinModalOpen}
+                  toggleHostModal={this.toggleHostModal}
+                  toggleJoinModal={this.toggleJoinModal}
+                  changeJoinID={this.handleIDChange}
+                  joinID={joinID}
+                  setMessage={this.setMessage}
+                  authenticateModalOpen={authenticateModalOpen}
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  typeofauthentication={typeofauthentication}
+                  toggleNavbar={this.toggleNavbar}
+                  expanded={expanded}
+                />
+              )}
+            />
+            <Route
+              path="/aboutus"
+              render={() => (
+                <AboutUs
+                  expanded={expanded}
+                  toggleNavbar={this.toggleNavbar}
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  authenticateModalOpen={authenticateModalOpen}
+                  typeofauthentication={typeofauthentication}
+                />
+              )}
+            />
+            <Route component={NotFoundPage} />
+          </Switch>
         </Container>
       </>
     );

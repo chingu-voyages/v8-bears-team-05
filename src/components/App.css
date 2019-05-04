@@ -1,5 +1,7 @@
-html, body {
+html,
+body {
   overflow-x: hidden;
+  height: 100%;
 }
 .white-board,
 .code-editor {
@@ -32,4 +34,8 @@ html, body {
 }
 .notification-content {
   text-align: center;
+}
+.app,
+#root {
+  height: 100%;
 }
