@@ -7,7 +7,12 @@ const NotFoundPage = () => {
   return (
     <div className="not-found-container">
       <img src={notFound} alt="404image" />
-      <p>404 Not Found</p>
+      <p>
+        404 Not Found!{' '}
+        <span role="img" aria-labelledby="sad-emoji">
+          😢
+        </span>
+      </p>
     </div>
   );
 };

@@ -11,10 +11,10 @@
   min-height: 200px;
 }
 .not-found-container p {
-  font-family: monospace;
-  font-size: 5rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 6rem;
   text-align: center;
-  font-weight: bold;
+  color: rgb(226, 65, 97);
 }
 @media screen and (max-width: 1000px) {
   .not-found-container p {
