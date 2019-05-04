@@ -13,7 +13,13 @@
 .meeting-input {
   display: inline-block;
   width: 90%;
+  font-size: 1.2rem;
 }
+
+.text-muted {
+  font-size: 1.1rem;
+}
+
 .hostid-copy {
   font-size: 2.7rem;
   margin-left: 0.7rem;
@@ -30,6 +36,9 @@
 }
 @media screen and (max-width: 450px) {
   .meeting-input {
-    width: 70%;
+    width: 85%;
+  }
+  .meeting-form.form-group {
+    padding: 1rem 2rem;
   }
 }
