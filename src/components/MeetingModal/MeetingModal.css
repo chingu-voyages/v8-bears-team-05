@@ -4,6 +4,7 @@
 }
 .meeting-modal-title {
   font-size: 2rem;
+  display: block;
 }
 .meeting-modal-button {
   font-size: 1.6rem;
@@ -26,4 +27,9 @@
 .hostid-copy:hover {
   background-color: #d3d3d3;
   color: #000;
+}
+@media screen and (max-width: 450px) {
+  .meeting-input {
+    width: 70%;
+  }
 }
