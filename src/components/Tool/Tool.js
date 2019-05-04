@@ -15,7 +15,7 @@ const Tool = ({ iconName, selectTool, tool, selectedTool }) => {
   return (
     <div>
       <div className={classes.join(' ')}>
-        <div className="Icon-overlay" onClick={e => selectTool(e)} value={tool} />
+        <div className="Icon-overlay" onClick={e => selectTool(e)} value={tool} title={tool} />
         <FontAwesomeIcon icon={iconName} />
       </div>
     </div>

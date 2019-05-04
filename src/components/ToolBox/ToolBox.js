@@ -77,7 +77,7 @@ const ToolBox = ({
         <Tool selectTool={e => changeTool(e)} tool={Tools.Rectangle} iconName={faSquare} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Line} iconName={faPencilRuler} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Circle} iconName={faCircle} selectedTool={selectedTool} />
-        <Tool selectTool={toggleModal} tool={undefined} iconName={faImage} selectedTool={selectedTool} />
+        <Tool selectTool={toggleModal} tool="Add image" iconName={faImage} selectedTool={selectedTool} />
         <Tool selectTool={highlightTool} tool="highlighter" iconName={faHighlighter} selectedTool={selectedTool} />
         <Tool selectTool={copyPaste} tool="copy" iconName={faCopy} selectedTool={selectedTool} />
 
@@ -85,9 +85,9 @@ const ToolBox = ({
         <Tool selectTool={zoomOut} tool="zoomout" iconName={faSearchMinus} selectedTool={selectedTool} />
         <Tool selectTool={e => changeTool(e)} tool={Tools.Pan} iconName={faHandPaper} selectedTool={selectedTool} />
         <Tool selectTool={removeSelected} tool="remove" iconName={faTimes} selectedTool={selectedTool} />
-        <Tool selectTool={undo} tool={Tools.Undo} iconName={faUndo} selectedTool={selectedTool} />
-        <Tool selectTool={redo} tool={Tools.Redo} iconName={faRedo} selectedTool={selectedTool} />
-        <Tool selectTool={clear} tool={Tools.Clear} iconName={faTrash} selectedTool={selectedTool} />
+        <Tool selectTool={undo} tool="undo" iconName={faUndo} selectedTool={selectedTool} />
+        <Tool selectTool={redo} tool="redo" iconName={faRedo} selectedTool={selectedTool} />
+        <Tool selectTool={clear} tool="Clear All" iconName={faTrash} selectedTool={selectedTool} />
       </div>
       <Collapse in={addTextOpen}>
         <Form>
