@@ -638,6 +638,8 @@ class BoardandEditor extends React.Component {
   };
 
   copyUniqueId = () => {
+    const { setMessage } = this.props;
+    setMessage('Copied to Clipboard!', 'success');
     this.setState({ copied: true });
   };
 

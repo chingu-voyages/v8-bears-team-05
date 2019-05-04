@@ -27,7 +27,7 @@ const MeetingModal = ({ hostModalOpen, toggleHostModal, uniqueID, createRoom, co
             <CopyToClipboard text={uniqueID} onCopy={copyToClipboard}>
               <FontAwesomeIcon className="hostid-copy" icon={faCopy} />
             </CopyToClipboard>
-            <Form.Text className="text-muted">Share this with people to invite them to meeting</Form.Text>
+            <Form.Text className="text-muted">Share this ID with other users to invite them for the meeting.</Form.Text>
 
             <Button variant="primary" className="meeting-modal-button" onClick={createRoom}>
               Host
