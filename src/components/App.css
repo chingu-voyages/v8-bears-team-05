@@ -22,18 +22,9 @@ body {
   top: -2.5rem;
   width: 70rem;
 }
-.notification-success {
-  border-left: 0;
-}
-.notification-danger {
-  border-left: 0;
-}
 .notification-title {
   display: none;
 }
 .notification-content {
   text-align: center;
-}
-.app,
-#root {
 }
