@@ -1,0 +1,28 @@
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 500px;
+}
+.not-found-container img {
+  width: 80%;
+  height: auto;
+  min-height: 200px;
+}
+.not-found-container p {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 6rem;
+  text-align: center;
+  color: rgb(226, 65, 97);
+}
+@media screen and (max-width: 1000px) {
+  .not-found-container p {
+    font-size: 4.2rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .not-found-container p {
+    font-size: 3rem;
+  }
+}

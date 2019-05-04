@@ -1,8 +1,21 @@
-# v8-bears-team-05
+# v8-bears-team-05: Doodle Live
 
-Add-project-description-here | Voyage-8 | https://chingu.io/
+Take your team work to the Next level.
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Then an Express server was added in the `server` directory. The server is proxied via the `proxy` key in `package.json`.
+Work together anywhere, anytime!
+
+## Features
+
+1. Host Meetings with Unlimited Users.
+2. Sketch & Share.
+3. Live Chat Integration.
+4. Share notes with our rich text editor.
+5. Live code with Automatic Syntax Highlighting.
+6. Easter eggs and much more...
+
+## About the project
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Then an Express server was added in the `server` directory.
 
 ## Using this project
 
@@ -52,10 +65,10 @@ The React application will run on port 3000 and the Express server on port 3001.
 
 #### Installation guide
 
-1.  Install [VSCode](https://code.visualstudio.com/)
-2.  Install [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-3.  Install [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-4.  Modify the VSCode user settings to add below configuration
+1. Install [VSCode](https://code.visualstudio.com/)
+2. Install [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+3. Install [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+4. Modify the VSCode user settings to add below configuration
 
 
     ```javascript
