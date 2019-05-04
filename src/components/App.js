@@ -53,7 +53,7 @@ class App extends Component {
 
   // Set join modal toggle session to true
   setJoinModal = () => {
-    if (window.location.pathname === '/' || window.location.pathname === '/aboutus') {
+    if (window.location.pathname !== '/boardandeditor') {
       // console.log(window.location.pathname)
       window.location.href = '/boardandeditor';
       sessionStorage.setItem('join-modal', true);
@@ -64,7 +64,7 @@ class App extends Component {
 
   // Set host modal toggle session to true
   setHostModal = () => {
-    if (window.location.pathname === '/' || window.location.pathname === '/aboutus') {
+    if (window.location.pathname !== '/boardandeditor') {
       window.location.href = '/boardandeditor';
       sessionStorage.setItem('host-modal', true);
     } else {
@@ -206,7 +206,15 @@ class App extends Component {
                 />
               )}
             />
-            <Route component={NotFoundPage} />
+            <Route
+              render={() => (
+                <NotFoundPage
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  authenticateModalOpen={authenticateModalOpen}
+                  typeofauthentication={typeofauthentication}
+                />
+              )}
+            />
           </Switch>
         </Container>
       </>
