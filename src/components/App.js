@@ -5,14 +5,14 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
-import { withRouter, Route } from 'react-router-dom';
+import { withRouter, Route, Switch } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import BoardandEditor from './BoardandEditor/BoardandEditorTabs';
 import Homepage from './Homepage/Homepage';
 import NavBar from './NavBar/NavBar';
 import AboutUs from './About/About';
-
+import NotFoundPage from './NotFoundPage/NotFoundPage';
 import './App.css';
 
 class App extends Component {
@@ -26,23 +26,12 @@ class App extends Component {
       messageType: '',
       notificationRef: {},
       authenticateModalOpen: false,
+      expanded: false,
     };
   }
 
   setNotificationRef = notificationRef => {
     this.setState({ notificationRef });
-  };
-
-  toggleHostModal = () => {
-    const { location, history } = this.props;
-
-    if (location.pathname === '/') {
-      history.push('/boardandeditor');
-    }
-    this.setState(prevState => ({
-      ...prevState,
-      hostModalOpen: !prevState.hostModalOpen,
-    }));
   };
 
   setMessage = (message, messageType) => {
@@ -62,12 +51,33 @@ class App extends Component {
     });
   };
 
-  toggleJoinModal = () => {
-    const { location, history } = this.props;
-    const { joinModalOpen } = this.state;
-    if (location.pathname === '/') {
-      history.push('/boardandeditor');
+  // Set join modal toggle session to true
+  setJoinModal = () => {
+    if (window.location.pathname !== '/boardandeditor') {
+      // console.log(window.location.pathname)
+      window.location.href = '/boardandeditor';
+      sessionStorage.setItem('join-modal', true);
+    } else {
+      this.toggleJoinModal();
     }
+  };
+
+  // Set host modal toggle session to true
+  setHostModal = () => {
+    if (window.location.pathname !== '/boardandeditor') {
+      window.location.href = '/boardandeditor';
+      sessionStorage.setItem('host-modal', true);
+    } else {
+      this.toggleHostModal();
+    }
+  };
+
+  toggleJoinModal = () => {
+    // const { location, history } = this.props;
+    const { joinModalOpen } = this.state;
+    // if (location.pathname === '/' || '/aboutus') {
+    //   history.push('/boardandeditor');
+    // }
 
     if (!joinModalOpen) {
       // Sets Focus to ID Input
@@ -79,6 +89,18 @@ class App extends Component {
     this.setState(prevState => ({
       ...prevState,
       joinModalOpen: !prevState.joinModalOpen,
+    }));
+  };
+
+  toggleHostModal = () => {
+    // const { location, history } = this.props;
+
+    // if (location.pathname === '/' || '/aboutus') {
+    //   history.push('/boardandeditor');
+    // }
+    this.setState(prevState => ({
+      ...prevState,
+      hostModalOpen: !prevState.hostModalOpen,
     }));
   };
 
@@ -107,6 +129,11 @@ class App extends Component {
     history.push('/aboutus');
   };
 
+  toggleNavbar = () => {
+    const { expanded } = this.state;
+    this.setState({ ...this.state, expanded: !expanded });
+  };
+
   render() {
     const {
       hostModalOpen,
@@ -115,51 +142,80 @@ class App extends Component {
       authenticateModalOpen,
       toggleAuthenticateModal,
       typeofauthentication,
+      expanded,
     } = this.state;
     return (
       <>
         <NavBar
-          toggleHostModal={this.toggleHostModal}
-          toggleJoinModal={this.toggleJoinModal}
+          setHostModal={this.setHostModal}
+          setJoinModal={this.setJoinModal}
           setNotificationRef={this.setNotificationRef}
           authenticateModalOpen={authenticateModalOpen}
           toggleAuthenticateModal={this.toggleAuthenticateModal}
           goToHome={this.goToHome}
           pushToAbout={this.pushToAbout}
+          toggleNavbar={this.toggleNavbar}
+          expanded={expanded}
         />
 
         <Container fluid className="app">
-          <Route
-            path="/"
-            exact
-            render={() => (
-              <Homepage
-                joinModalOpen={joinModalOpen}
-                toggleJoinModal={this.toggleJoinModal}
-                toggleAuthenticateModal={this.toggleAuthenticateModal}
-                authenticateModalOpen={authenticateModalOpen}
-                typeofauthentication={typeofauthentication}
-              />
-            )}
-          />
-          <Route
-            path="/boardandeditor"
-            render={() => (
-              <BoardandEditor
-                hostModalOpen={hostModalOpen}
-                joinModalOpen={joinModalOpen}
-                toggleHostModal={this.toggleHostModal}
-                toggleJoinModal={this.toggleJoinModal}
-                changeJoinID={this.handleIDChange}
-                joinID={joinID}
-                setMessage={this.setMessage}
-                authenticateModalOpen={authenticateModalOpen}
-                toggleAuthenticateModal={this.toggleAuthenticateModal}
-                typeofauthentication={typeofauthentication}
-              />
-            )}
-          />
-          <Route path="/aboutus" component={AboutUs} />
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <Homepage
+                  joinModalOpen={joinModalOpen}
+                  toggleJoinModal={this.toggleJoinModal}
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  authenticateModalOpen={authenticateModalOpen}
+                  typeofauthentication={typeofauthentication}
+                  toggleNavbar={this.toggleNavbar}
+                  expanded={expanded}
+                />
+              )}
+            />
+            <Route
+              path="/boardandeditor"
+              render={() => (
+                <BoardandEditor
+                  hostModalOpen={hostModalOpen}
+                  joinModalOpen={joinModalOpen}
+                  toggleHostModal={this.toggleHostModal}
+                  toggleJoinModal={this.toggleJoinModal}
+                  changeJoinID={this.handleIDChange}
+                  joinID={joinID}
+                  setMessage={this.setMessage}
+                  authenticateModalOpen={authenticateModalOpen}
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  typeofauthentication={typeofauthentication}
+                  toggleNavbar={this.toggleNavbar}
+                  expanded={expanded}
+                />
+              )}
+            />
+            <Route
+              path="/aboutus"
+              render={() => (
+                <AboutUs
+                  expanded={expanded}
+                  toggleNavbar={this.toggleNavbar}
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  authenticateModalOpen={authenticateModalOpen}
+                  typeofauthentication={typeofauthentication}
+                />
+              )}
+            />
+            <Route
+              render={() => (
+                <NotFoundPage
+                  toggleAuthenticateModal={this.toggleAuthenticateModal}
+                  authenticateModalOpen={authenticateModalOpen}
+                  typeofauthentication={typeofauthentication}
+                />
+              )}
+            />
+          </Switch>
         </Container>
       </>
     );
@@ -168,7 +224,7 @@ class App extends Component {
 
 App.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
+  // location: PropTypes.object.isRequired,
 };
 
 export default withRouter(App);

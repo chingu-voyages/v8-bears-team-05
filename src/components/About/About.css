@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
+  text-align: left;
   align-items: center;
 }
 
@@ -12,6 +12,14 @@
   margin-bottom: 1rem;
 }
 
+
+.aboutus h2 {
+  font-size: 2.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-weight: 650;
+}
+
 .aboutus hr {
   width: 10rem;
   border-width: 0.6rem;
@@ -19,7 +27,32 @@
   margin-top: 0;
 }
 
+.about-img {
+  padding-bottom: 10rem;
+  height: auto;
+  width: 100%;
+}
+
 .aboutus p {
   font-size: 1.8rem;
   width: 70%;
+}
+@media screen and (max-width: 500px) {
+  .aboutus p {
+    width: 95%;
+  }
+}
+
+.aboutus p:last-child {
+  margin-bottom: 15rem;
+}
+
+footer {
+  background-color: #8a2be2;
+  width: 99.9%;
+  overflow-x: hidden;
+  padding: 0 0 0 0;
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: #fff;
 }

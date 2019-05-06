@@ -8,8 +8,9 @@
   font-size: 2rem;
   height: 100%;
   width: 12.3rem;
-  z-index: 200;
+  z-index: 10;
   transform: skewX(-15deg);
+  cursor: pointer;
 }
 
 .logo::before {

@@ -75,6 +75,15 @@ class CodeEditor extends React.Component {
     // Update text for every user connected to the ID
     socket.on('text-editor', data => {
       this.setState({ ...this.state, text: data });
+
+      const { sendData } = this.state;
+      const id = sessionStorage.getItem('uniqueID');
+
+      // Handles unhandled collisions
+      if (id in sendData) {
+        clearTimeout(sendData[id]);
+        sendData[id] = '';
+      }
     });
   }
 
@@ -88,13 +97,14 @@ class CodeEditor extends React.Component {
     // Clears previous timeout
     if (id in sendData) {
       clearTimeout(sendData[id]);
+      sendData[id] = '';
     }
 
     // Sets new timeout with the Updated text
     sendData[id] = setTimeout(() => {
       // Pings all connnected users ecery 1 secs
       socket.emit('text-editor', { room: id, data: text });
-    }, 1000);
+    }, 500);
   }
 
   // Save as word document

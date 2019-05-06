@@ -57,6 +57,7 @@ io.of('/boardandeditor').on('connection', socket => {
       chatHistory[id] = [];
       redoHistory[id] = [];
       userOnline[id] = { online: 1 };
+      userOnline[id].user = [];
       // console.log(drawHistory)
       socket.join(id);
       socket.emit('notify', {
@@ -144,15 +145,17 @@ io.of('/boardandeditor').on('connection', socket => {
   // clear canvas for all users
   socket.on('clear-canvas', res => {
     const id = res.room;
-    drawHistory[id].length = 0;
-    redoHistory[id].length = 0;
-    socket.broadcast.to(id).emit('clear-canvas');
+    if (id in drawHistory) {
+      drawHistory[id].length = 0;
+      redoHistory[id].length = 0;
+      socket.broadcast.to(id).emit('clear-canvas');
+    }
   });
 
   // Receive data for text editor
   socket.on('text-editor', res => {
     const id = res.room;
-    if (id in textStore && !textStore[id].includes(res.data)) {
+    if (id in textStore) {
       textStore[id] = res.data;
       socket.broadcast.to(id).emit('text-editor', res.data);
     }
@@ -170,7 +173,13 @@ io.of('/boardandeditor').on('connection', socket => {
   // Notify others about user available to chat
   socket.on('chat-notify', res => {
     const id = res.room;
-    socket.broadcast.to(id).emit('notify', { message: `${res.data} is now available to chat.`, type: 'default' });
+    if (userOnline[id].user.includes(res.data)) {
+      socket.emit('notify', { message: `${res.data} username is already taken.`, type: 'danger' });
+    } else {
+      userOnline[id].user.push(res.data);
+      socket.emit('add-user', res.data);
+      socket.broadcast.to(id).emit('notify', { message: `${res.data} is now available to chat.`, type: 'default' });
+    }
   });
 
   // Clean up memory on disconnect

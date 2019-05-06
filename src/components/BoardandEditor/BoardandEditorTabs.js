@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-access-state-in-setstate */
@@ -21,6 +23,7 @@ import ToolBox from '../ToolBox/ToolBox';
 import JoinModal from '../JoinModal/JoinModal';
 import MeetingModal from '../MeetingModal/MeetingModal';
 import AuthenticateModal from '../authenticateModal/authenticateModal';
+import AvailabilityModal from '../availabilityModal/availabilityModal';
 
 class BoardandEditor extends React.Component {
   constructor(props, context) {
@@ -32,7 +35,7 @@ class BoardandEditor extends React.Component {
       fillColor: 'rgba(245, 229, 27, 100)',
       eraserColor: null,
       // fillColor: '#68CCCA',
-      // backgroundColor: 'transparent',
+      backgroundColor: '#fff',
       // shadowWidth: 0,
       // shadowOffset: 0,
       selectedTool: Tools.Pencil,
@@ -67,6 +70,8 @@ class BoardandEditor extends React.Component {
       uniqueID: '',
       displayLineColorPicker: false,
       displayFillColorPicker: false,
+      availabilityModalOpen: false,
+      copied: false,
     };
     this.notificationDOMRef = React.createRef();
   }
@@ -74,6 +79,9 @@ class BoardandEditor extends React.Component {
   // Listening for drawing on canvas
   componentDidMount() {
     this.genUniqueID();
+
+    // Set scroll to the top
+    window.scrollTo(0, 0);
 
     // Set refresh to sessionStorage before reload
     window.onbeforeunload = () => {
@@ -93,11 +101,13 @@ class BoardandEditor extends React.Component {
       sessionStorage.setItem('uniqueID', id);
 
       // Close the Modal
-      if (joinModalOpen) {
+      if (joinModalOpen && sessionStorage.getItem('join-modal') === 'false') {
         toggleJoinModal();
 
         // Show notification
         setMessage(`Yippee! You are now connected to ID: ${id}`, 'success');
+      } else {
+        sessionStorage.setItem('join-modal', false);
       }
     });
 
@@ -165,7 +175,7 @@ class BoardandEditor extends React.Component {
         ...this.state,
         controlledValue: null,
         storeData: [],
-        // backgroundColor: 'transparent',
+        backgroundColor: '#fff',
         // fillWithBackgroundColor: false,
         canUndo: sketchRef.canUndo(),
         canRedo: sketchRef.canRedo(),
@@ -178,10 +188,13 @@ class BoardandEditor extends React.Component {
 
       // Stop trigger when join or host Modal open
       if (res.toggle === false && (joinModalOpen || hostModalOpen)) {
+        sessionStorage.setItem('join-modal', false);
         return;
       }
       setMessage(res.message, res.type);
     });
+    const { toggleNavbar, expanded } = this.props;
+    expanded && toggleNavbar();
   }
 
   // Show/Hide image drop modal
@@ -194,6 +207,7 @@ class BoardandEditor extends React.Component {
   // Get an id for unique teams
   genUniqueID = () => {
     const { uniqueID } = this.state;
+    const { toggleHostModal, toggleJoinModal } = this.props;
 
     // Check for an existing id
     if (uniqueID === '') {
@@ -201,7 +215,8 @@ class BoardandEditor extends React.Component {
       // const ids = ['rishabh', 'keshav'];
       // const id = ids[Math.floor(Math.random() * ids.length)];
 
-      const id = sessionStorage.getItem('uniqueID') || nanoid(6);
+      const prevID = sessionStorage.getItem('uniqueID');
+      const id = prevID || nanoid(6);
 
       // Save unique id to sessionStorage
       sessionStorage.setItem('uniqueID', id);
@@ -216,12 +231,22 @@ class BoardandEditor extends React.Component {
       if (refresh === 'true') {
         // socket emit to join the room
         socket.emit('join-room', id);
-      } else {
+      } else if (prevID !== id) {
         // socket emit to create the room
         socket.emit('create-room', id);
-        // console.log(typeof refresh)
+      } else {
+        socket.emit('join-room', id);
       }
       sessionStorage.setItem('refresh', false);
+    }
+
+    // Checks if the navbar host or join modals were clicked
+    if (sessionStorage.getItem('join-modal') === 'true') {
+      // Session storage set to false in create-room notify and join-room success to prevent closing the modal automatically accompanied with not required notification.
+      toggleJoinModal();
+    } else if (sessionStorage.getItem('host-modal') === 'true') {
+      toggleHostModal();
+      sessionStorage.setItem('host-modal', false);
     }
   };
 
@@ -234,8 +259,6 @@ class BoardandEditor extends React.Component {
     // Close the Modal
     toggleHostModal();
 
-    // set state for message and message color and then call add Notification
-
     // socket emit to join the room
     socket.emit('create-room', uniqueID);
   };
@@ -243,11 +266,16 @@ class BoardandEditor extends React.Component {
   // join room on host button trigger
   joinRoom = () => {
     // eslint-disable-next-line no-unused-vars
-    const { joinID } = this.props;
+    const { joinID, setMessage } = this.props;
     const id = joinID;
+    const prevID = sessionStorage.getItem('uniqueID');
 
-    // socket emit to join the room
-    socket.emit('join-room', id);
+    if (prevID !== id) {
+      // socket emit to join the room
+      socket.emit('join-room', id);
+    } else {
+      setMessage(`You are already connected to this ID: ${id}.`, 'danger');
+    }
   };
 
   handleLinePickerClick = () => {
@@ -301,8 +329,6 @@ class BoardandEditor extends React.Component {
     if (storeData.length !== 0) {
       // console.log(sketchRef.toDataURL());
       saveAs(sketchRef.toDataURL(), 'doodlelive.png');
-      console.log(storeData.length);
-      console.log(storeData);
     } else {
       setMessage('Doodle before you download this image.', 'warning');
     }
@@ -492,15 +518,22 @@ class BoardandEditor extends React.Component {
     const { sketchRef, uniqueID } = this.state;
     sketchRef.clear();
     // sketchRef.setBackgroundFromDataUrl('');
-    this.setState({
-      ...this.state,
-      controlledValue: null,
-      storeData: [],
-      // backgroundColor: 'transparent',
-      // fillWithBackgroundColor: false,
-      canUndo: sketchRef.canUndo(),
-      canRedo: sketchRef.canRedo(),
-    });
+    this.setState(
+      {
+        controlledValue: null,
+        storeData: [],
+        backgroundColor: 'transparent',
+        // fillWithBackgroundColor: false,
+        canUndo: sketchRef.canUndo(),
+        canRedo: sketchRef.canRedo(),
+      },
+      () => {
+        // Resets the canvas background
+        this.setState({
+          backgroundColor: '#fff',
+        });
+      }
+    );
 
     socket.emit('clear-canvas', { room: uniqueID });
   };
@@ -551,6 +584,12 @@ class BoardandEditor extends React.Component {
     }, 100);
   };
 
+  toggleAvailabilityModal = () => {
+    this.setState(prevState => ({
+      availabilityModalOpen: !prevState.availabilityModalOpen,
+    }));
+  };
+
   addText = () => {
     const { sketchRef, text } = this.state;
     this.setState({ selectedTool: Tools.Select, addTextOpen: false });
@@ -571,12 +610,46 @@ class BoardandEditor extends React.Component {
     }
   };
 
+  onTabChange = tabKey => {
+    // Detect mobiles and tablets
+    const detectmob = () => {
+      if (
+        navigator.userAgent.match(/Android/i) ||
+        navigator.userAgent.match(/webOS/i) ||
+        // navigator.userAgent.match(/iPhone/i) ||
+        // navigator.userAgent.match(/iPad/i) ||
+        navigator.userAgent.match(/iPod/i) ||
+        navigator.userAgent.match(/BlackBerry/i) ||
+        navigator.userAgent.match(/Windows Phone/i)
+      ) {
+        return true;
+      }
+
+      return false;
+    };
+
+    // if (detectmob() && tabKey === 'codeeditor') {
+    //   return this.toggleAvailabilityModal();
+    // }
+    if (tabKey === 'whiteboard' && detectmob()) {
+      window.location.reload();
+    }
+    return this.setState({ key: tabKey });
+  };
+
+  copyUniqueId = () => {
+    const { setMessage } = this.props;
+    setMessage('Copied to Clipboard!', 'success');
+    this.setState({ copied: true });
+  };
+
   render() {
     const {
       key,
       lineWidth,
       lineColor,
       fillColor,
+      backgroundColor,
       eraserColor,
       selectedTool,
       sketchRef,
@@ -586,6 +659,7 @@ class BoardandEditor extends React.Component {
       uniqueID,
       displayLineColorPicker,
       displayFillColorPicker,
+      availabilityModalOpen,
     } = this.state;
     const {
       hostModalOpen,
@@ -605,6 +679,7 @@ class BoardandEditor extends React.Component {
           toggleHostModal={toggleHostModal}
           uniqueID={uniqueID}
           createRoom={this.createRoom}
+          copyToClipboard={this.copyUniqueId}
         />
         <JoinModal
           joinModalOpen={joinModalOpen}
@@ -618,10 +693,14 @@ class BoardandEditor extends React.Component {
           toggleAuthenticateModal={toggleAuthenticateModal}
           typeofauthentication={typeofauthentication}
         />
+        <AvailabilityModal
+          availabilityModalOpen={availabilityModalOpen}
+          toggleAvailabilityModal={this.toggleAvailabilityModal}
+        />
         <Container id="board">
           <Row>
             <Col md={9}>
-              <Tabs id="controlled-tab-example" activeKey={key} onSelect={tabKey => this.setState({ key: tabKey })}>
+              <Tabs id="controlled-tab-example" activeKey={key} onSelect={this.onTabChange}>
                 <Tab eventKey="whiteboard" title="Whiteboard">
                   <BoardContext.Provider
                     value={{ show: modalShow, toggleModal: this.toggleModal, imageDrop: this.imageDrop }}
@@ -630,6 +709,7 @@ class BoardandEditor extends React.Component {
                       lineWidth={lineWidth}
                       lineColor={lineColor}
                       fillColor={fillColor}
+                      backgroundColor={backgroundColor}
                       eraserColor={eraserColor}
                       tool={selectedTool}
                       sketchChange={this.onSketchChange}
@@ -701,4 +781,6 @@ BoardandEditor.propTypes = {
   toggleAuthenticateModal: PropTypes.func.isRequired,
   // eslint-disable-next-line react/require-default-props
   typeofauthentication: PropTypes.string,
+  toggleNavbar: PropTypes.func.isRequired,
+  expanded: PropTypes.bool.isRequired,
 };

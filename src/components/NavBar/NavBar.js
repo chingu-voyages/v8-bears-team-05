@@ -21,12 +21,20 @@ class NavBar extends Component {
   }
 
   render() {
-    const { toggleHostModal, toggleJoinModal, toggleAuthenticateModal, goToHome, pushToAbout } = this.props;
+    const {
+      setHostModal,
+      setJoinModal,
+      toggleAuthenticateModal,
+      goToHome,
+      pushToAbout,
+      expanded,
+      toggleNavbar,
+    } = this.props;
 
     return (
       <>
         <ReactNotification ref={this.notificationDOMRef} />
-        <Navbar className="py-4" bg="light" expand="lg">
+        <Navbar className="py-4" bg="light" expand="lg" expanded={expanded} onToggle={toggleNavbar}>
           <Container>
             <Navbar.Brand href="" onClick={goToHome}>
               <Logo />
@@ -35,14 +43,14 @@ class NavBar extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
               <Nav>
-                <Nav.Link href="#aboutus" onClick={pushToAbout}>
+                <Nav.Link href="" onClick={pushToAbout}>
                   About us
                 </Nav.Link>
 
-                <Nav.Link href="" onClick={toggleJoinModal}>
+                <Nav.Link href="" onClick={setJoinModal}>
                   Join a meeting
                 </Nav.Link>
-                <Nav.Link href="" onClick={toggleHostModal}>
+                <Nav.Link href="" onClick={setHostModal}>
                   Host a meeting
                 </Nav.Link>
                 <Nav.Link href="" onClick={() => toggleAuthenticateModal('Sign in')}>
@@ -61,12 +69,14 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  toggleHostModal: PropTypes.func.isRequired,
-  toggleJoinModal: PropTypes.func.isRequired,
+  setHostModal: PropTypes.func.isRequired,
+  setJoinModal: PropTypes.func.isRequired,
   setNotificationRef: PropTypes.func.isRequired,
   toggleAuthenticateModal: PropTypes.func.isRequired,
   goToHome: PropTypes.func.isRequired,
   pushToAbout: PropTypes.func.isRequired,
+  toggleNavbar: PropTypes.func.isRequired,
+  expanded: PropTypes.bool.isRequired,
 };
 
 export default NavBar;
