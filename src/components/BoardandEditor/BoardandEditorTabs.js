@@ -101,7 +101,7 @@ class BoardandEditor extends React.Component {
       sessionStorage.setItem('uniqueID', id);
 
       // Close the Modal
-      if (joinModalOpen && sessionStorage.getItem('join-modal') === 'false') {
+      if (joinModalOpen && sessionStorage.getItem('join-modal') !== 'true') {
         toggleJoinModal();
 
         // Show notification
