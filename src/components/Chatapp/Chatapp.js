@@ -159,8 +159,21 @@ class Chatapp extends Component {
 
   render() {
     const { chatOpen, user, messages, noOfUsers, unreadMessages, text } = this.state;
+    let chatLeftBound;
+    let chatRightBound;
+    if (window.innerWidth >= 1030) {
+      chatLeftBound = -window.innerWidth * 0.7;
+      chatRightBound = window.innerWidth * 0.05;
+    } else if (window.innerWidth >= 760) {
+      chatLeftBound = -window.innerWidth * 0.6;
+      chatRightBound = window.innerWidth * 0.015;
+    } else {
+      console.log(window.innerWidth);
+      chatLeftBound = -window.innerWidth * 0.07;
+      chatRightBound = window.innerWidth * 0.125;
+    }
     return (
-      <Draggable axis="x" bounds={{ left: -910, right: 30 }} disabled={chatOpen}>
+      <Draggable axis="x" bounds={{ left: chatLeftBound, right: chatRightBound }} disabled={chatOpen}>
         <div className="chat-app">
           <ChatHeader
             toggleChat={this.toggleChat}
