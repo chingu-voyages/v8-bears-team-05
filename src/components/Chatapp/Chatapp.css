@@ -28,3 +28,8 @@
   position: relative;
   bottom: 40px;
 }
+@media screen and (max-width: 1030px) and (min-width: 760px) {
+  .chat-app {
+    right: 20px;
+  }
+}
